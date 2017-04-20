@@ -229,13 +229,12 @@ class FusionMailService {
     /**
      * Generate a letter for given subscriber and subscription and sends it. Async.
      *
-     * @Job\Defer(queueName="psmb-newsletter")
      * @param Subscriber $subscriber
      * @param array $subscription
-     * @param null|NodeInterface $node
+     * @param NodeInterface $node
      * @return void
      */
-    public function generateSubscriptionLetterAndSend(Subscriber $subscriber, $subscription, $node = NULL)
+    public function generateSubscriptionLetterAndSend(Subscriber $subscriber, $subscription, NodeInterface $node)
     {
         $letter = $this->generateSubscriptionLetter($subscriber, $subscription, $node);
         if ($letter) {
