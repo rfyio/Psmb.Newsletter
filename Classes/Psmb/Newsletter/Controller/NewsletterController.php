@@ -113,7 +113,7 @@ class NewsletterController extends ActionController
      * @param NodeInterface $node Node of the current newsletter item
      * @return void
      */
-    protected function sendLettersForSubscription($subscription, NodeInterface $node)
+    protected function sendLettersForSubscription($subscription, $node)
     {
         $subscribers = $this->subscriberRepository->findBySubscriptionId($subscription['identifier'])->toArray();
 
