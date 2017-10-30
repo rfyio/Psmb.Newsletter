@@ -1,18 +1,30 @@
+
+Flowpack:
+  JobQueue:
+    Common:
+      queues:
+        psmb-newsletter:
+          className: Flowpack\JobQueue\Common\Queue\FakeQueue
+        psmb-newsletter-web:
+          className: Flowpack\JobQueue\Common\Queue\FakeQueue
+          options:
+            async: true
 TYPO3:
   Flow:
     security:
       authentication:
         providers:
-          Typo3BackendProvider:
+          'TYPO3.Neos:Backend':
             requestPatterns:
               'Psmb.Newsletter:Backend':
-                pattern: 'ControllerObjectName'
+                pattern: ControllerObjectName
                 patternOptions:
                   controllerObjectNamePattern: 'Psmb\Newsletter\Controller\.*'
+    mvc:
+      routes:
+        'Psmb.Newsletter':
+          position: 'before TYPO3.Neos'
   Neos:
-    typoScript:
-      autoInclude:
-        'Psmb.Newsletter': TRUE
     userInterface:
       translation:
         autoInclude:

@@ -3,6 +3,7 @@ namespace Psmb\Newsletter\TypoScript;
 
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\TypoScript\TypoScriptObjects\AbstractTypoScriptObject;
+
 # use Pelago\Emogrifier;
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 

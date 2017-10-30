@@ -19,7 +19,6 @@ use TYPO3\Flow\Http\Response;
 use TYPO3\Flow\Http\Uri;
 use TYPO3\Flow\Mvc\Controller\Arguments;
 
-
 /**
  * @Flow\Scope("singleton")
  */
