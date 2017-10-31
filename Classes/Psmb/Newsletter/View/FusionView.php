@@ -96,8 +96,8 @@ class FusionView extends AbstractView
 
 	/**
 	 * @param NodeInterface $siteNode
-	 * @return \Neos\Fusion\Core\Runtime
-	 */
+     * @return \TYPO3\TypoScript\Core\Runtime
+     */
 	protected function getTypoScriptRuntime(NodeInterface $siteNode)
 	{
 		if ($this->typoScriptRuntime === null) {

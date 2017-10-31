@@ -14,7 +14,7 @@ TYPO3:
     security:
       authentication:
         providers:
-          'TYPO3.Neos:Backend':
+          Typo3BackendProvider:
             requestPatterns:
               'Psmb.Newsletter:Backend':
                 pattern: ControllerObjectName
@@ -31,6 +31,9 @@ TYPO3:
           'Psmb.Newsletter': ['Main', 'Modules', 'NodeTypes/*']
       requireJsPathMapping:
         'Psmb.Newsletter/Views': 'resource://Psmb.Newsletter/Public/JavaScript/Inspector/Views'
+    typoScript:
+      autoInclude:
+        'Psmb.NewsLetter': TRUE
     modules:
       management:
         submodules:
