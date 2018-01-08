@@ -5,6 +5,21 @@
 			<trans-unit id="groups.newsletter" xml:space="preserve">
 				<source>Newsletter</source>
 			</trans-unit>
+			<trans-unit id="groups.analytics" xml:space="preserve">
+                <source>Newsletter Analytics</source>
+            </trans-unit>
+            <trans-unit id="views.newsletter" xml:space="preserve">
+                <source>Newsletter View</source>
+            </trans-unit>
+            <trans-unit id="views.viewCount" xml:space="preserve">
+                <source>Overall Views</source>
+            </trans-unit>
+            <trans-unit id="views.uniqueVisitsByDeviceCategory" xml:space="preserve">
+                <source>Visits per Device Category</source>
+            </trans-unit>
+            <trans-unit id="views.uniqueViewsByOsFamilies" xml:space="preserve">
+                <source>Visits per OS</source>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>

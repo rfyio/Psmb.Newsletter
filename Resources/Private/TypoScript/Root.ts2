@@ -102,4 +102,24 @@ prototype(Psmb.Newsletter:UnsubscribeLink) < prototype(NodeUri) {
 	}
 }
 
+prototype(Psmb.Newsletter:TrackingLink) < prototype(NodeUri) {
+	node = ${site}
+	additionalParams {
+		--track= TYPO3.TypoScript:RawArray {
+			'@package' = 'Psmb.Newsletter'
+			'@controller' = 'Analytics'
+			'@action' = 'track'
+			trackingCode = ${trackingCode}
+		}
+	}
+	absolute = ${true}
+	@cache {
+		mode = 'uncached'
+		context {
+			1 = 'site'
+			2 = 'documentNode'
+		}
+	}
+}
+
 newsletter = Psmb.Newsletter:SubscriptionCase

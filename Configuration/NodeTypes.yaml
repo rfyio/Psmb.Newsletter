@@ -17,9 +17,81 @@
       groups:
         newsletter:
           label: i18n
+          position: 10
+          tab: newsletter
+        analytics:
+          label: i18n
+          position: 110
           tab: newsletter
       views:
         newsletter:
-          label: 'Newsletter view'
+          label: i18n
           group: newsletter
           view: Psmb.Newsletter/Views/NewsletterView
+        viewCount:
+          label: i18n
+          group: analytics
+          position: 10
+          view: 'Content/Inspector/Views/Data/ColumnView'
+          viewOptions:
+            dataSource: 'psmb-newsletter-analytics'
+            arguments:
+              view: 'ColumnView'
+            hero:
+              data: 'totals.unique_views'
+              label: 'Unique Views'
+            columns:
+              -
+                data: 'totals.total_views'
+                label: 'Total Views'
+        uniqueVisitsByDeviceCategory:
+          label: i18n
+          group: analytics
+          position: 15
+          view: 'Content/Inspector/Views/Data/TableView'
+          viewOptions:
+            dataSource: 'psmb-newsletter-analytics'
+            arguments:
+              view: 'TableView'
+              type: 'device'
+            collection: 'rows'
+            columns:
+              -
+                data: 'deviceCategory'
+                iconMap:
+                  desktop: 'icon-desktop'
+                  tablet: 'icon-tablet'
+                  smartphone: 'icon-mobile-phone'
+              -
+                data: 'uniquePageviews'
+                suffix: ' visits'
+              -
+                data: 'percent'
+                suffix: '%'
+
+        uniqueViewsByOsFamilies:
+          label: i18n
+          group: analytics
+          position: 20
+          view: 'Content/Inspector/Views/Data/TableView'
+          viewOptions:
+            dataSource: 'psmb-newsletter-analytics'
+            arguments:
+              view: 'TableView'
+              type: 'osFamilies'
+            collection: 'rows'
+            columns:
+              -
+                data: 'osFamilies'
+                iconMap:
+                  'Apple': 'icon-apple'
+                  'iOS': 'icon-apple'
+                  'Windows': 'icon-windows'
+                  'GNU/Linux': 'icon-linux'
+                  'Android': 'icon-android'
+              -
+                data: 'uniquePageviews'
+                suffix: ' visits'
+              -
+                data: 'percent'
+                suffix: '%'

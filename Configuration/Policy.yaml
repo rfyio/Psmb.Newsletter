@@ -1,5 +1,7 @@
 privilegeTargets:
   TYPO3\Flow\Security\Authorization\Privilege\Method\MethodPrivilege:
+    'Psmb.Newsletter:Tracking':
+      matcher: 'method(Psmb\Newsletter\Controller\AnalyticsController->(.*)Action())'
     'Psmb.Newsletter:Subscription':
       matcher: 'method(Psmb\Newsletter\Controller\SubscriptionController->(.*)Action())'
     'Psmb.Newsletter:Backend':
@@ -10,6 +12,9 @@ privilegeTargets:
 roles:
   'TYPO3.Flow:Everybody':
     privileges:
+      -
+        privilegeTarget: 'Psmb.Newsletter:Tracking'
+        permission: GRANT
       -
         privilegeTarget: 'Psmb.Newsletter:Subscription'
         permission: GRANT

@@ -60,3 +60,12 @@
     '@format':     'json'
     '@action':     'send'
   appendExceedingArguments: TRUE
+
+-
+  name: 'Psmb.Newsletter Tracking route'
+  uriPattern: 'analytics/track'
+  defaults:
+    '@package':    'Psmb.Newsletter'
+    '@controller': 'Analytics'
+    '@action':     'track'
+  appendExceedingArguments: TRUE

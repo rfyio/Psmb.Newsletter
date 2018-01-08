@@ -1,6 +1,8 @@
 <?php
 namespace Psmb\Newsletter\Service;
 
+use Psmb\Newsletter\Domain\Model\Newsletter;
+use Psmb\Newsletter\Domain\Repository\NewsletterRepository;
 use TYPO3\Flow\Annotations as Flow;
 use Flowpack\JobQueue\Common\Annotations as Job;
 use Psmb\Newsletter\Domain\Model\Subscriber;
@@ -69,6 +71,12 @@ class FusionMailService {
      * @var array
      */
     protected $subscriptions;
+
+    /**
+     * @var NewsletterRepository
+     * @Flow\Inject()
+     */
+    protected $newsletterRepository;
 
     /**
      * We can't do this in constructor as we need configuration to be injected
@@ -213,14 +221,41 @@ class FusionMailService {
     {
         $dimensions = isset($subscription['dimensions']) ? $subscription['dimensions'] : null;
         $siteNode = $this->getSiteNode($dimensions);
+
         $node = $node ?: $siteNode;
+
+        /** @var Newsletter $newsletter */
+        $newsletter = $this->newsletterRepository->findOneByNode($node);
+        if (!$newsletter) {
+            // Create a newsletter object
+            $newsletter = new Newsletter();
+            $newsletter->setNode($node->getNodeData());
+            $newsletter->setPublicationDate(new \DateTime());
+
+            $this->newsletterRepository->add($newsletter);
+        } else {
+            $newsletter->setPublicationDate(new \DateTime());
+            $this->newsletterRepository->update($newsletter);
+        }
+
+        // Generate tracking code
+        $trackingCode = base64_encode($newsletter->getPersistenceObjectIdentifier() . '|' . $subscriber->getPersistenceObjectIdentifier());
+
+        $trackingLink = $this->uriBuilder->uriFor(
+            'track',
+            ['trackingCode' => $trackingCode],
+            'Analytics',
+            'Psmb.Newsletter'
+        );
+
         $this->view->assign('value', [
             'site' => $siteNode,
             'documentNode' => $node,
             'node' => $node,
             'subscriber' => $subscriber,
             'subscription' => $subscription,
-            'globalSettings' => $this->globalSettings
+            'globalSettings' => $this->globalSettings,
+            'trackingLink' => $trackingLink
         ]);
         return $this->view->render();
     }
@@ -228,7 +263,6 @@ class FusionMailService {
     /**
      * Generate a letter for given subscriber and subscription and sends it. Async.
      *
-     * @Job\Defer(queueName="psmb-newsletter")
      * @param Subscriber $subscriber
      * @param array $subscription
      * @param null|NodeInterface $node
