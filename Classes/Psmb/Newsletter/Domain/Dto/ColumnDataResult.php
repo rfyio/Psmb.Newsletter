@@ -31,15 +31,17 @@ class ColumnDataResult
     {
         $uniqueViews = 0;
         $totalViews = 0;
+        $totalSent = 0;
 
         if ($this->newsletter instanceof Newsletter) {
             $uniqueViews = $this->newsletter->getUniqueViewCount();
             $totalViews = $this->newsletter->getViewsCount();
+            $totalSent = $this->newsletter->getSentCount();
         }
 
         return array(
-            'totals' => array('unique_views' => $uniqueViews, 'total_views' => $totalViews),
-            'rows' => array(array('unique_views' => $uniqueViews, 'total_views' => $totalViews)),
+            'totals' => array('unique_views' => $uniqueViews, 'total_views' => $totalViews, 'total_sent' => $totalSent),
+            'rows' => array(array('unique_views' => $uniqueViews, 'total_views' => $totalViews, 'total_sent' => $totalSent)),
         );
     }
 }

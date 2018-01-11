@@ -31,6 +31,12 @@ class Newsletter {
      * @var integer
      * @Flow\Validate(type="Integer")
      */
+	protected $sentCount = 0;
+
+    /**
+     * @var integer
+     * @Flow\Validate(type="Integer")
+     */
 	protected $viewsCount = 0;
 
     /**
@@ -99,6 +105,23 @@ class Newsletter {
     public function setPublicationDate($publicationDate)
     {
         $this->publicationDate = $publicationDate;
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getSentCount()
+    {
+        return $this->sentCount;
+    }
+
+    /**
+     * One up sent count
+     */
+    public function updateSentCount()
+    {
+        $this->sentCount++;
     }
 
     /**

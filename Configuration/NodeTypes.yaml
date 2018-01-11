@@ -44,6 +44,9 @@
               -
                 data: 'totals.total_views'
                 label: 'Total Views'
+              -
+                data: 'totals.total_sent'
+                label: 'Total Sent'
         uniqueVisitsByDeviceCategory:
           label: i18n
           group: analytics

@@ -2,6 +2,8 @@
 namespace Psmb\Newsletter\Service;
 
 use Psmb\Newsletter\Domain\Model\Newsletter;
+use Psmb\Newsletter\Domain\Model\ViewsOnDevice;
+use Psmb\Newsletter\Domain\Model\ViewsOnOperatingSystem;
 use Psmb\Newsletter\Domain\Repository\NewsletterRepository;
 use TYPO3\Flow\Annotations as Flow;
 use Flowpack\JobQueue\Common\Annotations as Job;
@@ -212,6 +214,7 @@ class FusionMailService {
     /**
      * Generate a letter for given subscriber and subscription
      *
+     * @Job\Defer(queueName="psmb-newsletter")
      * @param Subscriber $subscriber
      * @param array $subscription
      * @param null|NodeInterface $node
@@ -225,28 +228,24 @@ class FusionMailService {
         $node = $node ?: $siteNode;
 
         /** @var Newsletter $newsletter */
-        $newsletter = $this->newsletterRepository->findOneByNode($node);
+        $newsletter = $this->newsletterRepository->findOneByNode($node->getNodeData());
         if (!$newsletter) {
             // Create a newsletter object
-            $newsletter = new Newsletter();
+            $newsletter = new Newsletter(new ViewsOnDevice(), new ViewsOnOperatingSystem());
             $newsletter->setNode($node->getNodeData());
             $newsletter->setPublicationDate(new \DateTime());
+            $newsletter->updateSentCount();
 
             $this->newsletterRepository->add($newsletter);
         } else {
             $newsletter->setPublicationDate(new \DateTime());
+            $newsletter->updateSentCount();
+
             $this->newsletterRepository->update($newsletter);
         }
 
         // Generate tracking code
         $trackingCode = base64_encode($newsletter->getPersistenceObjectIdentifier() . '|' . $subscriber->getPersistenceObjectIdentifier());
-
-        $trackingLink = $this->uriBuilder->uriFor(
-            'track',
-            ['trackingCode' => $trackingCode],
-            'Analytics',
-            'Psmb.Newsletter'
-        );
 
         $this->view->assign('value', [
             'site' => $siteNode,
@@ -255,7 +254,7 @@ class FusionMailService {
             'subscriber' => $subscriber,
             'subscription' => $subscription,
             'globalSettings' => $this->globalSettings,
-            'trackingLink' => $trackingLink
+            'trackingCode' => $trackingCode
         ]);
         return $this->view->render();
     }

@@ -39,12 +39,6 @@ class Subscriber {
 	protected $metadata;
 
     /**
-     * @var array<string>
-     * @ORM\Column(type="flow_json_array")
-     */
-	protected $trackingInfo;
-
-    /**
      * @return array
      */
     public function getMetadata()
@@ -111,20 +105,4 @@ class Subscriber {
 	public function setSubscriptions($subscriptions) {
 		$this->subscriptions = $subscriptions;
 	}
-
-    /**
-     * @return array
-     */
-    public function getTrackingInfo()
-    {
-        return $this->trackingInfo;
-    }
-
-    /**
-     * @param array $trackingInfo
-     */
-    public function setTrackingInfo($trackingInfo)
-    {
-        $this->trackingInfo = $trackingInfo;
-    }
 }

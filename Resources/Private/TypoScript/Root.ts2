@@ -48,6 +48,7 @@ prototype(Psmb.Newsletter:SubscriptionCase) < prototype(TYPO3.TypoScript:Case) {
 	# To reliably get subscriber data within cached aread use `${Registry.get('subscriber')}`
 	# See https://github.com/psmb/Psmb.Registry
 	@context.justNeedToExecute = ${Registry.set('subscriber', subscriber)}
+	@context.justNeedToExecute = ${Registry.set('trackingCode', trackingCode)}
 	confirmation {
 		condition = ${activationLink}
 		renderer = Psmb.Newsletter:ConfirmationMailRenderer
@@ -102,23 +103,16 @@ prototype(Psmb.Newsletter:UnsubscribeLink) < prototype(NodeUri) {
 	}
 }
 
-prototype(Psmb.Newsletter:TrackingLink) < prototype(NodeUri) {
-	node = ${site}
-	additionalParams {
-		--track= TYPO3.TypoScript:RawArray {
-			'@package' = 'Psmb.Newsletter'
-			'@controller' = 'Analytics'
-			'@action' = 'track'
-			trackingCode = ${trackingCode}
-		}
+prototype(Psmb.Newsletter:TrackingLink) < prototype(TYPO3.TypoScript:UriBuilder) {
+    package = 'Psmb.Newsletter'
+    controller = 'Analytics'
+    action = 'track'
+	arguments = TYPO3.TypoScript:RawArray {
+		trackingCode = ${Registry.get('trackingCode')}
 	}
-	absolute = ${true}
-	@cache {
-		mode = 'uncached'
-		context {
-			1 = 'site'
-			2 = 'documentNode'
-		}
+
+	additionalParams {
+		absolute = ${true}
 	}
 }
 
