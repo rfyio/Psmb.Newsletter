@@ -195,6 +195,16 @@ class Newsletter {
      */
     public function updateDevice($type)
     {
-        $this->viewsOnDevice->updateDevice($type);
+        $count = Arrays::getValueByPath($this->viewsOnDevice, $type) + 1;
+        $this->viewsOnDevice = Arrays::setValueByPath($this->viewsOnDevice, $type, $count);
+    }
+
+    /**
+     * @param $os
+     */
+    public function updateOS($os)
+    {
+        $count = Arrays::getValueByPath($this->viewsOnOS, $os) + 1;
+        $this->viewsOnOS = Arrays::setValueByPath($this->viewsOnOS, $os, $count);
     }
 }

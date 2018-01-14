@@ -145,7 +145,7 @@ class RequestParser {
         }
 
         if (!$matches) {
-            return 'Other';
+            return 'other';
         }
 
         $name = $this->buildByMatch($osRegex['name'], $matches);
@@ -154,7 +154,7 @@ class RequestParser {
             $this->operationSystem = self::$osFamilies[$name];
         }
 
-        return $this->operationSystem;
+        return strtolower($this->operationSystem);
     }
 
     /**

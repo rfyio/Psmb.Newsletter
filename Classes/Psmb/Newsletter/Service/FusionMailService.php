@@ -245,7 +245,7 @@ class FusionMailService {
         }
 
         // Generate tracking code
-        $trackingCode = base64_encode($newsletter->getPersistenceObjectIdentifier() . '|' . $subscriber->getPersistenceObjectIdentifier());
+        $trackingCode = $newsletter->getPersistenceObjectIdentifier() . '|' . $subscriber->getPersistenceObjectIdentifier();
 
         $this->view->assign('value', [
             'site' => $siteNode,

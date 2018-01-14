@@ -111,9 +111,7 @@ prototype(Psmb.Newsletter:TrackingLink) < prototype(TYPO3.TypoScript:UriBuilder)
 		trackingCode = ${Registry.get('trackingCode')}
 	}
 
-	additionalParams {
-		absolute = ${true}
-	}
+	absolute = ${true}
 }
 
 newsletter = Psmb.Newsletter:SubscriptionCase
