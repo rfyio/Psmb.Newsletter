@@ -2,13 +2,11 @@
 namespace Psmb\Newsletter\Controller\Module;
 
 use Psmb\Newsletter\Domain\Model\Subscriber;
+use Psmb\Newsletter\Domain\Repository\SubscriberTrackingRepository;
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Configuration\ConfigurationManager;
 use TYPO3\Flow\Configuration\Source\YamlSource;
-use TYPO3\Flow\Error\Message;
-use TYPO3\Flow\Http\Client\CurlEngineException;
 use TYPO3\Flow\Package\PackageManagerInterface;
-use TYPO3\Flow\Utility\Arrays;
 use TYPO3\Neos\Controller\Module\AbstractModuleController;
 use Psmb\Newsletter\Domain\Repository\SubscriberRepository;
 
@@ -42,6 +40,12 @@ class SubscriberController extends AbstractModuleController
      * @var SubscriberRepository
      */
     protected $subscriberRepository;
+
+    /**
+     * @Flow\Inject
+     * @var SubscriberTrackingRepository
+     */
+    protected $subscriberTrackingRepository;
 
     /**
      * @Flow\InjectConfiguration(package="Psmb.Newsletter", path="subscriptions")
@@ -89,8 +93,10 @@ class SubscriberController extends AbstractModuleController
      */
     public function editAction(Subscriber $subscriber)
     {
+        $trackingRecords = $this->subscriberTrackingRepository->findBySubscriber($subscriber);
         $this->view->assign('subscriber', $subscriber);
         $this->view->assign('subscriptions', $this->subscriptions);
+        $this->view->assign('trackingRecords', $trackingRecords);
     }
 
     /**

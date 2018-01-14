@@ -86,10 +86,18 @@
             <trans-unit id="module.subscriberSubscriptions" xml:space="preserve">
                 <source>Subscriptions</source>
             </trans-unit>
-            <trans-unit id="module.subscriberMetaInformation" xml:space="preserve">
+            <trans-unit id="module.subscriber.metaInformation" xml:space="preserve">
                 <source>Meta Information</source>
             </trans-unit>
-
+            <trans-unit id="module.subscriber.subscriberTracking" xml:space="preserve">
+                <source>Tracking Information</source>
+            </trans-unit>
+            <trans-unit id="module.subscriber.subscriberTracking.title" xml:space="preserve">
+                <source>Newsletter</source>
+            </trans-unit>
+            <trans-unit id="module.subscriber.subscriberTracking.count" xml:space="preserve">
+                <source>Views</source>
+            </trans-unit>
             <trans-unit id="module.actions.cancel" xml:space="preserve">
                 <source>Cancel</source>
             </trans-unit>

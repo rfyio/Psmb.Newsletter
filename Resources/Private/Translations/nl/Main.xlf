@@ -82,6 +82,64 @@
                 <source>Enter test email:</source>
                 <target>Voer test email in:</target>
             </trans-unit>
+
+
+            <trans-unit id="module.search" xml:space="preserve">
+                <source>Search</source>
+                <target>Zoeken</target>
+            </trans-unit>
+
+            <trans-unit id="module.header.newSubscriber" xml:space="preserve">
+                <source>New Subscriber</source>
+                <target>Nieuwe abonnee</target>
+            </trans-unit>
+            <trans-unit id="module.header.subscriberDetails" xml:space="preserve">
+                <source>Subscriber Details</source>
+                <target>Abonnee details</target>
+            </trans-unit>
+            <trans-unit id="module.header.subscriberEdit" xml:space="preserve">
+                <source>Edit Subscriber</source>
+                <target>Abonnee bewerken</target>
+            </trans-unit>
+            <trans-unit id="module.subscriberName" xml:space="preserve">
+                <source>Name</source>
+            </trans-unit>
+            <trans-unit id="module.subscriberEmail" xml:space="preserve">
+                <source>Email</source>
+                <target>E-mail</target>
+            </trans-unit>
+            <trans-unit id="module.subscriberSubscriptions" xml:space="preserve">
+                <source>Subscriptions</source>
+                <target>Abonnees</target>
+            </trans-unit>
+            <trans-unit id="module.subscriber.metaInformation" xml:space="preserve">
+                <source>Meta Information</source>
+                <target>Extra Informatie</target>
+            </trans-unit>
+            <trans-unit id="module.subscriber.subscriberTracking" xml:space="preserve">
+                <source>Tracking Information</source>
+                <target>Tracking informatie</target>
+            </trans-unit>
+            <trans-unit id="module.subscriber.subscriberTracking.title" xml:space="preserve">
+                <source>Newsletter</source>
+                <target>Nieuwsbrief</target>
+            </trans-unit>
+            <trans-unit id="module.subscriber.subscriberTracking.count" xml:space="preserve">
+                <source>Views</source>
+                <target>Bekeken</target>
+            </trans-unit>
+            <trans-unit id="module.actions.cancel" xml:space="preserve">
+                <source>Cancel</source>
+                <target>Annuleren</target>
+            </trans-unit>
+            <trans-unit id="module.actions.save" xml:space="preserve">
+                <source>Save</source>
+                <target>Opslaan</target>
+            </trans-unit>
+            <trans-unit id="module.actions.all" xml:space="preserve">
+                <source>Show All</source>
+                <target>Alles bekijken</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

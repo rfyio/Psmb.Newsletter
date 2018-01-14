@@ -52,26 +52,60 @@
                     </div>
                 </div>
 
+                <div class="neos-span4 neos-offset1">
                 <f:if condition="{subscriber.metadata}">
-                    <div class="neos-span4 neos-offset1">
-                        <div class="widget">
-                            <div class="widget-header">
-                                <i class="icon-globe neos-pull-left"></i>
-                                <h3>
-                                    <f:translate id="module.subscriberMetaInformation"/>
-                                </h3>
-                            </div>
+                    <div class="widget">
+                        <div class="widget-header">
+                            <i class="icon-globe neos-pull-left"></i>
+                            <h3>
+                                <f:translate id="module.subscriber.metaInformation"/>
+                            </h3>
+                        </div>
 
-                            <div class="widget-body">
-                                <ul>
-                                <f:for each="{subscriber.metadata}" as="data" key="title">
-                                    <li><strong>{title}: </strong> {data}</li>
-                                </f:for>
-                                </ul>
-                            </div>
+                        <div class="widget-body">
+                            <ul>
+                            <f:for each="{subscriber.metadata}" as="data" key="title">
+                                <li><strong>{title}: </strong> {data}</li>
+                            </f:for>
+                            </ul>
                         </div>
                     </div>
                 </f:if>
+
+                <f:if condition="{trackingRecords}">
+                    <div class="widget">
+                        <div class="widget-header">
+                            <i class="icon-globe neos-pull-left"></i>
+                            <h3>
+                                <f:translate id="module.subscriber.subscriberTracking"/>
+                            </h3>
+                        </div>
+
+                        <div class="widget-body">
+                            <table class="neos-table">
+                                <thead>
+                                <tr>
+                                    <th><f:translate id="module.subscriber.subscriberTracking.title"/></th>
+                                    <th><f:translate id="module.subscriber.subscriberTracking.count"/></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <f:for each="{trackingRecords}" as="trackingRecord">
+                                    <tr>
+                                        <td>
+                                            {trackingRecord.newsletter.node.properties.title}
+                                        </td>
+                                        <td>
+                                            {trackingRecord.viewCount}
+                                        </td>
+                                    </tr>
+                                    </f:for>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </f:if>
+                </div>
             </div>
         </div>
     </fieldset>

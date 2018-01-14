@@ -122,6 +122,7 @@ prototype(Sfi.Site:DigestArticle) < prototype(Neos.Fusion:Tag) {
 |`Psmb.Newsletter:MailRenderer`|Abstract mail renderer. Returns a RawArray of `body`, `subject` and other mail options passed to swiftmailer. See above for details.|
 |`Psmb.Newsletter:EditSubscriptionLink`|Generated a link to edit action of the plugin|
 |`Psmb.Newsletter:UnsubscribeLink`|Generated a link to unsubscribe action of the plugin|
+|`Psmb.Newsletter:TrackingLink`|Generated a link to track newsletters being opened|
 |`Psmb.Newsletter:CssToInline`|Processor to automatically inline CSS styles|
 |`Psmb.Newsletter:SubscriptionCase`|Rendering entry point. Usually no need to touch this one|
 |`Psmb.Newsletter:SubscriptionPlugin`|Configured `Neos.Neos:Plugin` instance that insert Flow signup plugin.|
