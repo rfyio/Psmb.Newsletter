@@ -28,7 +28,7 @@ TYPO3:
     userInterface:
       translation:
         autoInclude:
-          'Psmb.Newsletter': ['Main', 'Modules', 'TypoScriptObjects/*']
+          'Psmb.Newsletter': ['Main', 'Modules', 'NodeTypes/*']
       requireJsPathMapping:
         'Psmb.Newsletter/Views': 'resource://Psmb.Newsletter/Public/JavaScript/Inspector/Views'
     typoScript:
