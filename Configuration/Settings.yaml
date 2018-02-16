@@ -28,7 +28,7 @@ TYPO3:
     userInterface:
       translation:
         autoInclude:
-          'Psmb.Newsletter': ['Main', 'Modules', 'NodeTypes/*']
+          'Psmb.Newsletter': ['Main', 'Modules', 'TypoScriptObjects/*']
       requireJsPathMapping:
         'Psmb.Newsletter/Views': 'resource://Psmb.Newsletter/Public/JavaScript/Inspector/Views'
     typoScript:
@@ -46,6 +46,16 @@ TYPO3:
               index:
                 label: 'Manage newsletter subscribers'
                 title: 'Manage newsletter subscribers'
+          analytics:
+            label: 'Psmb.Newsletter:Modules:analytics.label'
+            controller: \Psmb\Newsletter\Controller\Module\SubscriberController
+            description: 'Psmb.Newsletter:Modules:analytics.description'
+            icon: icon-pie-chart
+            actions:
+              index:
+                label: 'View newsletter analytics'
+                title: 'View newsletter analytics'
+
 
 Flowpack:
   JobQueue:

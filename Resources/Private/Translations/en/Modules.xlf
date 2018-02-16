@@ -6,7 +6,13 @@
 				<source>Newsletter Subscribers</source>
 			</trans-unit>
 			<trans-unit id="newsletter.description" xml:space="preserve">
-				<source>Management panel for your newsletters subscribers</source>
+				<source>This module allows finding and managing of your newsletters subscribers for each newsletter. It also provides a in detail view of per subscriber meta information and analytics.</source>
+			</trans-unit>
+			<trans-unit id="analytics.label" xml:space="preserve">
+				<source>Newsletter Analytics</source>
+			</trans-unit>
+			<trans-unit id="analytics.description" xml:space="preserve">
+				<source>This module provides an overview of the newsletter which where sent and the tracking information corresponding with global newsletters.</source>
 			</trans-unit>
 		</body>
 	</file>
