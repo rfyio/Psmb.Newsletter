@@ -7,7 +7,7 @@ privilegeTargets:
     'Psmb.Newsletter:Backend':
       matcher: 'method(Psmb\Newsletter\Controller\NewsletterController->(.*)Action())'
     'Psmb.Newsletter:Module_Subscribers':
-      matcher: 'method(Psmb\Newsletter\Controller\Module\SubscriberController->(index|new|create|update|edit|delete)Action())'
+      matcher: 'method(Psmb\Newsletter\Controller\Module\SubscriberController->(index|export|new|create|update|edit|delete)Action())'
 
 roles:
   'TYPO3.Flow:Everybody':

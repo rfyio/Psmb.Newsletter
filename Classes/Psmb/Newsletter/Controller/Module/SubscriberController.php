@@ -7,6 +7,7 @@ use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Configuration\ConfigurationManager;
 use TYPO3\Flow\Configuration\Source\YamlSource;
 use TYPO3\Flow\Package\PackageManagerInterface;
+use TYPO3\Flow\Reflection\ObjectAccess;
 use TYPO3\Neos\Controller\Module\AbstractModuleController;
 use Psmb\Newsletter\Domain\Repository\SubscriberRepository;
 
@@ -66,6 +67,45 @@ class SubscriberController extends AbstractModuleController
     }
 
     /**
+     * @param string $filter
+     * @return string
+     */
+    public function exportAction($filter = '')
+    {
+        $subscribers = $filter ? $this->subscriberRepository->findAllByFilter($filter) : $this->subscriberRepository->findAll();
+
+        $output = array();
+        $objectProperties = array('email', 'name');
+        $output[] = $objectProperties;
+        foreach ($subscribers as $singleResult) {
+            $row = array();
+
+            $properties = ObjectAccess::getGettableProperties($singleResult);
+            foreach ($objectProperties as $propertyName) {
+                $property = $properties[$propertyName];
+                if (is_string($property)) {
+                    $row[$propertyName] = ObjectAccess::getProperty($singleResult, $propertyName);
+                }
+
+                if ($property === NULL) {
+                    $row[$propertyName] = '';
+                }
+            }
+            $output[] = $row;
+
+        }
+
+        $this->response->setCharset('ISO-8859-1');
+        $this->response->setHeader('Content-Type', 'text/x-csv');
+        $this->response->setHeader('Pragma', 'no-cache');
+        $this->response->setHeader('Content-Disposition', 'attachment; filename=Subscribers-Export.csv;');
+        // Convert to Excel CSV
+        $this->response->setContent($this->convertArrayToCsv($output));
+        return '';
+
+    }
+
+    /**
      * An edit view for a subscriber
      *
      * @return void
@@ -122,5 +162,35 @@ class SubscriberController extends AbstractModuleController
         $this->subscriberRepository->remove($subscriber);
         $this->persistenceManager->persistAll();
         $this->redirect('index');
+    }
+
+    /**
+     * @param array $array
+     * @return string
+     */
+    protected function convertArrayToCsv(array $array) {
+        $string = '';
+        $delimiter = ';';
+        $enclosure = '"';
+
+        foreach ($array as $dataArray) {
+            // loop over arrays here to avoid having to do utf8 decoding all over the place
+            $writeDelimiter = FALSE;
+            foreach ($dataArray as $dataElement) {
+                // Replaces a double quote with two double quotes
+                $dataElement = str_replace('"', '""', $dataElement);
+
+                // Adds a delimiter before each field (except the first)
+                if($writeDelimiter) $string .= $delimiter;
+
+                // Encloses each field with $enclosure and adds it to the string
+                $string .= $enclosure . $dataElement . $enclosure;
+
+                // Delimiters are used every time except the first.
+                $writeDelimiter = TRUE;
+            }
+            $string .= "\n";
+        }
+        return $string;
     }
 }

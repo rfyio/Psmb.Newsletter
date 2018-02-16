@@ -110,6 +110,10 @@
 				<f:widget.paginate objects="{subscribers}" as="paginatedSubscribers" configuration="{itemsPerPage: settings.module.itemsPerPage, insertAbove: FALSE, insertBelow: true, maximumNumberOfLinks: 8}">
 					<legend>
 						Showing {settings.module.itemsPerPage} of <strong><f:count>{subscribers}</f:count></strong>
+
+						<f:link.action style="float: right; margin-left: 10px;" action="export" class="neos-button neos-button-primary" arguments="{filter: filter}" title="Export subscribers">
+							<i class="icon-download icon-white"></i>
+						</f:link.action>
 						<f:link.action style="float: right;" action="new" class="neos-button neos-button-success" title="New subscriber">
 							<i class="icon-plus icon-white"></i>
 						</f:link.action>
