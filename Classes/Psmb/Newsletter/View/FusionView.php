@@ -12,6 +12,7 @@ use TYPO3\TYPO3CR\Domain\Model\NodeInterface;
 use TYPO3\TypoScript\Core\Runtime;
 use TYPO3\TypoScript\Exception\RuntimeException;
 use TYPO3\Flow\Security\Context;
+use TYPO3\Flow\Log\SystemLoggerInterface;
 
 /**
  * A TypoScript view
@@ -57,6 +58,12 @@ class FusionView extends AbstractView
 	 */
 	protected $securityContext;
 
+    /**
+     * @Flow\Inject
+     * @var SystemLoggerInterface
+     */
+    protected $systemLogger;
+
 	/**
 	 * Renders the view
 	 *
@@ -66,31 +73,38 @@ class FusionView extends AbstractView
 	 */
 	public function render()
 	{
+        $this->systemLogger->log('Render #1', LOG_INFO);
 		$contextVars = $this->variables['value'];
 		if (!is_array($contextVars)) {
 			throw new Exception('FusionView needs an array for variable \'value\'.', 1329736457);
-		}
+        }
+        $this->systemLogger->log('Render #2', LOG_INFO);
 		$siteNode = $contextVars['site'];
 		if (!$siteNode instanceof Node) {
 			throw new Exception('FusionView needs a site node to be set in context variables passed to \'value\'.', 1329736457);
 		}
+        $this->systemLogger->log('Render #3', LOG_INFO);
 		$typoScriptRuntime = $this->getTypoScriptRuntime($siteNode);
-
+        $this->systemLogger->log('Render #4', LOG_INFO);
 		$dimensions = $siteNode->getContext()->getDimensions();
 		if (array_key_exists('language', $dimensions) && $dimensions['language'] !== array()) {
 			$currentLocale = new Locale($dimensions['language'][0]);
 			$this->i18nService->getConfiguration()->setCurrentLocale($currentLocale);
 			$this->i18nService->getConfiguration()->setFallbackRule(array('strict' => false, 'order' => array_reverse($dimensions['language'])));
 		}
+        $this->systemLogger->log('Render #5', LOG_INFO);
 
 		$typoScriptRuntime->pushContextArray($contextVars);
 		try {
+            $this->systemLogger->log('Render #6', LOG_INFO);
 			$output = $typoScriptRuntime->render($this->fusionPath);
+            $this->systemLogger->log('Render #7', LOG_INFO);
 		} catch (RuntimeException $exception) {
+            $this->systemLogger->log('Exception', LOG_INFO, [$exception->getPrevious()]);
 			throw $exception->getPrevious();
 		}
 		$typoScriptRuntime->popContext();
-
+        $this->systemLogger->log('Render #6', LOG_INFO);
 		return $output;
 	}
 
