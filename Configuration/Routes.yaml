@@ -1,4 +1,13 @@
 -
+  name: 'Psmb.Newsletter Subscriber Export'
+  uriPattern: 'subscribers/export'
+  defaults:
+    '@package':    'Psmb.Newsletter'
+    '@controller': 'Module\Subscriber'
+    '@action':     'export'
+  appendExceedingArguments: TRUE
+
+-
   name: 'Psmb.Newsletter edit route'
   uriPattern: '{node}~newsletter/edit/{--newsletter.subscriber}'
   defaults:
