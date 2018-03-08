@@ -214,7 +214,6 @@ class FusionMailService {
     /**
      * Generate a letter for given subscriber and subscription
      *
-     * @Job\Defer(queueName="psmb-newsletter")
      * @param Subscriber $subscriber
      * @param array $subscription
      * @param null|NodeInterface $node
@@ -262,6 +261,7 @@ class FusionMailService {
     /**
      * Generate a letter for given subscriber and subscription and sends it. Async.
      *
+     * @Job\Defer(queueName="psmb-newsletter")
      * @param Subscriber $subscriber
      * @param array $subscription
      * @param null|NodeInterface $node
