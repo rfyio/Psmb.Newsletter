@@ -17,7 +17,6 @@ use TYPO3\SwiftMailer\Message;
 use TYPO3\TYPO3CR\Domain\Model\Node;
 use TYPO3\TYPO3CR\Domain\Model\NodeInterface;
 use TYPO3\TYPO3CR\Domain\Service\ContextFactoryInterface;
-use TYPO3\Flow\Log\SystemLoggerInterface;
 use TYPO3\Flow\Http\Request;
 use TYPO3\Flow\Http\Response;
 use TYPO3\Flow\Http\Uri;
@@ -81,12 +80,6 @@ class FusionMailService {
     protected $newsletterRepository;
 
     /**
-     * @Flow\Inject
-     * @var SystemLoggerInterface
-     */
-    protected $systemLogger;
-
-    /**
      * We can't do this in constructor as we need configuration to be injected
      */
     public function initializeObject() {
@@ -136,7 +129,6 @@ class FusionMailService {
      */
     public function sendLetter($letter)
     {
-        $this->systemLogger->log('SendING!! Letter', LOG_INFO);
         $subject = isset($letter['subject']) ? $letter['subject'] : null;
         $body = isset($letter['body']) ? $letter['body'] : null;
         $recipientAddress = isset($letter['recipientAddress']) ? $letter['recipientAddress'] : null;
@@ -188,17 +180,18 @@ class FusionMailService {
      * @param string $hash
      * @return void
      */
-    public function sendActivationLetter(Subscriber $subscriber, $hash)
+    public function sendActivationLetter(Subscriber $subscriber, $hash, $node = NULL)
     {
-        $siteNode = $this->getSiteNode();
+        $dimensions = isset($subscription['dimensions']) ? $subscription['dimensions'] : null;
+        $siteNode = $this->getSiteNode($dimensions);
+
+        $node = $node ?: $siteNode;
         $arguments = ['--newsletter' => [
             '@package' => 'Psmb.Newsletter',
             '@controller' => 'Subscription',
             '@action' => 'confirm',
             'hash' => $hash
         ]];
-
-        $this->systemLogger->log('Activation Link', LOG_INFO, [$this->controllerContext]);
 
         $activationLink = $this->linkingService->createNodeUri(
             $this->controllerContext,
@@ -211,8 +204,8 @@ class FusionMailService {
 
         $this->view->assign('value', [
             'site' => $siteNode,
-            'documentNode' => $siteNode,
-            'node' => $siteNode,
+            'documentNode' => $node,
+            'node' => $node,
             'subscriber' => $subscriber,
             'globalSettings' => $this->globalSettings,
             'activationLink' => $activationLink
@@ -224,7 +217,6 @@ class FusionMailService {
     /**
      * Generate a letter for given subscriber and subscription
      *
-     * @Job\Defer(queueName="psmb-newsletter")
      * @param Subscriber $subscriber
      * @param array $subscription
      * @param null|NodeInterface $node
@@ -232,32 +224,28 @@ class FusionMailService {
      */
     public function generateSubscriptionLetter(Subscriber $subscriber, $subscription, $node = NULL)
     {
-        $this->systemLogger->log('Generate subscription', LOG_INFO, [$this->controllerContext]);
         $dimensions = isset($subscription['dimensions']) ? $subscription['dimensions'] : null;
         $siteNode = $this->getSiteNode($dimensions);
-        $this->systemLogger->log('Test #1', LOG_INFO);
         $node = $node ?: $siteNode;
 
         /** @var Newsletter $newsletter */
         $newsletter = $this->newsletterRepository->findOneByNode($node->getNodeData());
-        $this->systemLogger->log('Test #2', LOG_INFO);
         if (!$newsletter) {
-            $this->systemLogger->log('Test #3', LOG_INFO);
             // Create a newsletter object
             $newsletter = new Newsletter(new ViewsOnDevice(), new ViewsOnOperatingSystem());
             $newsletter->setNode($node->getNodeData());
+            $newsletter->setSubscriptionIdentifier($subscription['identifier']);
             $newsletter->setPublicationDate(new \DateTime());
             $newsletter->updateSentCount();
 
             $this->newsletterRepository->add($newsletter);
         } else {
-            $this->systemLogger->log('Test #4', LOG_INFO);
             $newsletter->setPublicationDate(new \DateTime());
+            $newsletter->setSubscriptionIdentifier($subscription['identifier']);
             $newsletter->updateSentCount();
 
             $this->newsletterRepository->update($newsletter);
         }
-        $this->systemLogger->log('Test #5', LOG_INFO);
         // Generate tracking code
         $trackingCode = $newsletter->getPersistenceObjectIdentifier() . '|' . $subscriber->getPersistenceObjectIdentifier();
 
@@ -270,13 +258,13 @@ class FusionMailService {
             'globalSettings' => $this->globalSettings,
             'trackingCode' => $trackingCode
         ]);
-        $this->systemLogger->log('Test #6', LOG_INFO);
         return $this->view->render();
     }
 
     /**
      * Generate a letter for given subscriber and subscription and sends it. Async.
      *
+     * @Job\Defer(queueName="psmb-newsletter")
      * @param Subscriber $subscriber
      * @param array $subscription
      * @param null|NodeInterface $node
@@ -284,11 +272,8 @@ class FusionMailService {
      */
     public function generateSubscriptionLetterAndSend(Subscriber $subscriber, $subscription, $node = NULL)
     {
-        $this->systemLogger->log('Start generating', LOG_INFO);
         $letter = $this->generateSubscriptionLetter($subscriber, $subscription, $node);
-        $this->systemLogger->log('Letter is?', LOG_INFO, ['letter' => $letter]);
         if ($letter) {
-            $this->systemLogger->log('Newsletter being sent', LOG_INFO, [$letter]);
             $this->sendLetter($letter);
         }
     }

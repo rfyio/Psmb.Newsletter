@@ -12,6 +12,10 @@ use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Utility\Algorithms;
 use TYPO3\Flow\Validation\Validator\EmailAddressValidator;
 
+/**
+ * Class SubscriptionController
+ * @package Psmb\Newsletter\Controller
+ */
 class SubscriptionController extends ActionController
 {
     /**
@@ -85,6 +89,7 @@ class SubscriptionController extends ActionController
                 $this->addFlashMessage($message, null, Message::SEVERITY_WARNING);
                 $this->redirect('index');
             } else {
+                $node = $this->request->getInternalArgument('__node');
                 $subscriber->setMetadata([
                     'registrationDate' => new \DateTime(),
                     'registrationDimensions' => $this->request->getInternalArgument('__node')->getContext()->getDimensions()
@@ -96,7 +101,7 @@ class SubscriptionController extends ActionController
                 );
                 $message = $this->translator->translateById('flash.confirm', [], null, null, 'Main', 'Psmb.Newsletter');
                 $this->addFlashMessage($message);
-                $this->fusionMailService->sendActivationLetter($subscriber, $hash);
+                $this->fusionMailService->sendActivationLetter($subscriber, $hash, $node);
                 $this->redirect('feedback');
             }
         }
