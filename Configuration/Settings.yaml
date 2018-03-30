@@ -1,14 +1,3 @@
-
-Flowpack:
-  JobQueue:
-    Common:
-      queues:
-        psmb-newsletter:
-          className: Flowpack\JobQueue\Common\Queue\FakeQueue
-        psmb-newsletter-web:
-          className: Flowpack\JobQueue\Common\Queue\FakeQueue
-          options:
-            async: true
 TYPO3:
   Flow:
     security:
@@ -48,7 +37,7 @@ TYPO3:
                 title: 'Manage newsletter subscribers'
           analytics:
             label: 'Psmb.Newsletter:Modules:analytics.label'
-            controller: \Psmb\Newsletter\Controller\Module\SubscriberController
+            controller: \Psmb\Newsletter\Controller\Module\AnalyticsController
             description: 'Psmb.Newsletter:Modules:analytics.description'
             icon: icon-pie-chart
             actions:
@@ -56,15 +45,16 @@ TYPO3:
                 label: 'View newsletter analytics'
                 title: 'View newsletter analytics'
 
-
 Flowpack:
   JobQueue:
     Common:
       queues:
-        'psmb-newsletter':
-          className: 'Flowpack\JobQueue\Common\Queue\FakeQueue'
+        psmb-newsletter-web:
+          className: Flowpack\JobQueue\Common\Queue\FakeQueue
           options:
             async: true
+        'psmb-newsletter':
+          className: 'Flowpack\JobQueue\Common\Queue\FakeQueue'
 
 Psmb:
   Newsletter:

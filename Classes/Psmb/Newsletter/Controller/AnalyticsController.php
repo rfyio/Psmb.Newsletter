@@ -75,21 +75,23 @@ class AnalyticsController extends ActionController
                             $subscriberTracking = new SubscriberTracking();
                             $subscriberTracking->setNewsletter($newsletter);
                             $subscriberTracking->setSubscriber($subscriber);
-
                             $this->subscriberTrackingRepository->add($subscriberTracking);
                         }
 
+                        $subscriberTracking->setSubscriptionIdentifier($newsletter->getSubscriptionIdentifier());
                         $newsletter->updateSentCount();
                         $subscriberTracking->updateViewCount();
 
                         $this->subscriberTrackingRepository->update($subscriberTracking);
+                    } else {
+                        $newsletter->updateUniqueViewCount();
                     }
                     $this->newsletterRepository->update($newsletter);
                     $this->persistenceManager->persistAll();
                 }
             }
         }
-
+        // Return a pixel
         $fileName = 'resource://Psmb.Newsletter/Public/Images/1x1.png';
         $fp = fopen($fileName, 'rb');
 

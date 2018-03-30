@@ -17,7 +17,6 @@ use TYPO3\SwiftMailer\Message;
 use TYPO3\TYPO3CR\Domain\Model\Node;
 use TYPO3\TYPO3CR\Domain\Model\NodeInterface;
 use TYPO3\TYPO3CR\Domain\Service\ContextFactoryInterface;
-use Psmb\Newsletter\Domain\Repository\SubscriberRepository;
 use TYPO3\Flow\Http\Request;
 use TYPO3\Flow\Http\Response;
 use TYPO3\Flow\Http\Uri;
@@ -181,15 +180,19 @@ class FusionMailService {
      * @param string $hash
      * @return void
      */
-    public function sendActivationLetter(Subscriber $subscriber, $hash)
+    public function sendActivationLetter(Subscriber $subscriber, $hash, $node = NULL)
     {
-        $siteNode = $this->getSiteNode();
+        $dimensions = isset($subscription['dimensions']) ? $subscription['dimensions'] : null;
+        $siteNode = $this->getSiteNode($dimensions);
+
+        $node = $node ?: $siteNode;
         $arguments = ['--newsletter' => [
             '@package' => 'Psmb.Newsletter',
             '@controller' => 'Subscription',
             '@action' => 'confirm',
             'hash' => $hash
         ]];
+
         $activationLink = $this->linkingService->createNodeUri(
             $this->controllerContext,
             $siteNode,
@@ -201,8 +204,8 @@ class FusionMailService {
 
         $this->view->assign('value', [
             'site' => $siteNode,
-            'documentNode' => $siteNode,
-            'node' => $siteNode,
+            'documentNode' => $node,
+            'node' => $node,
             'subscriber' => $subscriber,
             'globalSettings' => $this->globalSettings,
             'activationLink' => $activationLink
@@ -223,7 +226,6 @@ class FusionMailService {
     {
         $dimensions = isset($subscription['dimensions']) ? $subscription['dimensions'] : null;
         $siteNode = $this->getSiteNode($dimensions);
-
         $node = $node ?: $siteNode;
 
         /** @var Newsletter $newsletter */
@@ -232,17 +234,18 @@ class FusionMailService {
             // Create a newsletter object
             $newsletter = new Newsletter(new ViewsOnDevice(), new ViewsOnOperatingSystem());
             $newsletter->setNode($node->getNodeData());
+            $newsletter->setSubscriptionIdentifier($subscription['identifier']);
             $newsletter->setPublicationDate(new \DateTime());
             $newsletter->updateSentCount();
 
             $this->newsletterRepository->add($newsletter);
         } else {
             $newsletter->setPublicationDate(new \DateTime());
+            $newsletter->setSubscriptionIdentifier($subscription['identifier']);
             $newsletter->updateSentCount();
 
             $this->newsletterRepository->update($newsletter);
         }
-
         // Generate tracking code
         $trackingCode = $newsletter->getPersistenceObjectIdentifier() . '|' . $subscriber->getPersistenceObjectIdentifier();
 

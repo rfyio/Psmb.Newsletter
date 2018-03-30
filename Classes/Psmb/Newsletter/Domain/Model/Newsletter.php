@@ -21,6 +21,11 @@ class Newsletter {
     protected $node;
 
     /**
+     * @var string
+     */
+    protected $subscriptionIdentifier;
+
+    /**
 	 * @var \DateTime
 	 * @Flow\Validate(type="\DateTime")
      * @ORM\Column(nullable=true)
@@ -89,6 +94,22 @@ class Newsletter {
     public function setNode($node)
     {
         $this->node = $node;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSubscriptionIdentifier()
+    {
+        return $this->subscriptionIdentifier;
+    }
+
+    /**
+     * @param string $subscriptionIdentifier
+     */
+    public function setSubscriptionIdentifier($subscriptionIdentifier)
+    {
+        $this->subscriptionIdentifier = $subscriptionIdentifier;
     }
 
     /**
