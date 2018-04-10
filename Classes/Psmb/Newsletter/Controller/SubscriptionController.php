@@ -89,7 +89,7 @@ class SubscriptionController extends ActionController
                 $this->addFlashMessage($message, null, Message::SEVERITY_WARNING);
                 $this->redirect('index');
             } else {
-                $node = $this->request->getInternalArgument('__node');
+                $node = $this->request->getInternalArgument('__documentNode');
                 $subscriber->setMetadata([
                     'registrationDate' => new \DateTime(),
                     'registrationDimensions' => $this->request->getInternalArgument('__node')->getContext()->getDimensions()

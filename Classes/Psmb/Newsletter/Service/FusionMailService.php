@@ -178,14 +178,14 @@ class FusionMailService {
      * @Job\Defer(queueName="psmb-newsletter")
      * @param Subscriber $subscriber
      * @param string $hash
+     * @param null|NodeInterface $node
      * @return void
      */
     public function sendActivationLetter(Subscriber $subscriber, $hash, $node = NULL)
     {
-        $dimensions = isset($subscription['dimensions']) ? $subscription['dimensions'] : null;
-        $siteNode = $this->getSiteNode($dimensions);
+        $siteNode = $this->getSiteNode();
 
-        $node = $node ?: $siteNode;
+        $node = $node ? $node : $siteNode;
         $arguments = ['--newsletter' => [
             '@package' => 'Psmb.Newsletter',
             '@controller' => 'Subscription',
@@ -195,7 +195,7 @@ class FusionMailService {
 
         $activationLink = $this->linkingService->createNodeUri(
             $this->controllerContext,
-            $siteNode,
+            $node,
             $siteNode,
             'html',
             true,
