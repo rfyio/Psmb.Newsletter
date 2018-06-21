@@ -18,15 +18,36 @@ class SubscriberRepository extends Repository
     );
 
     /**
-     * @param string $filter
+     * @param string $searchTerm
+     * @param array $filter
      * @return \TYPO3\Flow\Persistence\QueryResultInterface
      */
-    public function findAllByFilter($filter)
+
+    /**
+     * @param string $searchTerm
+     * @param array $filter
+     * @return \TYPO3\Flow\Persistence\QueryResultInterface
+     * @throws \TYPO3\Flow\Persistence\Exception\InvalidQueryException
+     */
+    public function findAllBySearchTermAndFilter($searchTerm = null, $filter = array())
     {
         $query = $this->createQuery();
 
+        $constraints = [];
+        if ($searchTerm) {
+            $constraints = [
+                $query->like('name', '%' . $searchTerm . '%'),
+                $query->like('email', '%' . $searchTerm . '%'),
+                $query->like('metadata', '%' . $searchTerm . '%')
+            ];
+        }
+
+        if (!empty($filter)) {
+            $constraints[] = $query->like('subscriptions', '%"' . $filter . '"%');
+        }
+
         return $query->matching(
-            $query->like('subscriptions', '%"' . $filter . '"%')
+            $query->logicalOr($constraints)
         )->execute();
     }
 }

@@ -6,8 +6,10 @@ use Psmb\Newsletter\Domain\Repository\SubscriberTrackingRepository;
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Configuration\ConfigurationManager;
 use TYPO3\Flow\Configuration\Source\YamlSource;
+use TYPO3\Flow\Mvc\View\ViewInterface;
 use TYPO3\Flow\Package\PackageManagerInterface;
 use TYPO3\Flow\Reflection\ObjectAccess;
+use TYPO3\Media\Domain\Session\BrowserState;
 use TYPO3\Neos\Controller\Module\AbstractModuleController;
 use Psmb\Newsletter\Domain\Repository\SubscriberRepository;
 
@@ -55,24 +57,118 @@ class SubscriberController extends AbstractModuleController
     protected $subscriptions;
 
     /**
-     * @param string $filter
+     * @Flow\Inject(lazy = false)
+     * @var BrowserState
      */
-    public function indexAction($filter = '')
-    {
-        $subscribers = $filter ? $this->subscriberRepository->findAllByFilter($filter) : $this->subscriberRepository->findAll();
+    protected $browserState;
 
-        $this->view->assign('filter', $filter);
-        $this->view->assign('subscribers', $subscribers);
-        $this->view->assign('subscriptions', $this->subscriptions);
+    /**
+     * Set common variables on the view
+     *
+     * @param ViewInterface $view
+     * @return void
+     */
+    protected function initializeView(ViewInterface $view)
+    {
+        $view->assignMultiple(array(
+            'sortBy' => $this->browserState->get('sortBy'),
+            'sortDirection' => $this->browserState->get('sortDirection'),
+            'filter' => $this->browserState->get('filter')
+        ));
     }
 
     /**
      * @param string $filter
-     * @return string
+     * @param string $sortBy
+     * @param string $sortDirection
+     * @param string $searchTerm
+     * @throws \TYPO3\Flow\Persistence\Exception\InvalidQueryException
      */
-    public function exportAction($filter = '')
+    public function indexAction($filter = null, $sortBy = null, $sortDirection = null, $searchTerm = null)
     {
-        $subscribers = $filter ? $this->subscriberRepository->findAllByFilter($filter) : $this->subscriberRepository->findAll();
+        if ($sortBy !== null) {
+            $this->browserState->set('sortBy', $sortBy);
+            $this->view->assign('sortBy', $sortBy);
+        }
+        if ($sortDirection !== null) {
+            $this->browserState->set('sortDirection', $sortDirection);
+            $this->view->assign('sortDirection', $sortDirection);
+        }
+
+        if ($filter !== null) {
+            $this->browserState->set('filter', $filter);
+            $this->view->assign('filter', $filter);
+        }
+
+        if ($searchTerm !== null) {
+            $this->browserState->set('searchTerm', $searchTerm);
+            $this->view->assign('searchTerm', $searchTerm);
+        }
+
+        switch ($this->browserState->get('sortBy')) {
+            case 'Name':
+                $this->subscriberRepository->setDefaultOrderings(array('name' => $this->browserState->get('sortDirection') ?: 'ASC'));
+                break;
+            case 'Email':
+            default:
+                $this->subscriberRepository->setDefaultOrderings(array('email' => $this->browserState->get('sortDirection') ?: 'ASC'));
+                break;
+        }
+
+        if ($searchTerm !== null || $filter !== null) {
+            $subscribers = $this->subscriberRepository->findAllBySearchTermAndFilter($searchTerm, $filter);
+        } else {
+            $subscribers = $this->subscriberRepository->findAll();
+        }
+
+        $this->view->assignMultiple([
+            'subscribers' => $subscribers,
+            'subscriptions' => $this->subscriptions,
+            'argumentNamespace' => $this->request->getArgumentNamespace(),
+        ]);
+    }
+
+    /**
+     * @param string $filter
+     * @param string $sortBy
+     * @param string $sortDirection
+     * @param string $searchTerm
+     * @return string
+     * @throws \TYPO3\Flow\Persistence\Exception\InvalidQueryException
+     * @throws \TYPO3\Flow\Reflection\Exception\PropertyNotAccessibleException
+     */
+    public function exportAction($filter = null, $sortBy = null, $sortDirection = null, $searchTerm = null)
+    {
+        if ($sortBy !== null) {
+            $this->browserState->set('sortBy', $sortBy);
+            $this->view->assign('sortBy', $sortBy);
+        }
+        if ($sortDirection !== null) {
+            $this->browserState->set('sortDirection', $sortDirection);
+            $this->view->assign('sortDirection', $sortDirection);
+        }
+
+        if ($filter !== null) {
+            $this->browserState->set('filter', $filter);
+            $this->view->assign('filter', $filter);
+        }
+
+        if ($searchTerm !== null) {
+            $this->browserState->set('searchTerm', $searchTerm);
+            $this->view->assign('searchTerm', $searchTerm);
+        }
+
+        switch ($this->browserState->get('sortBy')) {
+            case 'Name':
+                $this->subscriberRepository->setDefaultOrderings(array('name' => $this->browserState->get('sortDirection') ?: 'ASC'));
+                break;
+            case 'Email':
+            default:
+                $this->subscriberRepository->setDefaultOrderings(array('email' => $this->browserState->get('sortDirection') ?: 'ASC'));
+                break;
+        }
+
+        $subscribers = $filter || $searchTerm ? $this->subscriberRepository->findAllBySearchTermAndFilter($searchTerm, $filter) : $this->subscriberRepository->findAll();
 
         $output = array();
         $objectProperties = array('email', 'name');
@@ -102,7 +198,6 @@ class SubscriberController extends AbstractModuleController
         // Convert to Excel CSV
         $this->response->setContent($this->convertArrayToCsv($output));
         return '';
-
     }
 
     /**
@@ -117,6 +212,8 @@ class SubscriberController extends AbstractModuleController
 
     /**
      * @param Subscriber $subscriber
+     * @throws \TYPO3\Flow\Mvc\Exception\StopActionException
+     * @throws \TYPO3\Flow\Persistence\Exception\IllegalObjectTypeException
      */
     public function createAction(Subscriber $subscriber)
     {
@@ -141,9 +238,9 @@ class SubscriberController extends AbstractModuleController
 
     /**
      * Update Subscriber
-     *
      * @param Subscriber $subscriber
-     * @return void
+     * @throws \TYPO3\Flow\Mvc\Exception\StopActionException
+     * @throws \TYPO3\Flow\Persistence\Exception\IllegalObjectTypeException
      */
     public function updateAction(Subscriber $subscriber)
     {
@@ -152,10 +249,10 @@ class SubscriberController extends AbstractModuleController
     }
 
     /**
-     * Update Subscriber
-     *
+     * Delete Subscriber
      * @param Subscriber $subscriber
-     * @return void
+     * @throws \TYPO3\Flow\Mvc\Exception\StopActionException
+     * @throws \TYPO3\Flow\Persistence\Exception\IllegalObjectTypeException
      */
     public function deleteAction(Subscriber $subscriber)
     {

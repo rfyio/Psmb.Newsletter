@@ -1,0 +1,201 @@
+.neos-module-management-subscribers .neos-search {
+    width: 100%;
+    max-width: 320px;
+    margin-bottom: 16px;
+}
+
+.neos-module-management-subscribers .neos-search button[type="submit"] {
+    width: auto;
+    float: right;
+}
+
+.neos-module-management-subscribers .neos-search div {
+    overflow: hidden;
+}
+
+.neos-module-management-subscribers aside.neos-aside input {
+    width: 100%;
+}
+
+.neos-module-management-subscribers .neos-main:before {
+    display: table;
+    content: "";
+    line-height: 0;
+}
+
+.neos-module-management-subscribers .neos-main:after {
+    clear: both;
+}
+
+aside .neos-search button[type="submit"] {
+    width: auto;
+    float: right;
+}
+
+.neos-search div {
+    overflow: hidden;
+}
+
+.neos-search div input {
+    width: 100%;
+}
+
+.neos-search:after {
+    display: table;
+    content: "";
+    line-height: 0;
+}
+
+.psmb-newsletter legend {
+    padding: 0 !important;
+}
+
+.neos-module-management-subscribers .neos-options {
+    margin-bottom: 32px;
+    border-bottom: 1px solid #3f3f3f;
+    height: 40px;
+}
+
+.neos-module-management-subscribers .neos-options .neos-show-options {
+    float: left;
+}
+
+.neos-module-management-subscribers .neos-options .neos-show-options .count {
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 8px 0 0;
+    border-right: 1px solid #3f3f3f;
+}
+
+.neos-module-management-subscribers .neos-options .neos-view-options {
+    float: right;
+    white-space: nowrap;
+    font-size: 0;
+}
+
+.neos-module-management-subscribers .neos-options .neos-view-options > a:first-child {
+    border-left: 1px solid #3f3f3f;
+}
+
+.neos-module-management-subscribers .neos-options .neos-view-options > a, .neos-module-management-subscribers .neos-options .neos-dropdown {
+    border-right: 1px solid #3f3f3f;
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    min-width: 24px;
+    text-align: center;
+    padding: 0 8px;
+    color: #00b5ff;
+}
+
+.neos-module-management-subscribers .neos-options .neos-view-options a {
+    color: #fff;
+    font-size: 14px;
+}
+
+
+aside ul {
+    background-color: #3f3f3f;
+    border-top: 1px solid #3f3f3f;
+}
+
+.neos aside ul li {
+    position: relative;
+    background-color: #222;
+}
+
+aside ul li a {
+    display: block;
+    color: #fff;
+    padding: 9px 100px 10px 4px;
+    margin-bottom: 1px;
+    border-radius: 0;
+    text-shadow: none;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.psmb-newsletter aside ul li a:hover:not(.neos-drag-active) {
+    background-color: #00b5ff;
+    color: #fff;
+}
+
+.psmb-newsletter aside ul li a:hover:not(.neos-drag-active) > span {
+    background-color: #fff;
+    color: #00b5ff;
+    text-shadow: none;
+}
+
+aside ul li a > span {
+    position: absolute;
+    top: 10px;
+    right: 8px;
+    background-color: #00b5ff;
+    color: #fff;
+    padding: 4px;
+    line-height: 1;
+}
+
+aside ul li > a.neos-active {
+    color: #00b5ff !important;
+}
+
+aside ul li > a.neos-active:hover {
+    color: #fff !important;
+}
+
+@media (min-width: 768px) {
+    .neos-module-management-subscribers .neos-content {
+        float: left;
+        left: 272px;
+        width: calc(100% - (40px * 6 + 32px));
+    }
+
+    .neos-module-management-subscribers .neos-aside {
+        float: left;
+        margin-right: 32px;
+        width: 240px;
+        right: calc(100% - (40px * 6 + 32px));
+    }
+}
+
+@media (max-width: 767px) {
+    .neos-module-management-subscribers .neos-aside {
+        margin-top: 32px;
+    }
+}
+
+dl {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+dt,
+dd {
+    line-height: 1.42857143;
+}
+dt {
+    font-weight: bold;
+}
+dd {
+    margin-left: 0;
+}
+
+.neos td dl {
+    padding: 10px 0;
+}
+@media (min-width: 768px) {
+    .dl-horizontal dt {
+        float: left;
+        width: 100px;
+        clear: left;
+        text-align: right;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .dl-horizontal dd {
+        margin-left: 120px;
+    }
+}

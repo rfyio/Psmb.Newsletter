@@ -59,7 +59,7 @@ Flowpack:
 Psmb:
   Newsletter:
     module:
-      itemsPerPage: 18
+      itemsPerPage: 25
 
 #Psmb:
 #  Newsletter:

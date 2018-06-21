@@ -52,7 +52,7 @@
                     </div>
                 </div>
 
-                <div class="neos-span4 neos-offset1">
+                <div class="neos-span4 neos-offset2">
                 <f:if condition="{subscriber.metadata}">
                     <div class="widget">
                         <div class="widget-header">
@@ -63,11 +63,12 @@
                         </div>
 
                         <div class="widget-body">
-                            <ul>
+                            <dl class="dl-horizontal">
                             <f:for each="{subscriber.metadata}" as="data" key="title">
-                                <li><strong>{title}: </strong> {data}</li>
+                                <dt>{title}:</dt>
+                                <dd>{data}</dd>
                             </f:for>
-                            </ul>
+                            </dl>
                         </div>
                     </div>
                 </f:if>
