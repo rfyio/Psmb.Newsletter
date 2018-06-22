@@ -73,7 +73,7 @@ class Reporting extends AbstractServiceController
     public function getGlobalStatistics($type = '', $arguments = array())
     {
         $this->newsletterRepository->setDefaultOrderings(array('publicationDate' => 'DESC'));
-        $newsletters = isset($arguments['filter']) ? $this->newsletterRepository->findBySubscriptionIdentifier($arguments['filter']) : $this->newsletterRepository->findAll();
+        $newsletters = isset($arguments['filter']) && $arguments['filter'] !== '' ? $this->newsletterRepository->findBySubscriptionIdentifier($arguments['filter']) : $this->newsletterRepository->findAll();
 
         switch ($type) {
             case 'device':
