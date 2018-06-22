@@ -9,7 +9,7 @@ privilegeTargets:
     'Psmb.Newsletter:Module_Subscribers':
       matcher: 'method(Psmb\Newsletter\Controller\Module\SubscriberController->(index|export|new|create|update|edit|delete)Action())'
     'Psmb.Newsletter:Module_Analytics':
-      matcher: 'method(Psmb\Newsletter\Controller\Module\AnalyticsController->(index)Action())'
+      matcher: 'method(Psmb\Newsletter\Controller\Module\AnalyticsController->(.*)Action())'
 
 roles:
   'TYPO3.Flow:Everybody':

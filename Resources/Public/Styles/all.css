@@ -17,6 +17,7 @@
     width: 100%;
 }
 
+.neos-module-management-analytics .neos-main:before,
 .neos-module-management-subscribers .neos-main:before {
     display: table;
     content: "";
@@ -147,12 +148,14 @@ aside ul li > a.neos-active:hover {
 }
 
 @media (min-width: 768px) {
+    .neos-module-management-analytics .neos-content,
     .neos-module-management-subscribers .neos-content {
         float: left;
         left: 272px;
         width: calc(100% - (40px * 6 + 32px));
     }
 
+    .neos-module-management-analytics .neos-aside,
     .neos-module-management-subscribers .neos-aside {
         float: left;
         margin-right: 32px;
@@ -162,9 +165,26 @@ aside ul li > a.neos-active:hover {
 }
 
 @media (max-width: 767px) {
+    .neos-module-management-analytics .neos-aside,
     .neos-module-management-subscribers .neos-aside {
         margin-top: 32px;
     }
+}
+
+.neos .widget .widget-body.widget-table {
+    padding: 0;
+}
+
+.neos .widget.widget-chart .widget-body {
+    padding: 0;
+}
+
+.neos .widget.widget-chart{
+    height: auto;
+}
+
+.neos .widget .widget-body.widget-table table {
+    width: 100%;
 }
 
 dl {

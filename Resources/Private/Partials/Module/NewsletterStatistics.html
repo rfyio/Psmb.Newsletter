@@ -1,0 +1,49 @@
+<div class="widget widget-chart">
+    <div class="widget-header">
+        <i class="icon-calendar neos-pull-left"></i>
+        <h3>
+            Overall Statistics
+        </h3>
+    </div>
+
+    <div id="newsletter-statistics" class="widget-body widget-body-padding"></div>
+</div>
+
+<script>
+  $(function () {
+    $.getJSON("{f:uri.action(action:'dataSource', absolute:true, format:'json', arguments:'{type: \'overall\', filter: filter}') -> f:format.raw()}", result => {
+      Highcharts.chart('newsletter-statistics', {
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: null
+      },
+      xAxis: {
+        categories: result.xAxis,
+        crosshair: true
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: 'Newsletters'
+        }
+      },
+      tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+        '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+      },
+      plotOptions: {
+        column: {
+          borderWidth: 0
+        }
+      },
+      series: result.series
+    });
+  });
+  });
+</script>

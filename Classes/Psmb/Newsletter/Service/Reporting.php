@@ -1,12 +1,12 @@
 <?php
 namespace Psmb\Newsletter\Service;
 
+use TYPO3\Flow\Annotations as Flow;
 use Psmb\Newsletter\Domain\Dto\ColumnDataResult;
 use Psmb\Newsletter\Domain\Dto\DeviceDataResult;
 use Psmb\Newsletter\Domain\Dto\OperatingSystemDataResult;
-use Psmb\Newsletter\Domain\Model\Newsletter;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Mvc\Controller\ControllerContext;
+use Psmb\Newsletter\Domain\Dto\OverallDataResult;
+use Psmb\Newsletter\Domain\Dto\PublicationDataResult;
 use TYPO3\Flow\Persistence\Generic\PersistenceManager;
 use TYPO3\TYPO3CR\Domain\Model\NodeInterface;
 use TYPO3\Neos\Service\Controller\AbstractServiceController;
@@ -62,6 +62,30 @@ class Reporting extends AbstractServiceController
                         break;
                 }
                 break;
+        }
+    }
+
+    /**
+     * @param string $type
+     * @param array $arguments
+     * @return null
+     */
+    public function getGlobalStatistics($type = '', $arguments = array())
+    {
+        $this->newsletterRepository->setDefaultOrderings(array('publicationDate' => 'DESC'));
+        $newsletters = isset($arguments['filter']) ? $this->newsletterRepository->findBySubscriptionIdentifier($arguments['filter']) : $this->newsletterRepository->findAll();
+
+        switch ($type) {
+            case 'device':
+                return (new DeviceDataResult($newsletters))->getCollectionData();
+            case 'operation-system':
+                return (new OperatingSystemDataResult($newsletters))->getCollectionData();
+            case 'overall':
+                return (new OverallDataResult($newsletters))->getCollectionData();
+            case 'publication':
+                return (new PublicationDataResult($newsletters))->getCollectionData();
+            default:
+                return [];
         }
     }
 

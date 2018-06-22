@@ -78,3 +78,13 @@
     '@controller': 'Analytics'
     '@action':     'track'
   appendExceedingArguments: TRUE
+
+-
+  name: 'Psmb.Newsletter Datasource Analytics'
+  uriPattern: 'analytics/datasource'
+  defaults:
+    '@package':    'Psmb.Newsletter'
+    '@controller': 'Module\Analytics'
+    '@action':     'dataSource'
+    '@format':     'json'
+  appendExceedingArguments: TRUE

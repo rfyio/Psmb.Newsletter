@@ -1,0 +1,48 @@
+<div class="widget widget-chart">
+    <div class="widget-header">
+        <i class="icon-pie-chart neos-pull-left"></i>
+        <h3>
+            Visits per Device Category
+        </h3>
+    </div>
+
+    <div id="device-statistics" class="widget-body widget-body-padding"></div>
+</div>
+
+<script>
+
+  $(function () {
+    $.getJSON("{f:uri.action(action:'dataSource', absolute:true, format:'json', arguments:'{type: \'device\', filter: filter}') -> f:format.raw()}", result => {
+
+    Highcharts.chart('device-statistics', {
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+      },
+      title: {
+        text: null
+      },
+      tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+      },
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+            enabled: false
+          },
+          showInLegend: true
+        }
+      },
+      series: [{
+        name: 'Device',
+        colorByPoint: true,
+        data: result
+      }]
+    });
+  });
+  });
+</script>

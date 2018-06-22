@@ -1,0 +1,59 @@
+<div class="widget widget-chart">
+    <div class="widget-header">
+        <i class="icon-bar-chart neos-pull-left"></i>
+        <h3>
+            Publication Analytics
+        </h3>
+    </div>
+    <div id="chart" class="widget-body">
+
+    </div>
+</div>
+<script>
+  $(function () {
+    $.getJSON("{f:uri.action(action:'dataSource', absolute:true, format:'json', arguments:'{type: \'publication\', filter: filter}') -> f:format.raw()}", result => {
+      Highcharts.chart('chart', {
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: null
+      },
+      yAxis: {
+        title: {
+          text: 'Newsletters Sent'
+        }
+      },
+      xAxis: {
+        title: {
+          text: 'Newsletter'
+        },
+        type: 'category',
+        categories: result.xAxis
+      },
+      legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
+      },
+
+      series: result.series,
+
+      responsive: {
+        rules: [{
+          condition: {
+            maxWidth: 500
+          },
+          chartOptions: {
+            legend: {
+              layout: 'horizontal',
+              align: 'center',
+              verticalAlign: 'bottom'
+            }
+          }
+        }]
+      }
+    });
+  });
+  });
+</script>

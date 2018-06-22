@@ -1,0 +1,46 @@
+<div class="widget widget-chart">
+    <div class="widget-header">
+        <i class="icon-pie-chart neos-pull-left"></i>
+        <h3>
+            Visits per Operating System
+        </h3>
+    </div>
+
+    <div id="operation-system-statistics" class="widget-body widget-body-padding"></div>
+</div>
+
+<script>
+  $(function () {
+    $.getJSON("{f:uri.action(action:'dataSource', absolute:true, format:'json', arguments:'{type: \'operation-system\', filter: filter}') -> f:format.raw()}", result => {
+      Highcharts.chart('operation-system-statistics', {
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+      },
+      title: {
+        text: null
+      },
+      tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+      },
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+            enabled: false
+          },
+          showInLegend: true
+        }
+      },
+      series: [{
+        name: 'Operation System',
+        colorByPoint: true,
+        data: result
+      }]
+    });
+  });
+  });
+</script>
