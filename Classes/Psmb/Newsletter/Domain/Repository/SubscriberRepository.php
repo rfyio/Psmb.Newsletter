@@ -17,11 +17,20 @@ class SubscriberRepository extends Repository
         'name' => \TYPO3\Flow\Persistence\QueryInterface::ORDER_ASCENDING
     );
 
+
     /**
-     * @param string $searchTerm
-     * @param array $filter
+     * @param $filter
      * @return \TYPO3\Flow\Persistence\QueryResultInterface
+     * @throws \TYPO3\Flow\Persistence\Exception\InvalidQueryException
      */
+    public function findAllByFilter($filter)
+    {
+        $query = $this->createQuery();
+
+         return $query->matching(
+             $query->like('subscriptions', '%"' . $filter . '"%')
+         )->execute();
+     }
 
     /**
      * @param string $searchTerm
