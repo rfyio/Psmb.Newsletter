@@ -25,6 +25,11 @@ class SubscriberTracking {
     protected $newsletter;
 
     /**
+     * @var string
+     */
+    protected $subscriptionIdentifier;
+
+    /**
      * @var integer
      */
     protected $viewCount = 0;
@@ -66,6 +71,22 @@ class SubscriberTracking {
     public function setNewsletter($newsletter)
     {
         $this->newsletter = $newsletter;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSubscriptionIdentifier()
+    {
+        return $this->subscriptionIdentifier;
+    }
+
+    /**
+     * @param string $subscriptionIdentifier
+     */
+    public function setSubscriptionIdentifier($subscriptionIdentifier)
+    {
+        $this->subscriptionIdentifier = $subscriptionIdentifier;
     }
 
     /**
