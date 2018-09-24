@@ -3,16 +3,53 @@
 	<file original="" product-name="Psmb.Newsletter" source-language="en" datatype="plaintext">
 		<body>
 			<trans-unit id="newsletter.label" xml:space="preserve">
-				<source>Newsletter Subscribers</source>
+				<source>Newsletters</source>
 			</trans-unit>
 			<trans-unit id="newsletter.description" xml:space="preserve">
-				<source>This module allows finding and managing of your newsletters subscribers for each newsletter. It also provides a in detail view of per subscriber meta information and analytics.</source>
+				<source>Contains multiple modules to manage an analyze all newsletters.</source>
 			</trans-unit>
-			<trans-unit id="analytics.label" xml:space="preserve">
-				<source>Newsletter Analytics</source>
+			<trans-unit id="newsletter.subscribers.label" xml:space="preserve">
+				<source>Subscribers</source>
 			</trans-unit>
-			<trans-unit id="analytics.description" xml:space="preserve">
-				<source>This module provides an overview of the newsletter which where sent and the tracking information corresponding with global newsletters.</source>
+			<trans-unit id="newsletter.subscribers.description" xml:space="preserve">
+				<source>This module allows finding and managing of your newsletters subscribers for each newsletter. It also provides a in detail view of per subscriber meta information.</source>
+			</trans-unit>
+			<trans-unit id="newsletter.subscriptions.label" xml:space="preserve">
+				<source>Subscriptions</source>
+			</trans-unit>
+			<trans-unit id="newsletter.subscriptions.description" xml:space="preserve">
+				<source>This module allows finding and managing of your newsletters subscriptions for each newsletter. It also provides a in detail view of per subscription.</source>
+			</trans-unit>
+			<trans-unit id="newsletter.analytics.label" xml:space="preserve">
+				<source>Analytics</source>
+			</trans-unit>
+			<trans-unit id="newsletter.analytics.description" xml:space="preserve">
+				<source>This module provides an overview of the newsletters which where sent and the tracking information corresponding with global newsletters.</source>
+			</trans-unit>
+			<trans-unit id="newsletter.subscriptions.new" xml:space="preserve">
+				<source>Create new subscription</source>
+			</trans-unit>
+			<trans-unit id="newsletter.subscriptions.subscription.name" xml:space="preserve">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="newsletter.subscriptions.subscription.base" xml:space="preserve">
+				<source>Base</source>
+			</trans-unit>
+			<trans-unit id="newsletter.subscriptions.subscription.subscriberCount" xml:space="preserve">
+				<source>Total Subscribers</source>
+			</trans-unit>
+
+			<trans-unit id="error.fileType" xml:space="preserve">
+				<source>Wrong file type, only .csv files allowed!</source>
+			</trans-unit>
+			<trans-unit id="error.fileSizeExceedsAllowedLimit" xml:space="preserve">
+				<source>The file size of {0} exceeds the allowed limit of {1}</source>
+			</trans-unit>
+			<trans-unit id="error.noFileSelected" xml:space="preserve">
+				<source>No file selected</source>
+			</trans-unit>
+			<trans-unit id="error.cannotUploadFile" xml:space="preserve">
+				<source>Cannot upload the file</source>
 			</trans-unit>
 		</body>
 	</file>

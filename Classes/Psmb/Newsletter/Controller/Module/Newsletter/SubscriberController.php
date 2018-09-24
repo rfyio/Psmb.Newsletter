@@ -1,14 +1,19 @@
 <?php
-namespace Psmb\Newsletter\Controller\Module;
+
+namespace Psmb\Newsletter\Controller\Module\Newsletter;
 
 use Psmb\Newsletter\Domain\Model\Subscriber;
+use Psmb\Newsletter\Domain\Model\Subscription;
 use Psmb\Newsletter\Domain\Repository\SubscriberTrackingRepository;
+use Psmb\Newsletter\Domain\Repository\SubscriptionRepository;
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Configuration\ConfigurationManager;
 use TYPO3\Flow\Configuration\Source\YamlSource;
 use TYPO3\Flow\Mvc\View\ViewInterface;
 use TYPO3\Flow\Package\PackageManagerInterface;
 use TYPO3\Flow\Reflection\ObjectAccess;
+use TYPO3\Flow\Resource\Resource;
+use TYPO3\Flow\Utility\Files;
 use TYPO3\Media\Domain\Session\BrowserState;
 use TYPO3\Neos\Controller\Module\AbstractModuleController;
 use Psmb\Newsletter\Domain\Repository\SubscriberRepository;
@@ -46,6 +51,12 @@ class SubscriberController extends AbstractModuleController
 
     /**
      * @Flow\Inject
+     * @var SubscriptionRepository
+     */
+    protected $subscriptionRepository;
+
+    /**
+     * @Flow\Inject
      * @var SubscriberTrackingRepository
      */
     protected $subscriberTrackingRepository;
@@ -61,6 +72,12 @@ class SubscriberController extends AbstractModuleController
      * @var BrowserState
      */
     protected $browserState;
+
+    /**
+     * @Flow\Inject
+     * @var \TYPO3\Flow\Resource\ResourceManager
+     */
+    protected $resourceManager;
 
     /**
      * Set common variables on the view
@@ -123,9 +140,68 @@ class SubscriberController extends AbstractModuleController
 
         $this->view->assignMultiple([
             'subscribers' => $subscribers,
-            'subscriptions' => $this->subscriptions,
+            'subscriptions' => $this->subscriptionRepository->findAll(),
             'argumentNamespace' => $this->request->getArgumentNamespace(),
         ]);
+    }
+
+    /**
+     * Import Action
+     */
+    public function importAction()
+    {
+        $this->view->assignMultiple([
+            'subscriptions' => $this->subscriptionRepository->findAll(),
+            'maximumFileUploadSize' => $this->maximumFileUploadSize(),
+        ]);
+    }
+
+    /**
+     * @param array $resource
+     * @param array $subscriptions
+     * @return string
+     */
+    public function uploadCSVAction($resource, $subscriptions)
+    {
+        $resource = $this->resourceManager->importUploadedResource($resource);
+        ini_set("auto_detect_line_endings", true);
+        $handle = fopen('resource://' . $resource->getSha1(), "r");
+
+        foreach($subscriptions as $key => $value) {
+            $subscriptions[$key] = $this->subscriptionRepository->findByIdentifier($value);
+        }
+
+        while (($line = fgetcsv($handle)) !== false) {
+            $email = $line[0];
+
+            if ($this->subscriberRepository->countByEmail($email) > 0) {
+                $subscriber = $this->subscriberRepository->findByEmail($email)->getFirst();
+                /** @var Subscription $subscription */
+                foreach ($subscriptions as $subscription) {
+                    $subscriber->addSubscription($subscription);
+                    $subscription->addSubscriber($subscriber);
+                    $this->subscriptionRepository->update($subscription);
+                }
+
+                $this->subscriberRepository->update($subscriber);
+            } else {
+                $subscriber = new Subscriber();
+                $subscriber->setEmail($email);
+                $subscriber->setName('');
+
+                /** @var Subscription $subscription */
+                foreach ($subscriptions as $subscription) {
+                    $subscriber->addSubscription($subscription);
+                    $subscription->addSubscriber($subscriber);
+                    $this->subscriptionRepository->update($subscription);
+                }
+                $this->subscriberRepository->add($subscriber);
+            }
+        }
+        $this->persistenceManager->persistAll();
+        fclose($handle);
+        $this->addFlashMessage('Uploaded successfully!');
+        $this->redirect('index');
     }
 
     /**
@@ -188,7 +264,6 @@ class SubscriberController extends AbstractModuleController
                 }
             }
             $output[] = $row;
-
         }
 
         $this->response->setCharset('ISO-8859-1');
@@ -207,7 +282,7 @@ class SubscriberController extends AbstractModuleController
      */
     public function newAction()
     {
-        $this->view->assign('subscriptions', $this->subscriptions);
+        $this->view->assign('subscriptions', $this->subscriptionRepository->findAll());
     }
 
     /**
@@ -232,7 +307,7 @@ class SubscriberController extends AbstractModuleController
     {
         $trackingRecords = $this->subscriberTrackingRepository->findBySubscriber($subscriber);
         $this->view->assign('subscriber', $subscriber);
-        $this->view->assign('subscriptions', $this->subscriptions);
+        $this->view->assign('subscriptions', $this->subscriptionRepository->findAll());
         $this->view->assign('trackingRecords', $trackingRecords);
     }
 
@@ -265,7 +340,8 @@ class SubscriberController extends AbstractModuleController
      * @param array $array
      * @return string
      */
-    protected function convertArrayToCsv(array $array) {
+    protected function convertArrayToCsv(array $array)
+    {
         $string = '';
         $delimiter = ';';
         $enclosure = '"';
@@ -278,7 +354,7 @@ class SubscriberController extends AbstractModuleController
                 $dataElement = str_replace('"', '""', $dataElement);
 
                 // Adds a delimiter before each field (except the first)
-                if($writeDelimiter) $string .= $delimiter;
+                if ($writeDelimiter) $string .= $delimiter;
 
                 // Encloses each field with $enclosure and adds it to the string
                 $string .= $enclosure . $dataElement . $enclosure;
@@ -289,5 +365,15 @@ class SubscriberController extends AbstractModuleController
             $string .= "\n";
         }
         return $string;
+    }
+
+    /**
+     * Returns the lowest configured maximum upload file size
+     *
+     * @return integer
+     */
+    protected function maximumFileUploadSize()
+    {
+        return min(Files::sizeStringToBytes(ini_get('post_max_size')), Files::sizeStringToBytes(ini_get('upload_max_filesize')));
     }
 }

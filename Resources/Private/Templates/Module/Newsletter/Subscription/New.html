@@ -1,0 +1,16 @@
+<f:layout name="Default" />
+
+<f:section name="headScripts">
+</f:section>
+
+<f:section name="Title">
+	<h2><f:translate id="module.header.newSubscription"/></h2>
+</f:section>
+
+<f:section name="Content">
+	<f:form action="create" name="subscription" object="{subscription}">
+		<f:render partial="Module/SubscriptionForm" arguments="{subscription: subscription, baseSubscriptions: baseSubscriptions}" />
+	</f:form>
+</f:section>
+
+<f:section name="Scripts"></f:section>

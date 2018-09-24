@@ -2,6 +2,7 @@
 namespace Psmb\Newsletter\Service;
 
 use Psmb\Newsletter\Domain\Model\Newsletter;
+use Psmb\Newsletter\Domain\Model\Subscription;
 use Psmb\Newsletter\Domain\Model\ViewsOnDevice;
 use Psmb\Newsletter\Domain\Model\ViewsOnOperatingSystem;
 use Psmb\Newsletter\Domain\Repository\NewsletterRepository;
@@ -218,11 +219,11 @@ class FusionMailService {
      * Generate a letter for given subscriber and subscription
      *
      * @param Subscriber $subscriber
-     * @param array $subscription
+     * @param Subscription $subscription
      * @param null|NodeInterface $node
      * @return array
      */
-    public function generateSubscriptionLetter(Subscriber $subscriber, $subscription, $node = NULL)
+    public function generateSubscriptionLetter(Subscriber $subscriber, Subscription $subscription, $node = NULL)
     {
         $dimensions = isset($subscription['dimensions']) ? $subscription['dimensions'] : null;
         $siteNode = $this->getSiteNode($dimensions);
@@ -234,14 +235,14 @@ class FusionMailService {
             // Create a newsletter object
             $newsletter = new Newsletter(new ViewsOnDevice(), new ViewsOnOperatingSystem());
             $newsletter->setNode($node->getNodeData());
-            $newsletter->setSubscriptionIdentifier($subscription['identifier']);
+            $newsletter->setSubscriptionIdentifier($subscription->getFusionIdentifier());
             $newsletter->setPublicationDate(new \DateTime());
             $newsletter->updateSentCount();
 
             $this->newsletterRepository->add($newsletter);
         } else {
             $newsletter->setPublicationDate(new \DateTime());
-            $newsletter->setSubscriptionIdentifier($subscription['identifier']);
+            $newsletter->setSubscriptionIdentifier($subscription->getFusionIdentifier());
             $newsletter->updateSentCount();
 
             $this->newsletterRepository->update($newsletter);
@@ -266,11 +267,11 @@ class FusionMailService {
      *
      * @Job\Defer(queueName="psmb-newsletter")
      * @param Subscriber $subscriber
-     * @param array $subscription
+     * @param Subscription $subscription
      * @param null|NodeInterface $node
      * @return void
      */
-    public function generateSubscriptionLetterAndSend(Subscriber $subscriber, $subscription, $node = NULL)
+    public function generateSubscriptionLetterAndSend(Subscriber $subscriber, Subscription $subscription, $node = NULL)
     {
         $letter = $this->generateSubscriptionLetter($subscriber, $subscription, $node);
         if ($letter) {

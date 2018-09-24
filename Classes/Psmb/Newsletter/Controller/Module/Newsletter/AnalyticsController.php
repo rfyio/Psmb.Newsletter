@@ -1,5 +1,5 @@
 <?php
-namespace Psmb\Newsletter\Controller\Module;
+namespace Psmb\Newsletter\Controller\Module\Newsletter;
 
 use Psmb\Newsletter\Domain\Model\Newsletter;
 use Psmb\Newsletter\Domain\Model\Subscriber;

@@ -1,3 +1,4 @@
+{namespace p=Psmb\Newsletter\ViewHelpers}
 <div class=" neos-module-container">
     <fieldset class="neos-row-fluid">
         <div class="neos-span12">
@@ -37,11 +38,12 @@
                                 <div class="neos-span10">
                                     <label class="neos-control-label" for="name"><f:translate id="module.subscriberSubscriptions"/></label>
                                     <div class="neos-controls">
-                                        <f:for each="{subscriptions}" as="subscription" key="identifier" iteration="subscriptionIteration">
+                                        <f:for each="{subscriptions}" as="subscription" key="identifier">
                                             <div class="neos-controls">
-                                                <label for="subscription-{subscriptionIteration.cycle}" class="neos-checkbox">
-                                                    <f:form.checkbox property="subscriptions" value="{subscription.identifier}" multiple="true" id="subscription-{subscriptionIteration.cycle}" /><span></span>
-                                                    <span>{subscription.label} <f:if condition="{subscription.description}"><span class="neos-help-inline">({subscription.description})</span></f:if></span>
+                                                <label class="neos-checkbox neos-inline">
+                                                    <p:form.checkbox property="subscribedSubscriptions" value="{subscription}" />
+                                                    <span></span>
+                                                    <span>{subscription.name} <f:if condition="{subscription.fusionIdentifier}"><span class="neos-help-inline">({subscription.fusionIdentifier})</span></f:if></span>
                                                 </label>
                                             </div>
                                         </f:for>

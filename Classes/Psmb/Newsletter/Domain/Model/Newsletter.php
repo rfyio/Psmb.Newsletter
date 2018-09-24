@@ -1,4 +1,5 @@
 <?php
+
 namespace Psmb\Newsletter\Domain\Model;
 
 use TYPO3\Flow\Annotations as Flow;
@@ -11,7 +12,8 @@ use TYPO3\TYPO3CR\Domain\Model\NodeData;
  *
  * @Flow\Entity
  */
-class Newsletter {
+class Newsletter
+{
 
     /**
      * @ORM\ManyToOne(inversedBy="dimensions")
@@ -26,29 +28,29 @@ class Newsletter {
     protected $subscriptionIdentifier;
 
     /**
-	 * @var \DateTime
-	 * @Flow\Validate(type="\DateTime")
+     * @var \DateTime
+     * @Flow\Validate(type="\DateTime")
      * @ORM\Column(nullable=true)
-	 */
-	protected $publicationDate;
+     */
+    protected $publicationDate;
 
     /**
      * @var integer
      * @Flow\Validate(type="Integer")
      */
-	protected $sentCount = 0;
+    protected $sentCount = 0;
 
     /**
      * @var integer
      * @Flow\Validate(type="Integer")
      */
-	protected $viewsCount = 0;
+    protected $viewsCount = 0;
 
     /**
      * @var integer
      * @Flow\Validate(type="Integer")
      */
-	protected $uniqueViewCount = 0;
+    protected $uniqueViewCount = 0;
 
     /**
      * @var array<string>
@@ -74,11 +76,12 @@ class Newsletter {
     }
 
     /**
-	 * @return string
-	 */
-	public function getPersistenceObjectIdentifier() {
-		return $this->Persistence_Object_Identifier;
-	}
+     * @return string
+     */
+    public function getPersistenceObjectIdentifier()
+    {
+        return $this->Persistence_Object_Identifier;
+    }
 
     /**
      * @return NodeData
