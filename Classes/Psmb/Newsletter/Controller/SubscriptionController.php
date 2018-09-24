@@ -3,6 +3,7 @@ namespace Psmb\Newsletter\Controller;
 
 use Psmb\Newsletter\Domain\Model\Subscriber;
 use Psmb\Newsletter\Domain\Repository\SubscriberRepository;
+use Psmb\Newsletter\Domain\Repository\SubscriptionRepository;
 use Psmb\Newsletter\Service\FusionMailService;
 use TYPO3\Flow\Error\Message;
 use TYPO3\Flow\I18n\Service as I18nService;
@@ -52,6 +53,12 @@ class SubscriptionController extends ActionController
     * @var string
     */
     protected $subscriptions;
+
+    /**
+     * @Flow\Inject
+     * @var SubscriptionRepository
+     */
+    protected $subscriptionRepository;
 
     /**
      * Render a form

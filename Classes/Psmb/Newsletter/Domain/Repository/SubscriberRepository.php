@@ -1,4 +1,5 @@
 <?php
+
 namespace Psmb\Newsletter\Domain\Repository;
 
 use TYPO3\Flow\Annotations as Flow;
@@ -27,10 +28,10 @@ class SubscriberRepository extends Repository
     {
         $query = $this->createQuery();
 
-         return $query->matching(
-             $query->like('subscriptions', '%"' . $filter . '"%')
-         )->execute();
-     }
+        return $query->matching(
+            $query->like('subscriptions', '%"' . $filter . '"%')
+        )->execute();
+    }
 
     /**
      * @param string $searchTerm

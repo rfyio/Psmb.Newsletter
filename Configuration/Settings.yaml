@@ -34,6 +34,7 @@ TYPO3:
             label: 'Psmb.Newsletter:Modules:newsletter.subscribers.label'
             controller: \Psmb\Newsletter\Controller\Module\Newsletter\SubscriberController
             description: 'Psmb.Newsletter:Modules:newsletter.subscribers.description'
+            widgetTemplatePathAndFileName: 'resource://TYPO3.Neos/Private/Templates/Module/Widget.html'
             icon: icon-users
             actions:
               index:
@@ -43,6 +44,7 @@ TYPO3:
             label: 'Psmb.Newsletter:Modules:newsletter.subscriptions.label'
             controller: \Psmb\Newsletter\Controller\Module\Newsletter\SubscriptionController
             description: 'Psmb.Newsletter:Modules:newsletter.subscriptions.description'
+            widgetTemplatePathAndFileName: 'resource://TYPO3.Neos/Private/Templates/Module/Widget.html'
             icon: icon-paper-plane
             actions:
               index:
@@ -52,6 +54,7 @@ TYPO3:
             label: 'Psmb.Newsletter:Modules:newsletter.analytics.label'
             controller: \Psmb\Newsletter\Controller\Module\Newsletter\AnalyticsController
             description: 'Psmb.Newsletter:Modules:newsletter.analytics.description'
+            widgetTemplatePathAndFileName: 'resource://TYPO3.Neos/Private/Templates/Module/Widget.html'
             icon: icon-pie-chart
             actions:
               index:

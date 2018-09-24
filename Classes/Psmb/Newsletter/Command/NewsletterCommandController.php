@@ -77,8 +77,7 @@ class NewsletterCommandController extends CommandController
      */
     protected function sendLettersForSubscription(Subscription $subscription, $dryRun)
     {
-        // TODO
-        $subscribers = $this->subscriberRepository->findAllByFilter($subscription)->toArray();
+        $subscribers = $this->subscriberRepository->findBySubscription($subscription)->toArray();
 
         $this->outputLine('Sending letters for subscription %s (%s subscribers)', [$subscription->getName(), count($subscribers)]);
         $this->outputLine('-------------------------------------------------------------------------------');
