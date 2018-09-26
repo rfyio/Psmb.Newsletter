@@ -90,18 +90,18 @@ class SubscriberController extends AbstractModuleController
         $view->assignMultiple(array(
             'sortBy' => $this->browserState->get('sortBy'),
             'sortDirection' => $this->browserState->get('sortDirection'),
-            'filter' => $this->browserState->get('filter')
+            'subscription' => $this->browserState->get('subscription')
         ));
     }
 
     /**
-     * @param string $filter
+     * @param Subscription $subscription
      * @param string $sortBy
      * @param string $sortDirection
      * @param string $searchTerm
      * @throws \TYPO3\Flow\Persistence\Exception\InvalidQueryException
      */
-    public function indexAction($filter = null, $sortBy = null, $sortDirection = null, $searchTerm = null)
+    public function indexAction(Subscription $subscription = null, $sortBy = null, $sortDirection = null, $searchTerm = null)
     {
         if ($sortBy !== null) {
             $this->browserState->set('sortBy', $sortBy);
@@ -112,9 +112,9 @@ class SubscriberController extends AbstractModuleController
             $this->view->assign('sortDirection', $sortDirection);
         }
 
-        if ($filter !== null) {
-            $this->browserState->set('filter', $filter);
-            $this->view->assign('filter', $filter);
+        if ($subscription !== null) {
+            $this->browserState->set('subscription', $subscription);
+            $this->view->assign('subscription', $subscription);
         }
 
         if ($searchTerm !== null) {
@@ -132,8 +132,8 @@ class SubscriberController extends AbstractModuleController
                 break;
         }
 
-        if ($searchTerm !== null || $filter !== null) {
-            $subscribers = $this->subscriberRepository->findAllBySearchTermAndFilter($searchTerm, $filter);
+        if ($searchTerm !== null || $subscription !== null) {
+            $subscribers = $this->subscriberRepository->findAllBySearchTermAndSubscription($searchTerm, $subscription);
         } else {
             $subscribers = $this->subscriberRepository->findAll();
         }
@@ -205,7 +205,7 @@ class SubscriberController extends AbstractModuleController
     }
 
     /**
-     * @param string $filter
+     * @param string $subscription
      * @param string $sortBy
      * @param string $sortDirection
      * @param string $searchTerm
@@ -213,7 +213,7 @@ class SubscriberController extends AbstractModuleController
      * @throws \TYPO3\Flow\Persistence\Exception\InvalidQueryException
      * @throws \TYPO3\Flow\Reflection\Exception\PropertyNotAccessibleException
      */
-    public function exportAction($filter = null, $sortBy = null, $sortDirection = null, $searchTerm = null)
+    public function exportAction($subscription = null, $sortBy = null, $sortDirection = null, $searchTerm = null)
     {
         if ($sortBy !== null) {
             $this->browserState->set('sortBy', $sortBy);
@@ -224,9 +224,9 @@ class SubscriberController extends AbstractModuleController
             $this->view->assign('sortDirection', $sortDirection);
         }
 
-        if ($filter !== null) {
-            $this->browserState->set('filter', $filter);
-            $this->view->assign('filter', $filter);
+        if ($subscription !== null) {
+            $this->browserState->set('subscription', $subscription);
+            $this->view->assign('subscription', $subscription);
         }
 
         if ($searchTerm !== null) {
@@ -244,7 +244,7 @@ class SubscriberController extends AbstractModuleController
                 break;
         }
 
-        $subscribers = $filter || $searchTerm ? $this->subscriberRepository->findAllBySearchTermAndFilter($searchTerm, $filter) : $this->subscriberRepository->findAll();
+        $subscribers = $subscription || $searchTerm ? $this->subscriberRepository->findAllBySearchTermAndsubscription($searchTerm, $subscription) : $this->subscriberRepository->findAll();
 
         $output = array();
         $objectProperties = array('email', 'name');

@@ -23,16 +23,16 @@
 				</h2>
 				<ul>
 					<li>
-						<f:link.action action="index" class="{f:if(condition: filter, then: '', else: 'neos-active')}"><f:translate id="modules.actions.all">Show All</f:translate></f:link.action>
+						<f:link.action action="index" class="{f:if(condition: subscription, then: '', else: 'neos-active')}"><f:translate id="modules.actions.all">Show All</f:translate></f:link.action>
 					</li>
-					<f:for each="{subscriptions}" as="subscription">
+					<f:for each="{subscriptions}" as="subscriptionItem">
 						<li>
-							<f:if condition="{filter} == {subscription}">
+							<f:if condition="{subscription} == {subscriptionItem}">
 								<f:then>
-									<f:link.action action="index" class="neos-active" arguments="{filter: subscription}">{subscription.name} <span class="neos-label">{subscription.fusionIdentifier}</span></f:link.action>
+									<f:link.action action="index" class="neos-active" arguments="{subscription: subscriptionItem}">{subscriptionItem.name} <span class="neos-label">{subscriptionItem.fusionIdentifier}</span></f:link.action>
 								</f:then>
 								<f:else>
-									<f:link.action action="index" arguments="{filter: subscription.identifier}">{subscription.name} <span class="neos-label">{subscription.fusionIdentifier}</span></f:link.action>
+									<f:link.action action="index" arguments="{subscription: subscriptionItem}">{subscriptionItem.name} <span class="neos-label">{subscriptionItem.fusionIdentifier}</span></f:link.action>
 								</f:else>
 							</f:if>
 						</li>
@@ -54,7 +54,7 @@
 							<f:link.action action="import" addQueryString="TRUE" title="Import subscribers">
 								<i class="icon-upload icon-white"></i>
 							</f:link.action>
-							<f:link.action action="export" useParentRequest="true" controller="Module\Newsletter\Subscriber" package="Psmb.Newsletter" arguments="{filter: filter}" addQueryString="TRUE" title="Export subscribers">
+							<f:link.action action="export" useParentRequest="true" controller="Module\Newsletter\Subscriber" package="Psmb.Newsletter" arguments="{subscription: subscription}" addQueryString="TRUE" title="Export subscribers">
 								<i class="icon-download icon-white"></i>
 							</f:link.action>
 
@@ -118,8 +118,8 @@
 								<td>{subscriber.name}</td>
 								<td>{subscriber.email}</td>
 								<td>
-									<f:for each="{subscriber.subscribedSubscriptions}" as="subscription">
-										<span class="neos-label">{subscription.name}</span>
+									<f:for each="{subscriber.subscribedSubscriptions}" as="subscriptionItem">
+										<span class="neos-label">{subscriptionItem.name}</span>
 									</f:for>
 								</td>
 								<td>
