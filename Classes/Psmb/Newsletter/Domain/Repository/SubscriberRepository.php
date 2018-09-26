@@ -1,6 +1,8 @@
 <?php
+
 namespace Psmb\Newsletter\Domain\Repository;
 
+use Psmb\Newsletter\Domain\Model\Subscription;
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Persistence\Repository;
 
@@ -27,18 +29,18 @@ class SubscriberRepository extends Repository
     {
         $query = $this->createQuery();
 
-         return $query->matching(
-             $query->like('subscriptions', '%"' . $filter . '"%')
-         )->execute();
-     }
+        return $query->matching(
+            $query->like('subscriptions', '%"' . $filter . '"%')
+        )->execute();
+    }
 
     /**
-     * @param string $searchTerm
-     * @param array $filter
+     * @param string|null $searchTerm
+     * @param Subscription|null $subscription
      * @return \TYPO3\Flow\Persistence\QueryResultInterface
      * @throws \TYPO3\Flow\Persistence\Exception\InvalidQueryException
      */
-    public function findAllBySearchTermAndFilter($searchTerm = null, $filter = array())
+    public function findAllBySearchTermAndSubscription($searchTerm = null, Subscription $subscription = null)
     {
         $query = $this->createQuery();
 
@@ -51,8 +53,8 @@ class SubscriberRepository extends Repository
             ];
         }
 
-        if (!empty($filter)) {
-            $constraints[] = $query->like('subscriptions', '%"' . $filter . '"%');
+        if ($subscription) {
+            $constraints[] = $query->contains('subscribedSubscriptions', $subscription);
         }
 
         return $query->matching(

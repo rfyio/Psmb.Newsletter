@@ -9,9 +9,12 @@
 		<f:render section="headScripts" />
 	</head>
 	<body>
-		<f:flashMessages class="flashmessages" />
+		<div class="neos-notification-container">
+			<f:render partial="FlashMessages" />
+		</div>
 
 		<h1><f:render section="Title" /></h1>
 		<f:render section="Content" />
+		<f:render section="Scripts" />
 	</body>
 </html>

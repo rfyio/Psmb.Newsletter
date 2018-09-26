@@ -1,4 +1,5 @@
 {namespace ps=Psmb\Newsletter\ViewHelpers}
+{namespace neos=TYPO3\Neos\ViewHelpers}
 <f:layout name="Default" />
 
 <f:section name="headScripts">
@@ -16,18 +17,22 @@
 						<input type="search" name="{f:if(condition: argumentNamespace, then: '{argumentNamespace}[searchTerm]', else: 'searchTerm')}" placeholder="Search" value="{searchTerm}" autofocus="autofocus" />
 					</div>
 				</form>
+				<h2>
+					{neos:backend.translate(id: 'newsletter.subscriptions.label', source: 'Modules', package: 'Psmb.Newsletter')}
+					<f:link.action action="new" controller="Module\Newsletter\Subscription" class="neos-edit-toggle neos-button"><i class="icon-pencil"></i></f:link.action>
+				</h2>
 				<ul>
 					<li>
-						<f:link.action action="index" class="{f:if(condition: filter, then: '', else: 'neos-active')}"><f:translate id="modules.actions.all">Show All</f:translate></f:link.action>
+						<f:link.action action="index" class="{f:if(condition: subscription, then: '', else: 'neos-active')}"><f:translate id="modules.actions.all">Show All</f:translate></f:link.action>
 					</li>
-					<f:for each="{subscriptions}" as="subscription">
+					<f:for each="{subscriptions}" as="subscriptionItem">
 						<li>
-							<f:if condition="{filter} == {subscription.identifier}">
+							<f:if condition="{subscription} == {subscriptionItem}">
 								<f:then>
-									<f:link.action action="index" class="neos-active" arguments="{filter: subscription.identifier}">{subscription.label} <span class="neos-label">{subscription.identifier}</span></f:link.action>
+									<f:link.action action="index" class="neos-active" arguments="{subscription: subscriptionItem}">{subscriptionItem.name} <span class="neos-label">{subscriptionItem.fusionIdentifier}</span></f:link.action>
 								</f:then>
 								<f:else>
-									<f:link.action action="index" arguments="{filter: subscription.identifier}">{subscription.label} <span class="neos-label">{subscription.identifier}</span></f:link.action>
+									<f:link.action action="index" arguments="{subscription: subscriptionItem}">{subscriptionItem.name} <span class="neos-label">{subscriptionItem.fusionIdentifier}</span></f:link.action>
 								</f:else>
 							</f:if>
 						</li>
@@ -46,9 +51,13 @@
 							<f:link.action action="new" title="New subscriber">
 								<i class="icon-plus icon-white"></i>
 							</f:link.action>
-							<f:link.action action="export" useParentRequest="true" controller="Module\Subscriber" package="Psmb.Newsletter" arguments="{filter: filter}" addQueryString="TRUE" title="Export subscribers">
+							<f:link.action action="import" addQueryString="TRUE" title="Import subscribers">
+								<i class="icon-upload icon-white"></i>
+							</f:link.action>
+							<f:link.action action="export" useParentRequest="true" controller="Module\Newsletter\Subscriber" package="Psmb.Newsletter" arguments="{subscription: subscription}" addQueryString="TRUE" title="Export subscribers">
 								<i class="icon-download icon-white"></i>
 							</f:link.action>
+
 							<div class="neos-dropdown" id="neos-sort-menu">
 								<span title="" data-neos-toggle="tooltip" data-original-title="Sort options">
 									<a class="dropdown-toggle" href="#" data-neos-toggle="dropdown" data-target="#neos-sort-menu">
@@ -109,8 +118,8 @@
 								<td>{subscriber.name}</td>
 								<td>{subscriber.email}</td>
 								<td>
-									<f:for each="{subscriber.subscriptions}" as="subscription">
-										<span class="neos-label">{subscription}</span>
+									<f:for each="{subscriber.subscribedSubscriptions}" as="subscriptionItem">
+										<span class="neos-label">{subscriptionItem.name}</span>
 									</f:for>
 								</td>
 								<td>
@@ -124,13 +133,25 @@
 									</dl>
 								</td>
 								<td class="neos-action">
-									<f:link.action action="edit" arguments="{subscriber: subscriber}" class="neos-button neos-button-primary" title="Click to edit">
-										<i class="icon-pencil icon-white"></i>
-									</f:link.action>
-
-									<f:link.action action="delete" arguments="{subscriber: subscriber}" class="neos-button neos-button-danger" title="Click to delete">
-										<i class="icon-trash icon-white"></i>
-									</f:link.action>
+									<div class="neos-dropdown">
+										<a class="dropdown-toggle neos-button neos-button-mini" href="#" data-neos-toggle="dropdown">
+											<i class="icon-ellipsis-horizontal"></i>
+										</a>
+										<div class="neos-dropdown-menu-list neos-pull-right" role="menu">
+											<ul>
+												<li>
+													<f:link.action action="edit" arguments="{subscriber: subscriber}" title="Click to edit">
+														<i class="icon-pencil icon-white"></i> Edit
+													</f:link.action>
+												</li>
+												<li>
+													<f:link.action action="delete" arguments="{subscriber: subscriber}" title="Click to delete">
+														<i class="icon-trash icon-white"></i> Delete
+													</f:link.action>
+												</li>
+											</ul>
+										</div>
+									</div>
 								</td>
 							</tr>
 						</f:for>
@@ -141,3 +162,5 @@
 		</div>
 	</fieldset>
 </f:section>
+
+<f:section name="Scripts"></f:section>

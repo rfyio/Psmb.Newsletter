@@ -107,6 +107,21 @@
             <trans-unit id="module.actions.all" xml:space="preserve">
                 <source>Show All</source>
             </trans-unit>
+            <trans-unit id="module.header.newSubscription" xml:space="preserve">
+                <source>New Subscription</source>
+            </trans-unit>
+            <trans-unit id="module.header.subscriptionDetails" xml:space="preserve">
+                <source>Subscription Details</source>
+            </trans-unit>
+            <trans-unit id="module.header.subscriptionEdit" xml:space="preserve">
+                <source>Edit Subscription</source>
+            </trans-unit>
+            <trans-unit id="module.subscriptionName" xml:space="preserve">
+                <source>Name</source>
+            </trans-unit>
+            <trans-unit id="module.subscriptionNewsletter" xml:space="preserve">
+                <source>Newsletters</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

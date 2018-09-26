@@ -24,21 +24,37 @@ TYPO3:
       autoInclude:
         'Psmb.NewsLetter': TRUE
     modules:
-      management:
+      newsletter:
+        label: 'Psmb.Newsletter:Modules:newsletter.label'
+        controller: '\Psmb\Newsletter\Controller\Module\NewsletterController'
+        description: 'Psmb.Newsletter:Modules:newsletter.description'
+        icon: 'icon-envelope'
         submodules:
           subscribers:
-            label: 'Psmb.Newsletter:Modules:newsletter.label'
-            controller: \Psmb\Newsletter\Controller\Module\SubscriberController
-            description: 'Psmb.Newsletter:Modules:newsletter.description'
-            icon: icon-envelope
+            label: 'Psmb.Newsletter:Modules:newsletter.subscribers.label'
+            controller: \Psmb\Newsletter\Controller\Module\Newsletter\SubscriberController
+            description: 'Psmb.Newsletter:Modules:newsletter.subscribers.description'
+            widgetTemplatePathAndFileName: 'resource://TYPO3.Neos/Private/Templates/Module/Widget.html'
+            icon: icon-users
             actions:
               index:
                 label: 'Manage newsletter subscribers'
                 title: 'Manage newsletter subscribers'
+          subscriptions:
+            label: 'Psmb.Newsletter:Modules:newsletter.subscriptions.label'
+            controller: \Psmb\Newsletter\Controller\Module\Newsletter\SubscriptionController
+            description: 'Psmb.Newsletter:Modules:newsletter.subscriptions.description'
+            widgetTemplatePathAndFileName: 'resource://TYPO3.Neos/Private/Templates/Module/Widget.html'
+            icon: icon-paper-plane
+            actions:
+              index:
+                label: 'Manage newsletter subscriptions'
+                title: 'Manage newsletter subscriptions'
           analytics:
-            label: 'Psmb.Newsletter:Modules:analytics.label'
-            controller: \Psmb\Newsletter\Controller\Module\AnalyticsController
-            description: 'Psmb.Newsletter:Modules:analytics.description'
+            label: 'Psmb.Newsletter:Modules:newsletter.analytics.label'
+            controller: \Psmb\Newsletter\Controller\Module\Newsletter\AnalyticsController
+            description: 'Psmb.Newsletter:Modules:newsletter.analytics.description'
+            widgetTemplatePathAndFileName: 'resource://TYPO3.Neos/Private/Templates/Module/Widget.html'
             icon: icon-pie-chart
             actions:
               index:

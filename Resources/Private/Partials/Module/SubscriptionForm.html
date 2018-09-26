@@ -1,0 +1,40 @@
+<div class=" neos-module-container">
+    <fieldset class="neos-row-fluid">
+        <div class="neos-span12">
+            <legend><f:translate id="module.header.subscriptionDetails"/></legend>
+            <br>
+            <div class="neos-row-fluid">
+                <div class="neos-span6">
+                    <div class="neos-row-fluid">
+                        <div class="neos-span12">
+                            <div class="neos-control-group neos-row-fluid">
+                                <div class="neos-span10">
+                                    <label class="neos-control-label" for="name"><f:translate id="module.subscriptionName"/></label>
+                                    <div class="neos-controls">
+                                        <f:form.textfield property="name" id="name" class="neos-span16" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="neos-row-fluid">
+                        <div class="neos-span12">
+                            <div class="neos-control-group neos-row-fluid">
+                                <div class="neos-span10">
+                                    <label class="neos-control-label" for="name"><f:translate id="module.subscriptionNewsletter"/></label>
+                                    <div class="neos-controls">
+                                        <f:form.select property="fusionIdentifier" id="fusionIdentifier" class="neos-span16" options="{baseSubscriptions}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
+<div class="neos-footer">
+    <f:link.action action="index" class="neos-button"><f:translate id="module.actions.cancel"/></f:link.action>
+    <f:form.submit value="{f:translate(id: 'module.actions.save')}" class="neos-button neos-button-primary" />
+</div>

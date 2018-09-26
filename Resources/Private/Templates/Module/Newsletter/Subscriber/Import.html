@@ -1,0 +1,48 @@
+{namespace neos=TYPO3\Neos\ViewHelpers}
+<f:layout name="Default"/>
+
+<f:section name="headScripts">
+</f:section>
+
+<f:section name="Title">Upload Subscribers</f:section>
+
+<f:section name="Content">
+    <div class="neos-row-fluid">
+        <f:form method="post" action="uploadCSV" enctype="multipart/form-data">
+            <fieldset>
+                <div class="neos-span6 neos-image-inputs">
+
+                <span class="neos-file-input">
+                    <label class="neos-button neos-button-primary" for="resource" title="{neos:backend.translate(id: 'media.maxUploadSize', arguments: {0: humanReadableMaximumFileUploadSize}, source: 'Modules', package: 'TYPO3.Neos')}" data-neos-toggle="tooltip">
+                        {neos:backend.translate(id: 'media.chooseFile', source: 'Modules', package: 'TYPO3.Neos')} <i class="icon-file"></i>
+                    </label>
+                    <f:form.upload id="resource" name="resource" additionalAttributes="{required: 'required'}"/>
+                </span>
+
+                    <f:if condition="{subscriptions}">
+                        <label>Available Subscriptions</label>
+                        <f:for each="{subscriptions}" as="subscription">
+                            <div class="neos-controls">
+                                <label class="neos-checkbox neos-inline">
+                                    <f:form.checkbox name="subscriptions[]" value="{subscription -> f:format.identifier()}" />
+                                    <span></span> {subscription.name}
+                                </label>
+                            </div>
+                        </f:for>
+                    </f:if>
+                </div>
+            </fieldset>
+            <div class="neos-footer">
+                <f:link.action action="index" class="neos-button">{neos:backend.translate(id: 'media.cancel', source: 'Modules', package: 'TYPO3.Neos')}</f:link.action>
+                <f:form.submit id="import" class="neos-button neos-button-primary" value="{neos:backend.translate(id: 'media.upload', source: 'Modules', package: 'TYPO3.Neos')}"/>
+            </div>
+        </f:form>
+    </div>
+</f:section>
+
+<f:section name="Scripts">
+    <script type="text/javascript">
+      var maximumFileUploadSize = {maximumFileUploadSize};
+    </script>
+    <script type="text/javascript" src="{f:uri.resource(package: 'Psmb.Newsletter', path: 'JavaScript/upload.js')}"></script>
+</f:section>

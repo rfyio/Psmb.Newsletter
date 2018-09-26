@@ -3,7 +3,7 @@
   uriPattern: 'subscribers/export'
   defaults:
     '@package':    'Psmb.Newsletter'
-    '@controller': 'Module\Subscriber'
+    '@controller': 'Module\Newsletter\Subscriber'
     '@action':     'export'
   appendExceedingArguments: TRUE
 

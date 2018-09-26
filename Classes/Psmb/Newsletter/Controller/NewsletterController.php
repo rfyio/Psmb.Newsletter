@@ -2,6 +2,8 @@
 namespace Psmb\Newsletter\Controller;
 
 use Flowpack\JobQueue\Common\Annotations as Job;
+use Psmb\Newsletter\Domain\Model\Subscription;
+use Psmb\Newsletter\Domain\Repository\SubscriptionRepository;
 use TYPO3\Flow\Annotations as Flow;
 use Psmb\Newsletter\Domain\Model\Subscriber;
 use Psmb\Newsletter\Domain\Repository\SubscriberRepository;
@@ -38,6 +40,12 @@ class NewsletterController extends ActionController
     protected $subscriberRepository;
 
     /**
+     * @Flow\Inject
+     * @var SubscriptionRepository
+     */
+    protected $subscriptionRepository;
+
+    /**
      * @Flow\InjectConfiguration(path="subscriptions")
      * @var array
      */
@@ -59,45 +67,39 @@ class NewsletterController extends ActionController
         $manualSubscriptions = array_filter($this->subscriptions, function ($item) {
             return $item['interval'] == 'manual';
         });
+
+        $subscriptions = $this->subscriptionRepository->findByManualSubscriptions($manualSubscriptions);
+
         $subscriptionsJsonArray = array_map(function ($item) {
-            return ['label' => $item['label'], 'value' => $item['identifier']];
-        }, $manualSubscriptions);
+            /** @var  Subscription $item */
+            return ['label' => $item->getName(), 'value' => $item->getPersistenceObjectIdentifier()];
+        }, $subscriptions->toArray());
         $this->view->assign('value', array_values($subscriptionsJsonArray));
     }
 
     /**
      * Registers a new subscriber
      *
-     * @param string $subscription Subscription id to send newsletter to
+     * @param Subscription $subscription Subscription to send newsletter to
      * @param NodeInterface $node Node of the current newsletter item
      * @return void
      */
-    public function sendAction($subscription, NodeInterface $node)
+    public function sendAction(Subscription $subscription, NodeInterface $node)
     {
-        $subscriptions = array_filter($this->subscriptions, function ($item) use ($subscription) {
-            return $item['identifier'] == $subscription;
-        });
-        array_walk($subscriptions, function ($subscription) use ($node) {
-            $this->sendLettersForSubscription($subscription, $node);
-        });
+        $this->sendLettersForSubscription($subscription, $node);
         $this->view->assign('value', ['status' => 'success']);
     }
 
     /**
      * Sends a test letter for subscription
      *
-     * @param string $subscription Subscription id to send newsletter to
+     * @param Subscription $subscription Subscription id to send newsletter to
      * @param NodeInterface $node Node of the current newsletter item
      * @param string $email Test email address
      * @return void
      */
-    public function testSendAction($subscription, NodeInterface $node, $email)
+    public function testSendAction(Subscription $subscription, NodeInterface $node, $email)
     {
-        $subscriptions = array_filter($this->subscriptions, function ($item) use ($subscription) {
-            return $item['identifier'] == $subscription;
-        });
-        $subscription = reset($subscriptions);
-
         $subscriber = new Subscriber();
         $subscriber->setEmail($email);
         $subscriber->setName('Test User');
@@ -111,13 +113,13 @@ class NewsletterController extends ActionController
      * Generate a letter for each subscriber in the subscription
      *
      * @Job\Defer(queueName="psmb-newsletter-web")
-     * @param array $subscription
+     * @param Subscription $subscription
      * @param NodeInterface $node Node of the current newsletter item
      * @return void
      */
-    public function sendLettersForSubscription($subscription, $node)
+    public function sendLettersForSubscription(Subscription $subscription, $node)
     {
-        $subscribers = $this->subscriberRepository->findAllByFilter($subscription['identifier'])->toArray();
+        $subscribers = $this->subscriberRepository->findBySubscription($subscription)->toArray();
 
         array_walk($subscribers, function ($subscriber) use ($subscription, $node) {
             $this->fusionMailService->generateSubscriptionLetterAndSend($subscriber, $subscription, $node);

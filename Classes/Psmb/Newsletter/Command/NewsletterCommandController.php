@@ -1,6 +1,8 @@
 <?php
+
 namespace Psmb\Newsletter\Command;
 
+use Psmb\Newsletter\Domain\Model\Subscription;
 use TYPO3\Flow\Annotations as Flow;
 use Psmb\Newsletter\Domain\Model\Subscriber;
 use Psmb\Newsletter\Domain\Repository\SubscriberRepository;
@@ -37,42 +39,6 @@ class NewsletterCommandController extends CommandController
     protected $subscriptions;
 
     /**
-     * Import newsletter subscribers from CSV.
-     * CSV should be in the format `"user@email.com","User Name","subscriptionId1|subscriptionId2"`
-     *
-     * @param string $filename
-     * @return void
-     */
-    public function importCsvCommand($filename)
-    {
-        if (!is_readable($filename)) {
-            $this->outputLine('<error>Sorry, but the file "%s" is not readable or does not exist...</error>', [$filename]);
-            $this->outputLine();
-            $this->sendAndExit(1);
-        }
-        $handle = fopen($filename, "r");
-        while (($line = fgetcsv($handle)) !== false) {
-            if (count($line) === 3) {
-                $email = $line[0];
-                $name = $line[1] ?: "";
-                $subscriptions = explode("|", $line[2]);
-
-                if ($this->subscriberRepository->countByEmail($email) > 0) {
-                    $this->outputLine('<error>User with email "%s" already exists, skipping...</error>', [$email]);
-                } else {
-                    $this->outputLine('Creating a subscriber (%s, %s, %s)', [$email, $name, $line[2]]);
-                    $subscriber = new Subscriber();
-                    $subscriber->setEmail($email);
-                    $subscriber->setName($name);
-                    $subscriber->setSubscriptions($subscriptions);
-                    $this->subscriberRepository->add($subscriber);
-                }
-            }
-        }
-        fclose($handle);
-    }
-
-    /**
      * Selects all subscriptions with given interval and sends a letter to each subscriber
      *
      * @param string $subscription Subscription id to send newsletter to
@@ -105,15 +71,15 @@ class NewsletterCommandController extends CommandController
     /**
      * Generate a letter for each subscriber in the subscription
      *
-     * @param array $subscription
+     * @param Subscription $subscription
      * @param bool $dryRun
      * @return void
      */
-    protected function sendLettersForSubscription($subscription, $dryRun)
+    protected function sendLettersForSubscription(Subscription $subscription, $dryRun)
     {
-        $subscribers = $this->subscriberRepository->findAllByFilter($subscription['identifier'])->toArray();
+        $subscribers = $this->subscriberRepository->findBySubscription($subscription)->toArray();
 
-        $this->outputLine('Sending letters for subscription %s (%s subscribers)', [$subscription['identifier'], count($subscribers)]);
+        $this->outputLine('Sending letters for subscription %s (%s subscribers)', [$subscription->getName(), count($subscribers)]);
         $this->outputLine('-------------------------------------------------------------------------------');
 
         array_walk($subscribers, function ($subscriber) use ($subscription, $dryRun) {

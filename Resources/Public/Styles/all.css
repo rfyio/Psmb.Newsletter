@@ -1,36 +1,49 @@
-.neos-module-management-subscribers .neos-search {
+.neos-module-newsletter-subscribers .neos-search {
     width: 100%;
     max-width: 320px;
     margin-bottom: 16px;
 }
 
-.neos-module-management-subscribers .neos-search button[type="submit"] {
+.neos-module-newsletter-subscribers .neos-search button[type="submit"] {
     width: auto;
     float: right;
 }
 
-.neos-module-management-subscribers .neos-search div {
+.neos-module-newsletter-subscribers .neos-search div {
     overflow: hidden;
 }
 
-.neos-module-management-subscribers aside.neos-aside input {
+.neos-module-newsletter-subscribers aside.neos-aside input {
     width: 100%;
 }
 
-.neos-module-management-analytics .neos-main:before,
+.neos-module-newsletter-analytics .neos-main:before,
 .neos-module-management-subscribers .neos-main:before {
     display: table;
     content: "";
     line-height: 0;
 }
 
-.neos-module-management-subscribers .neos-main:after {
+.neos-module-newsletter-subscribers .neos-main:after {
     clear: both;
 }
 
 aside .neos-search button[type="submit"] {
     width: auto;
     float: right;
+}
+aside.neos-aside > h2 {
+    line-height: 40px;
+}
+
+aside.neos-aside > h2 > .neos-edit-toggle {
+    float: right;
+    background-color: #222;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
 }
 
 .neos-search div {
@@ -51,17 +64,17 @@ aside .neos-search button[type="submit"] {
     padding: 0 !important;
 }
 
-.neos-module-management-subscribers .neos-options {
+.neos-module-newsletter-subscribers .neos-options {
     margin-bottom: 32px;
     border-bottom: 1px solid #3f3f3f;
     height: 40px;
 }
 
-.neos-module-management-subscribers .neos-options .neos-show-options {
+.neos-module-newsletter-subscribers .neos-options .neos-show-options {
     float: left;
 }
 
-.neos-module-management-subscribers .neos-options .neos-show-options .count {
+.neos-module-newsletter-subscribers .neos-options .neos-show-options .count {
     display: inline-block;
     height: 40px;
     line-height: 40px;
@@ -69,17 +82,17 @@ aside .neos-search button[type="submit"] {
     border-right: 1px solid #3f3f3f;
 }
 
-.neos-module-management-subscribers .neos-options .neos-view-options {
+.neos-module-newsletter-subscribers .neos-options .neos-view-options {
     float: right;
     white-space: nowrap;
     font-size: 0;
 }
 
-.neos-module-management-subscribers .neos-options .neos-view-options > a:first-child {
+.neos-module-newsletter-subscribers .neos-options .neos-view-options > a:first-child {
     border-left: 1px solid #3f3f3f;
 }
 
-.neos-module-management-subscribers .neos-options .neos-view-options > a, .neos-module-management-subscribers .neos-options .neos-dropdown {
+.neos-module-newsletter-subscribers .neos-options .neos-view-options > a, .neos-module-newsletter-subscribers .neos-options .neos-dropdown {
     border-right: 1px solid #3f3f3f;
     display: inline-block;
     height: 40px;
@@ -90,7 +103,7 @@ aside .neos-search button[type="submit"] {
     color: #00b5ff;
 }
 
-.neos-module-management-subscribers .neos-options .neos-view-options a {
+.neos-module-newsletter-subscribers .neos-options .neos-view-options a {
     color: #fff;
     font-size: 14px;
 }
@@ -148,15 +161,15 @@ aside ul li > a.neos-active:hover {
 }
 
 @media (min-width: 768px) {
-    .neos-module-management-analytics .neos-content,
-    .neos-module-management-subscribers .neos-content {
+    .neos-module-newsletter-analytics .neos-content,
+    .neos-module-newsletter-subscribers .neos-content {
         float: left;
         left: 272px;
         width: calc(100% - (40px * 6 + 32px));
     }
 
-    .neos-module-management-analytics .neos-aside,
-    .neos-module-management-subscribers .neos-aside {
+    .neos-module-newsletter-analytics .neos-aside,
+    .neos-module-newsletter-subscribers .neos-aside {
         float: left;
         margin-right: 32px;
         width: 240px;
@@ -165,8 +178,8 @@ aside ul li > a.neos-active:hover {
 }
 
 @media (max-width: 767px) {
-    .neos-module-management-analytics .neos-aside,
-    .neos-module-management-subscribers .neos-aside {
+    .neos-module-newsletter-analytics .neos-aside,
+    .neos-module-newsletter-subscribers .neos-aside {
         margin-top: 32px;
     }
 }
@@ -185,6 +198,10 @@ aside ul li > a.neos-active:hover {
 
 .neos .widget .widget-body.widget-table table {
     width: 100%;
+}
+
+.psmb-newsletter table.neos-table .neos-action {
+    text-align: right;
 }
 
 dl {
@@ -218,4 +235,32 @@ dd {
     .dl-horizontal dd {
         margin-left: 120px;
     }
+}
+
+/**
+ * Import Subscribers
+ */
+.neos-row-fluid .neos-image-inputs {
+    float: left;
+    margin-left: 0;
+}
+
+.neos-file-input #resource {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.neos-file-input {
+    position: relative;
+}
+
+.neos-row-fluid .neos-image-inputs .neos-button {
+    margin-top: 22px;
+    margin-right: 8px;
+    margin-bottom: 22px;
 }
