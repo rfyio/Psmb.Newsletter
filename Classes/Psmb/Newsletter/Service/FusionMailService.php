@@ -225,8 +225,8 @@ class FusionMailService {
      */
     public function generateSubscriptionLetter(Subscriber $subscriber, Subscription $subscription, $node = NULL)
     {
-        $dimensions = isset($subscription['dimensions']) ? $subscription['dimensions'] : null;
-        $siteNode = $this->getSiteNode($dimensions);
+//        $dimensions = isset($subscription['dimensions']) ? $subscription['dimensions'] : null;
+        $siteNode = $this->getSiteNode([]);
         $node = $node ?: $siteNode;
 
         /** @var Newsletter $newsletter */
