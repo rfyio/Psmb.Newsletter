@@ -225,8 +225,12 @@ class FusionMailService {
      */
     public function generateSubscriptionLetter(Subscriber $subscriber, Subscription $subscription, $node = NULL)
     {
-//        $dimensions = isset($subscription['dimensions']) ? $subscription['dimensions'] : null;
-        $siteNode = $this->getSiteNode([]);
+        $definedSubscription = array_filter($this->subscriptions, function($definedSubscription) use ($subscription) {
+           return $definedSubscription['identifier'] == $subscription->getFusionIdentifier();
+        })[0];
+
+        $dimensions = isset($definedSubscription['dimensions']) ? $definedSubscription['dimensions'] : null;
+        $siteNode = $this->getSiteNode($dimensions);
         $node = $node ?: $siteNode;
 
         /** @var Newsletter $newsletter */
@@ -255,7 +259,7 @@ class FusionMailService {
             'documentNode' => $node,
             'node' => $node,
             'subscriber' => $subscriber,
-            'subscription' => $subscription,
+            'subscription' => $definedSubscription,
             'globalSettings' => $this->globalSettings,
             'trackingCode' => $trackingCode
         ]);
@@ -274,6 +278,7 @@ class FusionMailService {
     public function generateSubscriptionLetterAndSend(Subscriber $subscriber, Subscription $subscription, $node = NULL)
     {
         $letter = $this->generateSubscriptionLetter($subscriber, $subscription, $node);
+
         if ($letter) {
             $this->sendLetter($letter);
         }
