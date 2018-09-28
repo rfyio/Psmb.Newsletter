@@ -225,45 +225,47 @@ class FusionMailService {
      */
     public function generateSubscriptionLetter(Subscriber $subscriber, Subscription $subscription, $node = NULL)
     {
-        $definedSubscription = array_filter($this->subscriptions, function($definedSubscription) use ($subscription) {
+        $definedSubscriptions = array_filter($this->subscriptions, function($definedSubscription) use ($subscription) {
            return $definedSubscription['identifier'] == $subscription->getFusionIdentifier();
-        })[0];
+        });
 
-        $dimensions = isset($definedSubscription['dimensions']) ? $definedSubscription['dimensions'] : null;
-        $siteNode = $this->getSiteNode($dimensions);
-        $node = $node ?: $siteNode;
+        foreach($definedSubscriptions as $definedSubscription) {
+            $dimensions = isset($definedSubscription['dimensions']) ? $definedSubscription['dimensions'] : null;
+            $siteNode = $this->getSiteNode($dimensions);
+            $node = $node ?: $siteNode;
 
-        /** @var Newsletter $newsletter */
-        $newsletter = $this->newsletterRepository->findOneByNode($node->getNodeData());
-        if (!$newsletter) {
-            // Create a newsletter object
-            $newsletter = new Newsletter(new ViewsOnDevice(), new ViewsOnOperatingSystem());
-            $newsletter->setNode($node->getNodeData());
-            $newsletter->setSubscriptionIdentifier($subscription->getFusionIdentifier());
-            $newsletter->setPublicationDate(new \DateTime());
-            $newsletter->updateSentCount();
+            /** @var Newsletter $newsletter */
+            $newsletter = $this->newsletterRepository->findOneByNode($node->getNodeData());
+            if (!$newsletter) {
+                // Create a newsletter object
+                $newsletter = new Newsletter(new ViewsOnDevice(), new ViewsOnOperatingSystem());
+                $newsletter->setNode($node->getNodeData());
+                $newsletter->setSubscriptionIdentifier($subscription->getFusionIdentifier());
+                $newsletter->setPublicationDate(new \DateTime());
+                $newsletter->updateSentCount();
 
-            $this->newsletterRepository->add($newsletter);
-        } else {
-            $newsletter->setPublicationDate(new \DateTime());
-            $newsletter->setSubscriptionIdentifier($subscription->getFusionIdentifier());
-            $newsletter->updateSentCount();
+                $this->newsletterRepository->add($newsletter);
+            } else {
+                $newsletter->setPublicationDate(new \DateTime());
+                $newsletter->setSubscriptionIdentifier($subscription->getFusionIdentifier());
+                $newsletter->updateSentCount();
 
-            $this->newsletterRepository->update($newsletter);
+                $this->newsletterRepository->update($newsletter);
+            }
+            // Generate tracking code
+            $trackingCode = $newsletter->getPersistenceObjectIdentifier() . '|' . $subscriber->getPersistenceObjectIdentifier();
+
+            $this->view->assign('value', [
+                'site' => $siteNode,
+                'documentNode' => $node,
+                'node' => $node,
+                'subscriber' => $subscriber,
+                'subscription' => $definedSubscription,
+                'globalSettings' => $this->globalSettings,
+                'trackingCode' => $trackingCode
+            ]);
+            return $this->view->render();
         }
-        // Generate tracking code
-        $trackingCode = $newsletter->getPersistenceObjectIdentifier() . '|' . $subscriber->getPersistenceObjectIdentifier();
-
-        $this->view->assign('value', [
-            'site' => $siteNode,
-            'documentNode' => $node,
-            'node' => $node,
-            'subscriber' => $subscriber,
-            'subscription' => $definedSubscription,
-            'globalSettings' => $this->globalSettings,
-            'trackingCode' => $trackingCode
-        ]);
-        return $this->view->render();
     }
 
     /**

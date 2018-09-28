@@ -119,7 +119,7 @@ class NewsletterController extends ActionController
      */
     public function sendLettersForSubscription(Subscription $subscription, $node)
     {
-        $subscribers = $this->subscriberRepository->findBySubscription($subscription)->toArray();
+        $subscribers = $this->subscriberRepository->findAllBySearchTermAndSubscription(null, $subscription)->toArray();
 
         array_walk($subscribers, function ($subscriber) use ($subscription, $node) {
             $this->fusionMailService->generateSubscriptionLetterAndSend($subscriber, $subscription, $node);
