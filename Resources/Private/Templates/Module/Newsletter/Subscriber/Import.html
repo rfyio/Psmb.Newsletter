@@ -21,11 +21,11 @@
 
                     <f:if condition="{subscriptions}">
                         <label>Available Subscriptions</label>
-                        <f:for each="{subscriptions}" as="subscription">
+                        <f:for each="{subscriptions}" as="row">
                             <div class="neos-controls">
                                 <label class="neos-checkbox neos-inline">
-                                    <f:form.checkbox name="subscriptions[]" value="{subscription -> f:format.identifier()}" />
-                                    <span></span> {subscription.name}
+                                    <f:form.checkbox name="subscriptions[]" value="{row -> f:format.identifier()}" />
+                                    <span></span> {row.name}
                                 </label>
                             </div>
                         </f:for>
