@@ -167,7 +167,7 @@ class SubscriberController extends AbstractModuleController
         ini_set("auto_detect_line_endings", true);
         $handle = fopen('resource://' . $resource->getSha1(), "r");
 
-        foreach($subscriptions as $key => $value) {
+        foreach ($subscriptions as $key => $value) {
             $subscriptions[$key] = $this->subscriptionRepository->findByIdentifier($value);
         }
 
@@ -195,7 +195,12 @@ class SubscriberController extends AbstractModuleController
                     $subscription->addSubscriber($subscriber);
                     $this->subscriptionRepository->update($subscription);
                 }
-                $this->subscriberRepository->add($subscriber);
+
+                if ($this->persistenceManager->isNewObject($subscriber)) {
+                    $this->subscriberRepository->add($subscriber);
+                } else {
+                    $this->subscriberRepository->update($subscriber);
+                }
             }
         }
         $this->persistenceManager->persistAll();
