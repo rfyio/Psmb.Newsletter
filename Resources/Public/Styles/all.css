@@ -237,6 +237,10 @@ dd {
     }
 }
 
+table td.text-right {
+    text-align: right;
+}
+
 /**
  * Import Subscribers
  */

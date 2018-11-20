@@ -1,4 +1,5 @@
 {namespace ps=Psmb\Newsletter\ViewHelpers}
+{namespace neos=TYPO3\Neos\ViewHelpers}
 <f:layout name="Default"/>
 
 <f:section name="Title">
@@ -217,107 +218,79 @@
         <div class="psmb-newsletter neos-main">
             <aside class="neos-aside">
                 <ul>
-                    <li>
-                        <f:link.action action="index" class="{f:if(condition: filter, then: '', else: 'neos-active')}">
-                            <f:translate id="module.actions.all"/>
-                        </f:link.action>
+                    <li class="active">
+                        <f:link.action action="index"><f:translate id="module.actions.all"/></f:link.action>
                     </li>
-                    <f:for each="{subscriptions}" as="subscription">
+                    <f:for each="{newsletters}" as="newsletterItem">
                         <li>
-                            <f:if condition="{filter} == {subscription.identifier}">
-                                <f:then>
-                                    <f:link.action action="index" class="neos-active"
-                                                   arguments="{filter: subscription.identifier}">{subscription.label}
-                                        <span class="neos-label">{subscription.identifier}</span></f:link.action>
-                                </f:then>
-                                <f:else>
-                                    <f:link.action action="index" arguments="{filter: subscription.identifier}">
-                                        {subscription.label} <span class="neos-label">{subscription.identifier}</span>
-                                    </f:link.action>
-                                </f:else>
-                            </f:if>
+                            <f:link.action action="show" arguments="{newsletter: newsletterItem}">{newsletterItem.node.properties.title}</f:link.action>
                         </li>
                     </f:for>
                 </ul>
             </aside>
             <div class="neos-content">
+                <legend><f:translate id="module.analytics.showHeader"/> {newsletter.node.properties.title}</legend>
                 <div class="neos-row-fluid">
-                    <div class="neos-span12">
-                        <f:render partial="Module/PublicationAnalytics" arguments="{filter: filter}" />
+                    <div class="neos-span4">
+                        <f:render partial="Module/DeviceStatistics" arguments="{_all}" />
+                    </div>
+                    <div class="neos-span4">
+                        <f:render partial="Module/OSStatistics" arguments="{_all}" />
+                    </div>
+                    <div class="neos-span4">
+                        <f:render partial="Module/ClickStatistics" arguments="{_all}" />
                     </div>
                 </div>
 
                 <div class="neos-row-fluid">
-                    <div class="neos-span4">
-                        <f:render partial="Module/DeviceStatistics" arguments="{filter: filter}" />
-                    </div>
-                    <div class="neos-span4">
-                        <f:render partial="Module/OSStatistics" arguments="{filter: filter}" />
-                    </div>
-                    <div class="neos-span4">
-                        <f:render partial="Module/NewsletterStatistics" arguments="{filter: filter}" />
-                    </div>
-                </div>
-
-                <div class="neos-row-fluid">
-                    <f:widget.paginate objects="{newsletters}" as="paginatedNewsletters" configuration="{itemsPerPage: settings.module.itemsPerPage, insertAbove: FALSE, insertBelow: true, maximumNumberOfLinks: 8}">
-                        <table class="neos-table">
-                            <thead>
+                    <table class="neos-table">
+                        <thead>
+                        <tr>
+                            <th>
+                                <f:if condition="{sortBy} == 'Name'">
+                                    <f:then><f:translate id="module.analytics.linkName"/> <i class="icon-caret-down"></i></f:then>
+                                    <f:else>
+                                        <f:link.action action="index" title="Sort by name" data="{neos-toggle: 'tooltip'}" arguments="{sortBy: 'Name'}" addQueryString="TRUE"><f:translate id="module.analytics.linkName"/></f:link.action>
+                                    </f:else>
+                                </f:if>
+                            </th>
+                            <th class="text-center" width="150">
+                                <f:translate id="module.analytics.linkDate"/>
+                            </th>
+                            <th class="text-center" width="150">
+                                <f:translate id="module.analytics.linkTotalViews"/>
+                            </th>
+                            <th class="neos-action" width="95"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <f:for each="{newsletter.links}" as="link">
                             <tr>
-                                <th width="350">
-                                    <f:if condition="{sortBy} == 'Name'">
-                                        <f:then><f:translate id="module.analytics.newsletter"/> <i class="icon-caret-down"></i></f:then>
-                                        <f:else>
-                                            <f:link.action action="index" title="Sort by name" data="{neos-toggle: 'tooltip'}" arguments="{sortBy: 'Name'}" addQueryString="TRUE"><f:translate id="module.analytics.newsletter"/></f:link.action>
-                                        </f:else>
-                                    </f:if>
-                                </th>
-                                <th class="text-center" width="250">
-                                    <f:translate id="module.analytics.publishDate"/>
-                                </th>
-                                <th class="text-center" width="250">
-                                    <f:translate id="module.analytics.sentCount"/>
-                                </th>
-                                <th class="text-center" width="250">
-                                    <f:translate id="module.analytics.uniqueViewCount"/>
-                                </th>
-                                <th class="text-center" width="250">
-                                    <f:translate id="module.analytics.totalViewCount"/>
-                                </th>
-                                <th></th>
-                                <th class="neos-action" width="95"></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <f:for each="{paginatedNewsletters}" as="newsletter" iteration="newsletterIterator">
-                                <tr>
-                                    <td>{newsletter.node.properties.title}</td>
-                                    <td><span class="neos-label">{newsletter.publicationDate -> f:format.date(format:"d.m.Y")}</span></td>
-                                    <td class="text-right">{newsletter.sentCount}</td>
-                                    <td class="text-right">{newsletter.uniqueViewCount}</td>
-                                    <td class="text-right">{newsletter.viewsCount}</td>
-                                    <td></td>
-                                    <td class="neos-action">
-                                        <div class="neos-dropdown">
-                                            <a class="dropdown-toggle neos-button neos-button-mini" href="#" data-neos-toggle="dropdown">
-                                                <i class="icon-ellipsis-horizontal"></i>
-                                            </a>
-                                            <div class="neos-dropdown-menu-list neos-pull-right" role="menu">
-                                                <ul>
-                                                    <li>
-                                                        <f:link.action action="show" arguments="{newsletter: newsletter}" title="Click to view newsletter details">
-                                                            <i class="icon-street-view icon-white"></i> View
-                                                        </f:link.action>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                <td>{link.node.properties.title}</td>
+                                <td><span class="neos-label">{newsletter.publicationDate -> f:format.date(format:"d.m.Y")}</span></td>
+                                <td class="text-right">{link.viewsCount}</td>
+                                <td class="neos-action">
+                                    <div class="neos-dropdown">
+                                        <a class="dropdown-toggle neos-button neos-button-mini" href="#" data-neos-toggle="dropdown">
+                                            <i class="icon-ellipsis-horizontal"></i>
+                                        </a>
+                                        <div class="neos-dropdown-menu-list neos-pull-right" role="menu">
+                                            <ul>
+                                                <li>
+                                                    <f:if condition="{link.node}">
+                                                        <neos:link.node node="{link.node.path}" title="Click to view link">
+                                                            <i class="icon-link icon-white"></i> View <neos:uri.node node="{link.node.path}"/>
+                                                        </neos:link.node>
+                                                    </f:if>
+                                                </li>
+                                            </ul>
                                         </div>
-                                    </td>
-                                </tr>
-                            </f:for>
-                            </tbody>
-                        </table>
-                    </f:widget.paginate>
+                                    </div>
+                                </td>
+                            </tr>
+                        </f:for>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

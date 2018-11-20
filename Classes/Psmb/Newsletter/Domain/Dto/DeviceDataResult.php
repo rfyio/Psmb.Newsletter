@@ -47,13 +47,10 @@ class DeviceDataResult
         }
 
         return array(
-            'totals' => array('uniquePageviews' => $totalViews),
-            'rows' => array(
-                array('deviceCategory' => 'desktop', 'uniquePageviews' => $clientDevices['Desktop'], 'percent' => ($totalViews == 0 ? 0 : round(($clientDevices['Desktop'] * 100 / $totalViews)))),
-                array('deviceCategory' => 'tablet', 'uniquePageviews' => $clientDevices['Tablet'], 'percent' => ($totalViews == 0 ? 0 : round(($clientDevices['Tablet'] * 100 / $totalViews)))),
-                array('deviceCategory' => 'smartphone', 'uniquePageviews' => $clientDevices['Smartphone'], 'percent' => ($totalViews == 0 ? 0 : round(($clientDevices['Smartphone'] * 100 / $totalViews)))),
-                array('deviceCategory' => 'other', 'uniquePageviews' => $clientDevices['Other'], 'percent' => ($totalViews == 0 ? 0 : round(($clientDevices['Other'] * 100 / $totalViews))))
-            )
+            array('name' => 'desktop', 'y' => $clientDevices['Desktop'], 'percent' => ($totalViews == 0 ? 0 : round(($clientDevices['Desktop'] * 100 / $totalViews)))),
+            array('name' => 'tablet', 'y' => $clientDevices['Tablet'], 'percent' => ($totalViews == 0 ? 0 : round(($clientDevices['Tablet'] * 100 / $totalViews)))),
+            array('name' => 'smartphone', 'y' => $clientDevices['Smartphone'], 'percent' => ($totalViews == 0 ? 0 : round(($clientDevices['Smartphone'] * 100 / $totalViews)))),
+            array('name' => 'other', 'y' => $clientDevices['Other'], 'percent' => ($totalViews == 0 ? 0 : round(($clientDevices['Other'] * 100 / $totalViews))))
         );
     }
 
@@ -79,12 +76,11 @@ class DeviceDataResult
             $clientDevices['Other'] += $row->getViewsOnDeviceValue('other');
         }
 
-
         return array(
-                array('name' => 'desktop', 'y' => $clientDevices['Desktop'], 'percent' => ($totalViews == 0 ? 0 : round(($clientDevices['Desktop'] * 100 / $totalViews)))),
-                array('name' => 'tablet', 'y' => $clientDevices['Tablet'], 'percent' => ($totalViews == 0 ? 0 : round(($clientDevices['Tablet'] * 100 / $totalViews)))),
-                array('name' => 'smartphone', 'y' => $clientDevices['Smartphone'], 'percent' => ($totalViews == 0 ? 0 : round(($clientDevices['Smartphone'] * 100 / $totalViews)))),
-                array('name' => 'other', 'y' => $clientDevices['Other'], 'percent' => ($totalViews == 0 ? 0 : round(($clientDevices['Other'] * 100 / $totalViews))))
+            array('name' => 'desktop', 'y' => $clientDevices['Desktop'], 'percent' => ($totalViews == 0 ? 0 : round(($clientDevices['Desktop'] * 100 / $totalViews)))),
+            array('name' => 'tablet', 'y' => $clientDevices['Tablet'], 'percent' => ($totalViews == 0 ? 0 : round(($clientDevices['Tablet'] * 100 / $totalViews)))),
+            array('name' => 'smartphone', 'y' => $clientDevices['Smartphone'], 'percent' => ($totalViews == 0 ? 0 : round(($clientDevices['Smartphone'] * 100 / $totalViews)))),
+            array('name' => 'other', 'y' => $clientDevices['Other'], 'percent' => ($totalViews == 0 ? 0 : round(($clientDevices['Other'] * 100 / $totalViews))))
         );
     }
 }

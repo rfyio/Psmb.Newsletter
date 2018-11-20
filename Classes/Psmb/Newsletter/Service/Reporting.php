@@ -1,6 +1,8 @@
 <?php
 namespace Psmb\Newsletter\Service;
 
+use Psmb\Newsletter\Domain\Model\ClicksOnArticleNewsletter;
+use Psmb\Newsletter\Domain\Model\Newsletter;
 use TYPO3\Flow\Annotations as Flow;
 use Psmb\Newsletter\Domain\Dto\ColumnDataResult;
 use Psmb\Newsletter\Domain\Dto\DeviceDataResult;
@@ -84,6 +86,27 @@ class Reporting extends AbstractServiceController
                 return (new OverallDataResult($newsletters))->getCollectionData();
             case 'publication':
                 return (new PublicationDataResult($newsletters))->getCollectionData();
+            default:
+                return [];
+        }
+    }
+
+    /**
+     * @param Newsletter $newsletter
+     * @param string $type
+     * @return array
+     * @throws \TYPO3\TYPO3CR\Exception\NodeException
+     */
+    public function getNewsletterStatistics(Newsletter $newsletter, $type = '')
+    {
+        switch ($type) {
+            case 'device':
+                return (new DeviceDataResult($newsletter))->getData();
+            case 'operation-system':
+                return (new OperatingSystemDataResult($newsletter))->getData();
+            case 'click':
+                return (new ClicksOnArticleNewsletter($newsletter))->getData();
+                break;
             default:
                 return [];
         }

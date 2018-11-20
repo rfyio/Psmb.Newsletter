@@ -2,16 +2,16 @@
     <div class="widget-header">
         <i class="icon-pie-chart neos-pull-left"></i>
         <h3>
-            <f:translate id="module.analytics.visitPerOS"/>
+            <f:translate id="module.analytics.clickAnalytics"/>
         </h3>
     </div>
-    <div id="operation-system-statistics" class="widget-body widget-body-padding"></div>
-</div>
 
+    <div id="click-statistics" class="widget-body widget-body-padding"></div>
+</div>
 <script>
   $(function () {
-    $.getJSON("{f:uri.action(action:'dataSource', absolute:true, format:'json', arguments:'{type: \'operation-system\', newsletter: newsletter, filter: filter}') -> f:format.raw()}", result => {
-      Highcharts.chart('operation-system-statistics', {
+    $.getJSON("{f:uri.action(action:'dataSource', absolute:true, format:'json', arguments:'{type: \'click\', newsletter: newsletter}') -> f:format.raw()}", result => {
+      Highcharts.chart('click-statistics', {
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: null,
@@ -35,11 +35,11 @@
         }
       },
       series: [{
-        name: 'Operation System',
+        name: 'Device',
         colorByPoint: true,
         data: result
       }]
+      });
     });
-  });
   });
 </script>

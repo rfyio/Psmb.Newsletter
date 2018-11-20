@@ -1,9 +1,14 @@
 <?php
+
 namespace Psmb\Newsletter\Controller;
 
+use Psmb\Newsletter\Domain\Model\Link;
 use Psmb\Newsletter\Domain\Model\Newsletter;
 use Psmb\Newsletter\Domain\Model\Subscriber;
 use Psmb\Newsletter\Domain\Model\SubscriberTracking;
+use Psmb\Newsletter\Domain\Model\ViewsOnDevice;
+use Psmb\Newsletter\Domain\Model\ViewsOnOperatingSystem;
+use Psmb\Newsletter\Domain\Repository\LinkRepository;
 use Psmb\Newsletter\Domain\Repository\NewsletterRepository;
 use Psmb\Newsletter\Domain\Repository\SubscriberRepository;
 use Psmb\Newsletter\Domain\Repository\SubscriberTrackingRepository;
@@ -11,6 +16,7 @@ use Psmb\Newsletter\Parser\RequestParser;
 use TYPO3\Flow\Mvc\Controller\ActionController;
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Resource\ResourceManager;
+use TYPO3\TYPO3CR\Domain\Model\Node;
 
 /**
  * Class AnalyticsController
@@ -34,6 +40,12 @@ class AnalyticsController extends ActionController
 
     /**
      * @Flow\Inject
+     * @var LinkRepository
+     */
+    protected $linkRepository;
+
+    /**
+     * @Flow\Inject
      * @var SubscriberTrackingRepository
      */
     protected $subscriberTrackingRepository;
@@ -50,7 +62,8 @@ class AnalyticsController extends ActionController
      * @param string $trackingCode
      * @return string
      */
-    public function trackAction($trackingCode) {
+    public function trackAction($trackingCode)
+    {
         if ($trackingCode !== '') {
             $trackingInfo = explode('|', $trackingCode);
             if (count($trackingInfo) > 1) {
@@ -100,6 +113,45 @@ class AnalyticsController extends ActionController
         $this->response->setHeader('Content-Disposition', 'attachment; filename=1x1.png');
         $this->response->setHeader('Content-Length', filesize($fileName));
         $this->response->setContent($fp);
+        return '';
+    }
+
+    /**
+     * Gather link tracking information.
+     * @param string $trackingCode
+     */
+    public function tracklinkAction($trackingCode = null)
+    {
+        if ($trackingCode) {
+            $trackingInfo = explode('|', $trackingCode);
+            if (count($trackingInfo) > 1) {
+                list($newsletterId, $subscriber) = $trackingInfo;
+                /** @var Newsletter $newsletter */
+                $newsletter = $this->newsletterRepository->findByIdentifier($newsletterId);
+                $node = $this->request->getInternalArgument('__node');
+
+                if ($newsletter instanceof Newsletter && $node instanceof Node) {
+                    $link = $this->linkRepository->findByNewsletterAndNode($newsletter, $node->getNodeData());
+
+                    $userAgent = $this->request->getHttpRequest()->getHeader('User-Agent');
+                    $parser = new RequestParser($userAgent);
+                    if (!$link instanceof Link) {
+                        $link = new Link(new ViewsOnDevice(), new ViewsOnOperatingSystem());
+                        if ($node) {
+                            $link->setNode($node->getNodeData());
+                        }
+                    }
+
+                    $link->updateDevice($parser->getDevice());
+                    $link->updateOS($parser->getOperatingSystem());
+                    $link->updateViewCount();
+
+                    $newsletter->addLink($link);
+                    $this->newsletterRepository->update($newsletter);
+                    $this->persistenceManager->persistAll();
+                }
+            }
+        }
         return '';
     }
 }

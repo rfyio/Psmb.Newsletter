@@ -4,61 +4,80 @@
 		<body>
 			<trans-unit id="newsletter.label" xml:space="preserve">
 				<source>Newsletters</source>
+				<target>Nieuwsbrieven</target>
 			</trans-unit>
 			<trans-unit id="newsletter.description" xml:space="preserve">
 				<source>Contains multiple modules to manage an analyze all newsletters.</source>
+				<target>Bevat meerdere modules om de nieuwsbrieven te beheren en conversie te analyseren.</target>
 			</trans-unit>
 			<trans-unit id="newsletter.subscribers.label" xml:space="preserve">
 				<source>Subscribers</source>
-			</trans-unit>
-			<trans-unit id="newsletter.subscribers.button" xml:space="preserve">
-				<source>Manage newsletter subscribers</source>
+				<target>Nieuwsbrief Abonnees</target>
 			</trans-unit>
 			<trans-unit id="newsletter.subscribers.description" xml:space="preserve">
 				<source>This module allows finding and managing of your newsletters subscribers for each newsletter. It also provides a in detail view of per subscriber meta information.</source>
+				<target>Deze module draagt zorg voor het beheren van elke nieuwsbrief abonnees.</target>
+			</trans-unit>
+			<trans-unit id="newsletter.subscribers.button" xml:space="preserve">
+				<source>Manage newsletter subscribers</source>
+				<target>Beheer nieuwsbrief abonnees</target>
 			</trans-unit>
 			<trans-unit id="newsletter.subscriptions.label" xml:space="preserve">
 				<source>Subscriptions</source>
-			</trans-unit>
-			<trans-unit id="newsletter.subscriptions.button" xml:space="preserve">
-				<source>Manage newsletter subscriptions</source>
+				<target>Nieuwsbrief Abonnementen</target>
 			</trans-unit>
 			<trans-unit id="newsletter.subscriptions.description" xml:space="preserve">
 				<source>This module allows finding and managing of your newsletters subscriptions for each newsletter. It also provides a in detail view of per subscription.</source>
+				<target>Deze module draagt zorg voor het beheren van elke nieuwsbrief abonnementen.</target>
+			</trans-unit>
+			<trans-unit id="newsletter.subscriptions.button" xml:space="preserve">
+				<source>Manage newsletter subscribers</source>
+				<target>Beheer nieuwsbrief abonnementen</target>
 			</trans-unit>
 			<trans-unit id="newsletter.analytics.label" xml:space="preserve">
 				<source>Analytics</source>
+				<target>Nieuwsbrief Analyse</target>
 			</trans-unit>
 			<trans-unit id="newsletter.analytics.description" xml:space="preserve">
 				<source>This module provides an overview of the newsletters which where sent and the tracking information corresponding with global newsletters.</source>
+				<target>Deze module bied inzicht voor elke verstuurde nieuwsbrief.</target>
 			</trans-unit>
 			<trans-unit id="newsletter.analytics.button" xml:space="preserve">
-				<source>View newsletter analytics</source>
+				<source>Manage newsletter subscribers</source>
+				<target>Verzonden Nieuwsbrief Analyseren</target>
 			</trans-unit>
 			<trans-unit id="newsletter.subscriptions.new" xml:space="preserve">
 				<source>Create new subscription</source>
+				<target>Nieuwe abonnement aanmaken</target>
 			</trans-unit>
 			<trans-unit id="newsletter.subscriptions.subscription.name" xml:space="preserve">
 				<source>Name</source>
+				<target>Naam</target>
 			</trans-unit>
 			<trans-unit id="newsletter.subscriptions.subscription.base" xml:space="preserve">
 				<source>Base</source>
+				<target>Basis</target>
 			</trans-unit>
 			<trans-unit id="newsletter.subscriptions.subscription.subscriberCount" xml:space="preserve">
 				<source>Total Subscribers</source>
+				<target>Totaal Abonnees</target>
 			</trans-unit>
 
 			<trans-unit id="error.fileType" xml:space="preserve">
 				<source>Wrong file type, only .csv files allowed!</source>
+				<target>Foutief bestandstype, alleen .csv bestanden toegestaan!</target>
 			</trans-unit>
 			<trans-unit id="error.fileSizeExceedsAllowedLimit" xml:space="preserve">
 				<source>The file size of {0} exceeds the allowed limit of {1}</source>
+				<target>Laatst bezocht</target>
 			</trans-unit>
 			<trans-unit id="error.noFileSelected" xml:space="preserve">
 				<source>No file selected</source>
+				<target>Geen bestand geselecteerd</target>
 			</trans-unit>
 			<trans-unit id="error.cannotUploadFile" xml:space="preserve">
 				<source>Cannot upload the file</source>
+				<target>Kan bestand niet uploaden</target>
 			</trans-unit>
 		</body>
 	</file>

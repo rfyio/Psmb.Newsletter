@@ -103,6 +103,7 @@
             </trans-unit>
             <trans-unit id="module.subscriberName" xml:space="preserve">
                 <source>Name</source>
+                <target>Naam</target>
             </trans-unit>
             <trans-unit id="module.subscriberEmail" xml:space="preserve">
                 <source>Email</source>
@@ -140,6 +141,64 @@
                 <source>Show All</source>
                 <target>Alles bekijken</target>
             </trans-unit>
+
+            <trans-unit id="module.analytics.overall" xml:space="preserve">
+                <source>Overall Statistics</source>
+                <target>Globale Statistieken</target>
+            </trans-unit>
+            <trans-unit id="module.analytics.publishedNewsletters" xml:space="preserve">
+                <source>Published Newsletters Analytics</source>
+                <target>Gepubliseerde Nieuwsbrieven Analyse</target>
+            </trans-unit>
+            <trans-unit id="module.analytics.newsletter" xml:space="preserve">
+               <source>Newsletter</source>
+                <target>Nieuwsbrief</target>
+           </trans-unit>
+           <trans-unit id="module.analytics.publishDate" xml:space="preserve">
+               <source>Publish Date</source>
+                <target>Publicatie Datum</target>
+           </trans-unit>
+           <trans-unit id="module.analytics.sentCount" xml:space="preserve">
+               <source>Sent Count</source>
+                <target>Totaal Verzonden</target>
+           </trans-unit>
+           <trans-unit id="module.analytics.uniqueViewCount" xml:space="preserve">
+               <source>Unique Views</source>
+                <target>Uniek Bekeken</target>
+           </trans-unit>
+           <trans-unit id="module.analytics.totalViewCount" xml:space="preserve">
+               <source>Total Views</source>
+                <target>Totaal Bekeken</target>
+           </trans-unit>
+           <trans-unit id="module.analytics.showHeader" xml:space="preserve">
+               <source>Newsletter: </source>
+               <target>Nieuwsbrief: </target>
+           </trans-unit>
+           <trans-unit id="module.analytics.linkName" xml:space="preserve">
+               <source>Link Name</source>
+               <target>Link Naam</target>
+           </trans-unit>
+           <trans-unit id="module.analytics.linkDate" xml:space="preserve">
+               <source>Modified Date</source>
+               <target>Laatst bezocht</target>
+           </trans-unit>
+           <trans-unit id="module.analytics.linkTotalViews" xml:space="preserve">
+               <source>Total Views</source>
+               <target>Totaal bekeken</target>
+           </trans-unit>
+
+          <trans-unit id="module.analytics.visitPerDevice" xml:space="preserve">
+              <source>Visits per Device</source>
+              <target>Bezoekers per Apparaat</target>
+          </trans-unit>
+          <trans-unit id="module.analytics.visitPerOS" xml:space="preserve">
+              <source>Visits per Operation System</source>
+              <target>Bezoekers per Besturing Systeem</target>
+          </trans-unit>
+          <trans-unit id="module.analytics.clickAnalytics" xml:space="preserve">
+              <source>Click Analytics</source>
+              <target>Klik Analyse</target>
+          </trans-unit>
         </body>
     </file>
 </xliff>

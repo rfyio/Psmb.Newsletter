@@ -38,7 +38,7 @@ TYPO3:
             icon: icon-users
             actions:
               index:
-                label: 'Manage newsletter subscribers'
+                label: 'Psmb.Newsletter:Modules:newsletter.subscribers.button'
                 title: 'Manage newsletter subscribers'
           subscriptions:
             label: 'Psmb.Newsletter:Modules:newsletter.subscriptions.label'
@@ -48,7 +48,7 @@ TYPO3:
             icon: icon-paper-plane
             actions:
               index:
-                label: 'Manage newsletter subscriptions'
+                label: 'Psmb.Newsletter:Modules:newsletter.subscriptions.button'
                 title: 'Manage newsletter subscriptions'
           analytics:
             label: 'Psmb.Newsletter:Modules:newsletter.analytics.label'
@@ -58,7 +58,7 @@ TYPO3:
             icon: icon-pie-chart
             actions:
               index:
-                label: 'View newsletter analytics'
+                label: 'Psmb.Newsletter:Modules:newsletter.analytics.button'
                 title: 'View newsletter analytics'
 
 Flowpack:

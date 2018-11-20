@@ -9,4 +9,10 @@ use TYPO3\Flow\Persistence\Repository;
  */
 class NewsletterRepository extends Repository
 {
+    /**
+     * @var array
+     */
+    protected $defaultOrderings = array(
+        'publicationDate' => \TYPO3\Flow\Persistence\QueryInterface::ORDER_DESCENDING
+    );
 }

@@ -51,15 +51,12 @@ class OperatingSystemDataResult
         }
         
         return array(
-            'totals' => array('uniquePageviews' => $totalViews),
-            'rows' => array(
-                array('osFamilies' => 'Apple', 'uniquePageviews' => $clientOperatingSystems['Apple'], 'percent' => ($totalViews == 0 ? 0 : round(($clientOperatingSystems['Apple'] * 100 / $totalViews)))),
-                array('osFamilies' => 'iOS', 'uniquePageviews' => $clientOperatingSystems['iOS'], 'percent' => ($totalViews == 0 ? 0 : round(($clientOperatingSystems['iOS'] * 100 / $totalViews)))),
-                array('osFamilies' => 'Windows', 'uniquePageviews' => $clientOperatingSystems['Windows'], 'percent' => ($totalViews == 0 ? 0 : round(($clientOperatingSystems['Windows'] * 100 / $totalViews)))),
-                array('osFamilies' => 'GNU/Linux', 'uniquePageviews' => $clientOperatingSystems['GNU/Linux'], 'percent' => ($totalViews == 0 ? 0 : round(($clientOperatingSystems['GNU/Linux'] * 100 / $totalViews)))),
-                array('osFamilies' => 'Android', 'uniquePageviews' => $clientOperatingSystems['Android'], 'percent' => ($totalViews == 0 ? 0 : round(($clientOperatingSystems['Android'] * 100 / $totalViews)))),
-                array('osFamilies' => 'Other', 'uniquePageviews' => $clientOperatingSystems['Other'], 'percent' => ($totalViews == 0 ? 0 : round(($clientOperatingSystems['Other'] * 100 / $totalViews))))
-            )
+            array('name' => 'Apple', 'y' => $clientOperatingSystems['Apple'], 'percent' => ($totalViews == 0 ? 0 : round(($clientOperatingSystems['Apple'] * 100 / $totalViews)))),
+            array('name' => 'iOS', 'y' => $clientOperatingSystems['iOS'], 'percent' => ($totalViews == 0 ? 0 : round(($clientOperatingSystems['iOS'] * 100 / $totalViews)))),
+            array('name' => 'Windows', 'y' => $clientOperatingSystems['Windows'], 'percent' => ($totalViews == 0 ? 0 : round(($clientOperatingSystems['Windows'] * 100 / $totalViews)))),
+            array('name' => 'GNU/Linux', 'y' => $clientOperatingSystems['GNU/Linux'], 'percent' => ($totalViews == 0 ? 0 : round(($clientOperatingSystems['GNU/Linux'] * 100 / $totalViews)))),
+            array('name' => 'Android', 'y' => $clientOperatingSystems['Android'], 'percent' => ($totalViews == 0 ? 0 : round(($clientOperatingSystems['Android'] * 100 / $totalViews)))),
+            array('name' => 'Other', 'y' => $clientOperatingSystems['Other'], 'percent' => ($totalViews == 0 ? 0 : round(($clientOperatingSystems['Other'] * 100 / $totalViews))))
         );
     }
 

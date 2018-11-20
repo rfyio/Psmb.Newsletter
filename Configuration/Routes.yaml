@@ -44,6 +44,24 @@
   appendExceedingArguments: TRUE
 
 -
+  name: 'Psmb.Newsletter tracklink'
+  uriPattern: '{node}~newsletter/{--newsletter.@action}'
+  defaults:
+    '@package':    'TYPO3.Neos'
+    '@controller': 'Frontend\Node'
+    '@format':     'html'
+    '@action':     'show'
+    '--newsletter':
+      '@package': 'Psmb.Newsletter'
+      '@controller': 'Analytics'
+      '@action': 'tracklink'
+      '@format': 'html'
+  routeParts:
+    node:
+      handler: TYPO3\Neos\Routing\FrontendNodeRoutePartHandler
+  appendExceedingArguments: TRUE
+
+-
   name: 'Psmb.Newsletter other routes'
   uriPattern: '{node}~newsletter/{--newsletter.@action}'
   defaults:

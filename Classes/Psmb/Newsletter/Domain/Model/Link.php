@@ -2,7 +2,6 @@
 
 namespace Psmb\Newsletter\Domain\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use TYPO3\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
 use TYPO3\Flow\Utility\Arrays;
@@ -13,8 +12,14 @@ use TYPO3\TYPO3CR\Domain\Model\NodeData;
  *
  * @Flow\Entity
  */
-class Newsletter
+class Link
 {
+
+    /**
+     * @var Newsletter
+     * @ORM\ManyToOne(inversedBy="links")
+     */
+    protected $newsletter;
 
     /**
      * @ORM\ManyToOne(inversedBy="dimensions")
@@ -24,41 +29,10 @@ class Newsletter
     protected $node;
 
     /**
-     * @var string
-     */
-    protected $subscriptionIdentifier;
-
-    /**
-     * @var \Doctrine\Common\Collections\ArrayCollection<\Psmb\Newsletter\Domain\Model\Link>
-     * @ORM\OneToMany(mappedBy="newsletter", cascade={"persist","remove"})
-     * @Flow\Lazy
-     */
-    protected $links;
-
-    /**
-     * @var \DateTime
-     * @Flow\Validate(type="\DateTime")
-     * @ORM\Column(nullable=true)
-     */
-    protected $publicationDate;
-
-    /**
-     * @var integer
-     * @Flow\Validate(type="Integer")
-     */
-    protected $sentCount = 0;
-
-    /**
      * @var integer
      * @Flow\Validate(type="Integer")
      */
     protected $viewsCount = 0;
-
-    /**
-     * @var integer
-     * @Flow\Validate(type="Integer")
-     */
-    protected $uniqueViewCount = 0;
 
     /**
      * @var array<string>
@@ -81,7 +55,6 @@ class Newsletter
     {
         $this->setViewsOnDevice($viewsOnDevice);
         $this->setViewsOnOS($viewsOnOperatingSystem);
-        $this->links = new ArrayCollection();
     }
 
     /**
@@ -109,78 +82,19 @@ class Newsletter
     }
 
     /**
-     * @return ArrayCollection
+     * @return Newsletter
      */
-    public function getLinks()
+    public function getNewsletter()
     {
-        return $this->links;
+        return $this->newsletter;
     }
 
     /**
-     * @param ArrayCollection $links
+     * @param Newsletter $newsletter
      */
-    public function setLinks($links)
+    public function setNewsletter($newsletter)
     {
-        $this->links = $links;
-    }
-
-    /**
-     * @param Link $link
-     */
-    public function addLink(Link $link)
-    {
-        if (!$this->links->contains($link)) {
-            $this->links->add($link);
-            $link->setNewsletter($this);
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function getSubscriptionIdentifier()
-    {
-        return $this->subscriptionIdentifier;
-    }
-
-    /**
-     * @param string $subscriptionIdentifier
-     */
-    public function setSubscriptionIdentifier($subscriptionIdentifier)
-    {
-        $this->subscriptionIdentifier = $subscriptionIdentifier;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getPublicationDate()
-    {
-        return $this->publicationDate;
-    }
-
-    /**
-     * @param \DateTime $publicationDate
-     */
-    public function setPublicationDate($publicationDate)
-    {
-        $this->publicationDate = $publicationDate;
-    }
-
-    /**
-     * @return int
-     */
-    public function getSentCount()
-    {
-        return $this->sentCount;
-    }
-
-    /**
-     * One up sent count
-     */
-    public function updateSentCount()
-    {
-        $this->sentCount++;
+        $this->newsletter = $newsletter;
     }
 
     /**
@@ -197,22 +111,6 @@ class Newsletter
     public function updateViewCount()
     {
         $this->viewsCount++;
-    }
-
-    /**
-     * @return int
-     */
-    public function getUniqueViewCount()
-    {
-        return $this->uniqueViewCount;
-    }
-
-    /**
-     * One up unique view count
-     */
-    public function updateUniqueViewCount()
-    {
-        $this->uniqueViewCount++;
     }
 
     /**

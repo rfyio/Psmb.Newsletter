@@ -66,17 +66,37 @@ class AnalyticsController extends ActionController
      */
     public function indexAction($filter = '')
     {
-        $this->view->assign('filter', $filter);
-        $this->view->assign('subscriptions', $this->subscriptions);
+        $this->view->assignMultiple([
+            'filter' => $filter,
+            'subscriptions' => $this->subscriptions,
+            'newsletters' => $filter !== '' ? $this->newsletterRepository->findBySubscriptionIdentifier($filter) : $this->newsletterRepository->findAll(),
+        ]);
     }
 
     /**
+     * @param Newsletter $newsletter
      * @param string $type
      * @param string $filter
+     * @throws \TYPO3\TYPO3CR\Exception\NodeException
      */
-    public function dataSourceAction($type = '', $filter = '')
+    public function dataSourceAction(Newsletter $newsletter = null, $type = '', $filter = '')
     {
-        $result = $this->reporting->getGlobalStatistics($type, ['filter' => $filter]);
+        if ($newsletter instanceof Newsletter) {
+            $result = $this->reporting->getNewsletterStatistics($newsletter, $type);
+        } else {
+            $result = $this->reporting->getGlobalStatistics($type, ['filter' => $filter]);
+        }
         $this->view->assign('value', $result);
+    }
+
+    /**
+     * @param Newsletter $newsletter
+     */
+    public function showAction(Newsletter $newsletter)
+    {
+        $this->view->assignMultiple([
+            'newsletters' => $this->newsletterRepository->findBySubscriptionIdentifier($newsletter->getSubscriptionIdentifier()),
+            'newsletter' => $newsletter,
+        ]);
     }
 }

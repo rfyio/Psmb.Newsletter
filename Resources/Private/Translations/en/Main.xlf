@@ -122,6 +122,51 @@
             <trans-unit id="module.subscriptionNewsletter" xml:space="preserve">
                 <source>Newsletters</source>
             </trans-unit>
+
+            <trans-unit id="module.analytics.newsletter" xml:space="preserve">
+               <source>Newsletter</source>
+           </trans-unit>
+           <trans-unit id="module.analytics.publishDate" xml:space="preserve">
+               <source>Publish Date</source>
+           </trans-unit>
+           <trans-unit id="module.analytics.sentCount" xml:space="preserve">
+               <source>Sent Count</source>
+           </trans-unit>
+           <trans-unit id="module.analytics.uniqueViewCount" xml:space="preserve">
+               <source>Unique Views</source>
+           </trans-unit>
+           <trans-unit id="module.analytics.totalViewCount" xml:space="preserve">
+               <source>Total Views</source>
+           </trans-unit>
+
+           <trans-unit id="module.analytics.showHeader" xml:space="preserve">
+               <source>Newsletter: </source>
+           </trans-unit>
+           <trans-unit id="module.analytics.linkName" xml:space="preserve">
+               <source>Link Name</source>
+           </trans-unit>
+           <trans-unit id="module.analytics.linkDate" xml:space="preserve">
+               <source>Modified Date</source>
+           </trans-unit>
+           <trans-unit id="module.analytics.linkTotalViews" xml:space="preserve">
+               <source>Total Views</source>
+           </trans-unit>
+
+          <trans-unit id="module.analytics.overall" xml:space="preserve">
+              <source>Overall Statistics</source>
+          </trans-unit>
+          <trans-unit id="module.analytics.publishedNewsletters" xml:space="preserve">
+              <source>Published Newsletters Analytics</source>
+          </trans-unit>
+          <trans-unit id="module.analytics.visitPerDevice" xml:space="preserve">
+              <source>Visits per Device</source>
+          </trans-unit>
+          <trans-unit id="module.analytics.visitPerOS" xml:space="preserve">
+              <source>Visits per Operation System</source>
+          </trans-unit>
+          <trans-unit id="module.analytics.clickAnalytics" xml:space="preserve">
+              <source>Click Analytics</source>
+          </trans-unit>
         </body>
     </file>
 </xliff>
