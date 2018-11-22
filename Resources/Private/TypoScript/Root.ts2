@@ -122,7 +122,6 @@ prototype(Psmb.Newsletter:TrackingNodeLink) < prototype(NodeUri) {
 			'@controller' = 'Analytics'
 			'@action' = 'tracklink'
 			trackingCode = ${Registry.get('trackingCode')}
-			type = '1233'
 		}
 	}
 	absolute = ${true}

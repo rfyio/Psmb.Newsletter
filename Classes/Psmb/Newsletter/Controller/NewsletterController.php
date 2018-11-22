@@ -64,17 +64,13 @@ class NewsletterController extends ActionController
      * @return void
      */
     public function getSubscriptionsAction() {
-        $manualSubscriptions = array_filter($this->subscriptions, function ($item) {
-            return $item['interval'] == 'manual';
-        });
+        $subscriptions = $this->subscriptionRepository->findAll();
 
-        $subscriptions = $this->subscriptionRepository->findByManualSubscriptions($manualSubscriptions);
-
-        $subscriptionsJsonArray = array_map(function ($item) {
+        $subscriptionsJsonArray = \array_map(function ($item) {
             /** @var  Subscription $item */
             return ['label' => $item->getName(), 'value' => $item->getPersistenceObjectIdentifier()];
         }, $subscriptions->toArray());
-        $this->view->assign('value', array_values($subscriptionsJsonArray));
+        $this->view->assign('value', \array_values($subscriptionsJsonArray));
     }
 
     /**
@@ -121,7 +117,7 @@ class NewsletterController extends ActionController
     {
         $subscribers = $this->subscriberRepository->findAllBySearchTermAndSubscription(null, $subscription)->toArray();
 
-        array_walk($subscribers, function ($subscriber) use ($subscription, $node) {
+        \array_walk($subscribers, function ($subscriber) use ($subscription, $node) {
             $this->fusionMailService->generateSubscriptionLetterAndSend($subscriber, $subscription, $node);
         });
     }
