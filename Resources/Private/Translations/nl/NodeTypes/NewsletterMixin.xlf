@@ -5,6 +5,26 @@
 			<trans-unit id="groups.newsletter" xml:space="preserve">
 				<target>Newsletter</target>
 			</trans-unit>
+			<trans-unit id="groups.analytics" xml:space="preserve">
+                <source>Newsletter Analytics</source>
+                <target>Nieuwsbrief analyse</target>
+            </trans-unit>
+            <trans-unit id="views.newsletter" xml:space="preserve">
+                <source>Newsletter View</source>
+                <target>Nieuwsbrief bezoekers</target>
+            </trans-unit>
+            <trans-unit id="views.viewCount" xml:space="preserve">
+                <source>Overall Views</source>
+                <target>Totale bezoekers</target>
+            </trans-unit>
+            <trans-unit id="views.uniqueVisitsByDeviceCategory" xml:space="preserve">
+                <source>Visits per Device Category</source>
+                <target>Bezoekers per Type Apparaat</target>
+            </trans-unit>
+            <trans-unit id="views.uniqueViewsByOsFamilies" xml:space="preserve">
+                <source>Visits per OS</source>
+                <target>Bezoekers per OS</target>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>
