@@ -61,4 +61,16 @@ class SubscriberRepository extends Repository
             $query->logicalOr($constraints)
         )->execute();
     }
+
+    /**
+     * @param Subscription $subscription
+     * @return int
+     * @throws \TYPO3\Flow\Persistence\Exception\InvalidQueryException
+     */
+    public function countBySubscription(Subscription $subscription): int
+    {
+        $query = $this->createQuery();
+
+        return $query->matching($query->contains('subscribedSubscriptions', $subscription))->count();
+    }
 }

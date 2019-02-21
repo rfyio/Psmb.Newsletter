@@ -158,6 +158,10 @@
                <source>Publish Date</source>
                 <target>Publicatie Datum</target>
            </trans-unit>
+           <trans-unit id="module.analytics.currentSubscriberCount" xml:space="preserve">
+               <source>Subscriber Count</source>
+               <target>Abonnees</target>
+           </trans-unit>
            <trans-unit id="module.analytics.sentCount" xml:space="preserve">
                <source>Sent Count</source>
                 <target>Totaal Verzonden</target>

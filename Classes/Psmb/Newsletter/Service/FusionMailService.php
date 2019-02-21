@@ -6,6 +6,7 @@ use Psmb\Newsletter\Domain\Model\Subscription;
 use Psmb\Newsletter\Domain\Model\ViewsOnDevice;
 use Psmb\Newsletter\Domain\Model\ViewsOnOperatingSystem;
 use Psmb\Newsletter\Domain\Repository\NewsletterRepository;
+use Psmb\Newsletter\Domain\Repository\SubscriberRepository;
 use TYPO3\Flow\Annotations as Flow;
 use Flowpack\JobQueue\Common\Annotations as Job;
 use Psmb\Newsletter\Domain\Model\Subscriber;
@@ -49,6 +50,12 @@ class FusionMailService {
      * @var FusionView
      */
     protected $view;
+
+    /**
+     * @Flow\Inject
+     * @var SubscriberRepository
+     */
+    protected $subscriberRepository;
 
     /**
      * @Flow\Inject
@@ -241,6 +248,7 @@ class FusionMailService {
                 $newsletter = new Newsletter(new ViewsOnDevice(), new ViewsOnOperatingSystem());
                 $newsletter->setNode($node->getNodeData());
                 $newsletter->setSubscriptionIdentifier($subscription->getFusionIdentifier());
+                $newsletter->setCurrentSubscriberCount($this->subscriberRepository->countBySubscription($subscription));
                 $newsletter->setPublicationDate(new \DateTime());
                 $newsletter->updateSentCount();
 

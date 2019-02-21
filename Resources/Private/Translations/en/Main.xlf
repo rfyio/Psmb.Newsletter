@@ -129,6 +129,9 @@
            <trans-unit id="module.analytics.publishDate" xml:space="preserve">
                <source>Publish Date</source>
            </trans-unit>
+           <trans-unit id="module.analytics.currentSubscriberCount" xml:space="preserve">
+               <source>Subscriber Count</source>
+           </trans-unit>
            <trans-unit id="module.analytics.sentCount" xml:space="preserve">
                <source>Sent Count</source>
            </trans-unit>

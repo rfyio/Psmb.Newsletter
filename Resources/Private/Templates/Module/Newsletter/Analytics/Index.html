@@ -276,6 +276,9 @@
                                     <f:translate id="module.analytics.publishDate"/>
                                 </th>
                                 <th class="text-center" width="250">
+                                    <f:translate id="module.analytics.currentSubscriberCount"/>
+                                </th>
+                                <th class="text-center" width="250">
                                     <f:translate id="module.analytics.sentCount"/>
                                 </th>
                                 <th class="text-center" width="250">
@@ -293,6 +296,7 @@
                                 <tr>
                                     <td>{newsletter.node.properties.title}</td>
                                     <td><span class="neos-label">{newsletter.publicationDate -> f:format.date(format:"d.m.Y")}</span></td>
+                                    <td class="text-right">{newsletter.currentSubscriberCount}</td>
                                     <td class="text-right">{newsletter.sentCount}</td>
                                     <td class="text-right">{newsletter.uniqueViewCount}</td>
                                     <td class="text-right">{newsletter.viewsCount}</td>

@@ -46,6 +46,12 @@ class Newsletter
      * @var integer
      * @Flow\Validate(type="Integer")
      */
+    protected $currentSubscriberCount = 0;
+
+    /**
+     * @var integer
+     * @Flow\Validate(type="Integer")
+     */
     protected $sentCount = 0;
 
     /**
@@ -154,7 +160,7 @@ class Newsletter
     /**
      * @return \DateTime
      */
-    public function getPublicationDate()
+    public function getPublicationDate(): \DateTime
     {
         return $this->publicationDate;
     }
@@ -162,7 +168,7 @@ class Newsletter
     /**
      * @param \DateTime $publicationDate
      */
-    public function setPublicationDate($publicationDate)
+    public function setPublicationDate($publicationDate): void
     {
         $this->publicationDate = $publicationDate;
     }
@@ -170,7 +176,23 @@ class Newsletter
     /**
      * @return int
      */
-    public function getSentCount()
+    public function getCurrentSubscriberCount(): int
+    {
+        return $this->currentSubscriberCount;
+    }
+
+    /**
+     * @param int $currentSubscriberCount
+     */
+    public function setCurrentSubscriberCount($currentSubscriberCount): void
+    {
+        $this->currentSubscriberCount = $currentSubscriberCount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSentCount(): int
     {
         return $this->sentCount;
     }
@@ -178,7 +200,7 @@ class Newsletter
     /**
      * One up sent count
      */
-    public function updateSentCount()
+    public function updateSentCount(): void
     {
         $this->sentCount++;
     }
@@ -186,7 +208,7 @@ class Newsletter
     /**
      * @return int
      */
-    public function getViewsCount()
+    public function getViewsCount(): int
     {
         return $this->viewsCount;
     }
@@ -194,7 +216,7 @@ class Newsletter
     /**
      * One up view count
      */
-    public function updateViewCount()
+    public function updateViewCount(): void
     {
         $this->viewsCount++;
     }
@@ -202,7 +224,7 @@ class Newsletter
     /**
      * @return int
      */
-    public function getUniqueViewCount()
+    public function getUniqueViewCount(): int
     {
         return $this->uniqueViewCount;
     }
@@ -210,7 +232,7 @@ class Newsletter
     /**
      * One up unique view count
      */
-    public function updateUniqueViewCount()
+    public function updateUniqueViewCount(): void
     {
         $this->uniqueViewCount++;
     }

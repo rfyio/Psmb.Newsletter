@@ -110,14 +110,13 @@ prototype(Psmb.Newsletter:TrackingLink) < prototype(TYPO3.TypoScript:UriBuilder)
 	arguments = TYPO3.TypoScript:RawArray {
 		trackingCode = ${Registry.get('trackingCode')}
 	}
-
 	absolute = ${true}
 }
 
 prototype(Psmb.Newsletter:TrackingNodeLink) < prototype(NodeUri) {
 	node = ${documentNode}
 	additionalParams {
-		--newsletter = TYPO3.TypoScript:RawArray {
+		--analytics = TYPO3.TypoScript:RawArray {
 			'@package' = 'Psmb.Newsletter'
 			'@controller' = 'Analytics'
 			'@action' = 'tracklink'
@@ -138,7 +137,7 @@ prototype(Psmb.Newsletter:TrackingLinkPlugin) < prototype(TYPO3.Neos:Plugin) {
 	package = 'Psmb.Newsletter'
 	controller = 'Analytics'
 	action = 'tracklink'
-	argumentNamespace = 'newsletter'
+	argumentNamespace = 'analytics'
 }
 
 newsletter = Psmb.Newsletter:SubscriptionCase

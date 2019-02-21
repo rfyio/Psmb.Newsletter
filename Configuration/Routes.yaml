@@ -45,13 +45,13 @@
 
 -
   name: 'Psmb.Newsletter tracklink'
-  uriPattern: '{node}~newsletter/{--newsletter.@action}'
+  uriPattern: '{node}~analytics/{--newsletter.@action}'
   defaults:
     '@package':    'TYPO3.Neos'
     '@controller': 'Frontend\Node'
     '@format':     'html'
     '@action':     'show'
-    '--newsletter':
+    '--analytics':
       '@package': 'Psmb.Newsletter'
       '@controller': 'Analytics'
       '@action': 'tracklink'
