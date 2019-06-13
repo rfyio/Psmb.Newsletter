@@ -210,7 +210,7 @@ class SubscriberController extends AbstractModuleController
     }
 
     /**
-     * @param string $subscription
+     * @param Subscription $subscription
      * @param string $sortBy
      * @param string $sortDirection
      * @param string $searchTerm
@@ -218,7 +218,7 @@ class SubscriberController extends AbstractModuleController
      * @throws \TYPO3\Flow\Persistence\Exception\InvalidQueryException
      * @throws \TYPO3\Flow\Reflection\Exception\PropertyNotAccessibleException
      */
-    public function exportAction($subscription = null, $sortBy = null, $sortDirection = null, $searchTerm = null)
+    public function exportAction(Subscription $subscription = null, $sortBy = null, $sortDirection = null, $searchTerm = null)
     {
         if ($sortBy !== null) {
             $this->browserState->set('sortBy', $sortBy);
