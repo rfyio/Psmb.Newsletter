@@ -1,17 +1,17 @@
 <?php
 namespace Psmb\Newsletter\View;
 
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\I18n\Locale;
-use TYPO3\Flow\I18n\Service;
-use TYPO3\Flow\Mvc\View\AbstractView;
-use TYPO3\Neos\Domain\Service\TypoScriptService;
-use TYPO3\Neos\Exception;
-use TYPO3\TYPO3CR\Domain\Model\Node;
-use TYPO3\TYPO3CR\Domain\Model\NodeInterface;
-use TYPO3\TypoScript\Core\Runtime;
-use TYPO3\TypoScript\Exception\RuntimeException;
-use TYPO3\Flow\Security\Context;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\I18n\Locale;
+use Neos\Flow\I18n\Service;
+use Neos\Flow\Mvc\View\AbstractView;
+use Neos\Neos\Domain\Service\FusionService;
+use Neos\Neos\Exception;
+use Neos\ContentRepository\Domain\Model\Node;
+use Neos\ContentRepository\Domain\Model\NodeInterface;
+use Neos\Fusion\Core\Runtime;
+use Neos\Fusion\Exception\RuntimeException;
+use Neos\Flow\Security\Context;
 
 /**
  * A TypoScript view
@@ -35,7 +35,7 @@ class FusionView extends AbstractView
 
 	/**
 	 * @Flow\Inject
-	 * @var TypoScriptService
+	 * @var FusionService
 	 */
 	protected $fusionService;
 
@@ -96,7 +96,7 @@ class FusionView extends AbstractView
 
 	/**
 	 * @param NodeInterface $siteNode
-     * @return \TYPO3\TypoScript\Core\Runtime
+     * @return \Neos\Fusion\Core\Runtime
      */
 	protected function getTypoScriptRuntime(NodeInterface $siteNode)
 	{

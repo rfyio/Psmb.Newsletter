@@ -6,16 +6,16 @@ use Psmb\Newsletter\Domain\Model\Subscriber;
 use Psmb\Newsletter\Domain\Model\Subscription;
 use Psmb\Newsletter\Domain\Repository\SubscriberTrackingRepository;
 use Psmb\Newsletter\Domain\Repository\SubscriptionRepository;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Configuration\ConfigurationManager;
-use TYPO3\Flow\Configuration\Source\YamlSource;
-use TYPO3\Flow\Mvc\View\ViewInterface;
-use TYPO3\Flow\Package\PackageManagerInterface;
-use TYPO3\Flow\Reflection\ObjectAccess;
-use TYPO3\Flow\Resource\Resource;
-use TYPO3\Flow\Utility\Files;
-use TYPO3\Media\Domain\Session\BrowserState;
-use TYPO3\Neos\Controller\Module\AbstractModuleController;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Configuration\ConfigurationManager;
+use Neos\Flow\Configuration\Source\YamlSource;
+use Neos\Flow\Mvc\View\ViewInterface;
+use Neos\Flow\Package\PackageManagerInterface;
+use Neos\Utility\ObjectAccess;
+use Neos\Flow\ResourceManagement\PersistentResource;
+use Neos\Utility\Files;
+use Neos\Media\Domain\Session\BrowserState;
+use Neos\Neos\Controller\Module\AbstractModuleController;
 use Psmb\Newsletter\Domain\Repository\SubscriberRepository;
 
 /**
@@ -75,7 +75,7 @@ class SubscriberController extends AbstractModuleController
 
     /**
      * @Flow\Inject
-     * @var \TYPO3\Flow\Resource\ResourceManager
+     * @var \Neos\Flow\ResourceManagement\ResourceManager
      */
     protected $resourceManager;
 
@@ -99,7 +99,7 @@ class SubscriberController extends AbstractModuleController
      * @param string $sortBy
      * @param string $sortDirection
      * @param string $searchTerm
-     * @throws \TYPO3\Flow\Persistence\Exception\InvalidQueryException
+     * @throws \Neos\Flow\Persistence\Exception\InvalidQueryException
      */
     public function indexAction(Subscription $subscription = null, $sortBy = null, $sortDirection = null, $searchTerm = null)
     {
@@ -215,8 +215,8 @@ class SubscriberController extends AbstractModuleController
      * @param string $sortDirection
      * @param string $searchTerm
      * @return string
-     * @throws \TYPO3\Flow\Persistence\Exception\InvalidQueryException
-     * @throws \TYPO3\Flow\Reflection\Exception\PropertyNotAccessibleException
+     * @throws \Neos\Flow\Persistence\Exception\InvalidQueryException
+     * @throws \Neos\Utility\Exception\PropertyNotAccessibleException
      */
     public function exportAction(Subscription $subscription = null, $sortBy = null, $sortDirection = null, $searchTerm = null)
     {
@@ -292,8 +292,8 @@ class SubscriberController extends AbstractModuleController
 
     /**
      * @param Subscriber $subscriber
-     * @throws \TYPO3\Flow\Mvc\Exception\StopActionException
-     * @throws \TYPO3\Flow\Persistence\Exception\IllegalObjectTypeException
+     * @throws \Neos\Flow\Mvc\Exception\StopActionException
+     * @throws \Neos\Flow\Persistence\Exception\IllegalObjectTypeException
      */
     public function createAction(Subscriber $subscriber)
     {
@@ -319,8 +319,8 @@ class SubscriberController extends AbstractModuleController
     /**
      * Update Subscriber
      * @param Subscriber $subscriber
-     * @throws \TYPO3\Flow\Mvc\Exception\StopActionException
-     * @throws \TYPO3\Flow\Persistence\Exception\IllegalObjectTypeException
+     * @throws \Neos\Flow\Mvc\Exception\StopActionException
+     * @throws \Neos\Flow\Persistence\Exception\IllegalObjectTypeException
      */
     public function updateAction(Subscriber $subscriber)
     {
@@ -331,8 +331,8 @@ class SubscriberController extends AbstractModuleController
     /**
      * Delete Subscriber
      * @param Subscriber $subscriber
-     * @throws \TYPO3\Flow\Mvc\Exception\StopActionException
-     * @throws \TYPO3\Flow\Persistence\Exception\IllegalObjectTypeException
+     * @throws \Neos\Flow\Mvc\Exception\StopActionException
+     * @throws \Neos\Flow\Persistence\Exception\IllegalObjectTypeException
      */
     public function deleteAction(Subscriber $subscriber)
     {

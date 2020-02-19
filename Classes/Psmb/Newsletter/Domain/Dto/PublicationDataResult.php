@@ -1,9 +1,9 @@
 <?php
 namespace Psmb\Newsletter\Domain\Dto;
 
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 use Psmb\Newsletter\Domain\Model\Newsletter;
-use TYPO3\Flow\Persistence\Generic\QueryResult;
+use Neos\Flow\Persistence\Generic\QueryResult;
 
 /**
  * Class DeviceDataResult
@@ -27,7 +27,7 @@ class PublicationDataResult
 
     /**
      * @return array
-     * @throws \TYPO3\TYPO3CR\Exception\NodeException
+     * @throws \Neos\ContentRepository\Exception\NodeException
      */
     public function getCollectionData()
     {

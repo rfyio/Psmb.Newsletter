@@ -2,7 +2,7 @@
 namespace Psmb\Newsletter\Domain\Dto;
 
 use Psmb\Newsletter\Domain\Model\Newsletter;
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 
 /**
  * Class ColumnDataResult

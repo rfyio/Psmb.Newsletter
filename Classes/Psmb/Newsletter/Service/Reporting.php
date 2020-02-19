@@ -3,15 +3,15 @@ namespace Psmb\Newsletter\Service;
 
 use Psmb\Newsletter\Domain\Model\ClicksOnArticleNewsletter;
 use Psmb\Newsletter\Domain\Model\Newsletter;
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 use Psmb\Newsletter\Domain\Dto\ColumnDataResult;
 use Psmb\Newsletter\Domain\Dto\DeviceDataResult;
 use Psmb\Newsletter\Domain\Dto\OperatingSystemDataResult;
 use Psmb\Newsletter\Domain\Dto\OverallDataResult;
 use Psmb\Newsletter\Domain\Dto\PublicationDataResult;
-use TYPO3\Flow\Persistence\Generic\PersistenceManager;
-use TYPO3\TYPO3CR\Domain\Model\NodeInterface;
-use TYPO3\Neos\Service\Controller\AbstractServiceController;
+use Neos\Flow\Persistence\Generic\PersistenceManager;
+use Neos\ContentRepository\Domain\Model\NodeInterface;
+use Neos\Neos\Service\Controller\AbstractServiceController;
 use Psmb\Newsletter\Domain\Repository\NewsletterRepository;
 use Psmb\Newsletter\Exception\StatisticsNotAvailableException;
 
@@ -23,7 +23,7 @@ class Reporting extends AbstractServiceController
 {
     /**
      * @Flow\Inject
-     * @var \TYPO3\TYPO3CR\Domain\Service\ContextFactoryInterface
+     * @var \Neos\ContentRepository\Domain\Service\ContextFactoryInterface
      */
     protected $contextFactory;
 
@@ -95,7 +95,7 @@ class Reporting extends AbstractServiceController
      * @param Newsletter $newsletter
      * @param string $type
      * @return array
-     * @throws \TYPO3\TYPO3CR\Exception\NodeException
+     * @throws \Neos\ContentRepository\Exception\NodeException
      */
     public function getNewsletterStatistics(Newsletter $newsletter, $type = '')
     {

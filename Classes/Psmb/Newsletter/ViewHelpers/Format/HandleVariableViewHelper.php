@@ -1,9 +1,9 @@
 <?php
 namespace Psmb\Newsletter\ViewHelpers\Format;
 
-use TYPO3\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3\Fluid\Core\Rendering\RenderingContextInterface;
-use TYPO3\Fluid\Core\ViewHelper\Facets\CompilableInterface;
+use Neos\FluidAdaptor\Core\ViewHelper\AbstractViewHelper;
+use Neos\FluidAdaptor\Core\Rendering\RenderingContextInterface;
+use Neos\FluidAdaptor\Core\ViewHelper\Facets\CompilableInterface;
 
 /**
  * Class CropViewHelper
@@ -31,7 +31,7 @@ class HandleVariableViewHelper extends AbstractViewHelper implements CompilableI
     /**
      * @param array $arguments
      * @param callable $renderChildrenClosure
-     * @param \TYPO3\Fluid\Core\Rendering\RenderingContextInterface $renderingContext
+     * @param \Neos\FluidAdaptor\Core\Rendering\RenderingContextInterface $renderingContext
      * @return string
      */
     public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)

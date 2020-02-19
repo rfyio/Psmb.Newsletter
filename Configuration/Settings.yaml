@@ -1,65 +1,3 @@
-TYPO3:
-  Flow:
-    security:
-      authentication:
-        providers:
-          Typo3BackendProvider:
-            requestPatterns:
-              'Psmb.Newsletter:Backend':
-                pattern: ControllerObjectName
-                patternOptions:
-                  controllerObjectNamePattern: 'Psmb\Newsletter\Controller\.*'
-    mvc:
-      routes:
-        'Psmb.Newsletter':
-          position: 'before TYPO3.Neos'
-  Neos:
-    userInterface:
-      translation:
-        autoInclude:
-          'Psmb.Newsletter': ['Main', 'Modules', 'NodeTypes/*']
-      requireJsPathMapping:
-        'Psmb.Newsletter/Views': 'resource://Psmb.Newsletter/Public/JavaScript/Inspector/Views'
-    typoScript:
-      autoInclude:
-        'Psmb.NewsLetter': TRUE
-    modules:
-      newsletter:
-        label: 'Psmb.Newsletter:Modules:newsletter.label'
-        controller: '\Psmb\Newsletter\Controller\Module\NewsletterController'
-        description: 'Psmb.Newsletter:Modules:newsletter.description'
-        icon: 'icon-envelope'
-        submodules:
-          subscribers:
-            label: 'Psmb.Newsletter:Modules:newsletter.subscribers.label'
-            controller: \Psmb\Newsletter\Controller\Module\Newsletter\SubscriberController
-            description: 'Psmb.Newsletter:Modules:newsletter.subscribers.description'
-            widgetTemplatePathAndFileName: 'resource://TYPO3.Neos/Private/Templates/Module/Widget.html'
-            icon: icon-users
-            actions:
-              index:
-                label: 'Psmb.Newsletter:Modules:newsletter.subscribers.button'
-                title: 'Manage newsletter subscribers'
-          subscriptions:
-            label: 'Psmb.Newsletter:Modules:newsletter.subscriptions.label'
-            controller: \Psmb\Newsletter\Controller\Module\Newsletter\SubscriptionController
-            description: 'Psmb.Newsletter:Modules:newsletter.subscriptions.description'
-            widgetTemplatePathAndFileName: 'resource://TYPO3.Neos/Private/Templates/Module/Widget.html'
-            icon: icon-paper-plane
-            actions:
-              index:
-                label: 'Psmb.Newsletter:Modules:newsletter.subscriptions.button'
-                title: 'Manage newsletter subscriptions'
-          analytics:
-            label: 'Psmb.Newsletter:Modules:newsletter.analytics.label'
-            controller: \Psmb\Newsletter\Controller\Module\Newsletter\AnalyticsController
-            description: 'Psmb.Newsletter:Modules:newsletter.analytics.description'
-            widgetTemplatePathAndFileName: 'resource://TYPO3.Neos/Private/Templates/Module/Widget.html'
-            icon: icon-pie-chart
-            actions:
-              index:
-                label: 'Psmb.Newsletter:Modules:newsletter.analytics.button'
-                title: 'View newsletter analytics'
 
 Flowpack:
   JobQueue:
@@ -69,24 +7,74 @@ Flowpack:
           className: Flowpack\JobQueue\Common\Queue\FakeQueue
           options:
             async: true
-        'psmb-newsletter':
-          className: 'Flowpack\JobQueue\Common\Queue\FakeQueue'
-
+        psmb-newsletter:
+          className: Flowpack\JobQueue\Common\Queue\FakeQueue
 Psmb:
   Newsletter:
     module:
       itemsPerPage: 25
-
-#Psmb:
-#  Newsletter:
-#    globalSettings:
-#      senderAddress: 'robot@server.com'
-#      senderName: 'Your robot'
-#    subscriptions:
-#      -
-#        identifier: 'daily'
-#        renderer: 'Your:LetterRenderer'
-#        label: 'Our daily newsletter'
-#        interval: P1D
-#        dimensions:
-#          language: ['dimensionValues']
+Neos:
+  Flow:
+    security:
+      authentication:
+        providers:
+          'Neos.Neos:Backend':
+            requestPatterns:
+              'Psmb.Newsletter:Backend':
+                pattern: ControllerObjectName
+                patternOptions:
+                  controllerObjectNamePattern: 'Psmb\Newsletter\Controller\.*'
+    mvc:
+      routes:
+        Psmb.Newsletter:
+          position: 'before Neos.Neos'
+  Neos:
+    userInterface:
+      translation:
+        autoInclude:
+          Psmb.Newsletter:
+            - Main
+            - Modules
+            - 'NodeTypes/*'
+      requireJsPathMapping:
+        Psmb.Newsletter/Views: 'resource://Psmb.Newsletter/Public/JavaScript/Inspector/Views'
+    modules:
+      newsletter:
+        label: 'Psmb.Newsletter:Modules:newsletter.label'
+        controller: \Psmb\Newsletter\Controller\Module\NewsletterController
+        description: 'Psmb.Newsletter:Modules:newsletter.description'
+        icon: icon-envelope
+        submodules:
+          subscribers:
+            label: 'Psmb.Newsletter:Modules:newsletter.subscribers.label'
+            controller: \Psmb\Newsletter\Controller\Module\Newsletter\SubscriberController
+            description: 'Psmb.Newsletter:Modules:newsletter.subscribers.description'
+            widgetTemplatePathAndFileName: 'resource://Neos.Neos/Private/Templates/Module/Widget.html'
+            icon: icon-users
+            actions:
+              index:
+                label: 'Psmb.Newsletter:Modules:newsletter.subscribers.button'
+                title: 'Manage newsletter subscribers'
+          subscriptions:
+            label: 'Psmb.Newsletter:Modules:newsletter.subscriptions.label'
+            controller: \Psmb\Newsletter\Controller\Module\Newsletter\SubscriptionController
+            description: 'Psmb.Newsletter:Modules:newsletter.subscriptions.description'
+            widgetTemplatePathAndFileName: 'resource://Neos.Neos/Private/Templates/Module/Widget.html'
+            icon: icon-paper-plane
+            actions:
+              index:
+                label: 'Psmb.Newsletter:Modules:newsletter.subscriptions.button'
+                title: 'Manage newsletter subscriptions'
+          analytics:
+            label: 'Psmb.Newsletter:Modules:newsletter.analytics.label'
+            controller: \Psmb\Newsletter\Controller\Module\Newsletter\AnalyticsController
+            description: 'Psmb.Newsletter:Modules:newsletter.analytics.description'
+            widgetTemplatePathAndFileName: 'resource://Neos.Neos/Private/Templates/Module/Widget.html'
+            icon: icon-pie-chart
+            actions:
+              index:
+                label: 'Psmb.Newsletter:Modules:newsletter.analytics.button'
+                title: 'View newsletter analytics'
+    fusion:
+      autoInclude:
+        Psmb.NewsLetter: true

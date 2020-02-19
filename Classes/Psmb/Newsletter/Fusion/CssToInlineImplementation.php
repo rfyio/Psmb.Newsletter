@@ -1,8 +1,8 @@
 <?php
-namespace Psmb\Newsletter\TypoScript;
+namespace Psmb\Newsletter\Fusion;
 
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\TypoScript\TypoScriptObjects\AbstractTypoScriptObject;
+use Neos\Flow\Annotations as Flow;
+use Neos\Fusion\FusionObjects\AbstractFusionObject;
 
 # use Pelago\Emogrifier;
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
@@ -10,7 +10,7 @@ use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 /**
  * A TypoScript Object that inlines styles
  */
-class CssToInlineImplementation extends AbstractTypoScriptObject {
+class CssToInlineImplementation extends AbstractFusionObject {
     /**
      * `value` should contain html to be processed
      * `cssPath` should contain a path to CSS file, e.g. `cssPath = 'resource://Psmb.Newsletter/Public/styles.css'`

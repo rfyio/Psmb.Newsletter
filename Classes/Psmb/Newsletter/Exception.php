@@ -1,7 +1,7 @@
 <?php
 namespace Psmb\Newsletter;
 
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 
 /**
  * Class Exception
@@ -10,6 +10,6 @@ use TYPO3\Flow\Annotations as Flow;
  *
  * @package Psmb\Newsletter
  */
-class Exception extends \TYPO3\Flow\Exception
+class Exception extends \Neos\Flow\Exception
 {
 }

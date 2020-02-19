@@ -13,10 +13,10 @@ use Psmb\Newsletter\Domain\Repository\NewsletterRepository;
 use Psmb\Newsletter\Domain\Repository\SubscriberRepository;
 use Psmb\Newsletter\Domain\Repository\SubscriberTrackingRepository;
 use Psmb\Newsletter\Parser\RequestParser;
-use TYPO3\Flow\Mvc\Controller\ActionController;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Resource\ResourceManager;
-use TYPO3\TYPO3CR\Domain\Model\Node;
+use Neos\Flow\Mvc\Controller\ActionController;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\ResourceManagement\ResourceManager;
+use Neos\ContentRepository\Domain\Model\Node;
 
 /**
  * Class AnalyticsController

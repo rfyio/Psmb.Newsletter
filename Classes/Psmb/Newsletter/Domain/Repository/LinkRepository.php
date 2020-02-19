@@ -2,9 +2,9 @@
 namespace Psmb\Newsletter\Domain\Repository;
 
 use Psmb\Newsletter\Domain\Model\Newsletter;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Persistence\Repository;
-use TYPO3\TYPO3CR\Domain\Model\NodeData;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Persistence\Repository;
+use Neos\ContentRepository\Domain\Model\NodeData;
 
 /**
  * @Flow\Scope("singleton")

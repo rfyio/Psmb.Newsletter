@@ -5,13 +5,13 @@ use Psmb\Newsletter\Domain\Model\Subscriber;
 use Psmb\Newsletter\Domain\Repository\SubscriberRepository;
 use Psmb\Newsletter\Domain\Repository\SubscriptionRepository;
 use Psmb\Newsletter\Service\FusionMailService;
-use TYPO3\Flow\Error\Message;
-use TYPO3\Flow\I18n\Service as I18nService;
-use TYPO3\Flow\I18n\Translator;
-use TYPO3\Flow\Mvc\Controller\ActionController;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Utility\Algorithms;
-use TYPO3\Flow\Validation\Validator\EmailAddressValidator;
+use Neos\Error\Messages\Message;
+use Neos\Flow\I18n\Service as I18nService;
+use Neos\Flow\I18n\Translator;
+use Neos\Flow\Mvc\Controller\ActionController;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Utility\Algorithms;
+use Neos\Flow\Validation\Validator\EmailAddressValidator;
 
 /**
  * Class SubscriptionController
@@ -38,7 +38,7 @@ class SubscriptionController extends ActionController
 
     /**
      * @Flow\Inject
-     * @var \TYPO3\Flow\Cache\Frontend\VariableFrontend
+     * @var \Neos\Cache\Frontend\VariableFrontend
      */
     protected $tokenCache;
 

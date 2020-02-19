@@ -9,11 +9,11 @@ use Psmb\Newsletter\Domain\Repository\SubscriberRepository;
 use Psmb\Newsletter\Domain\Repository\SubscriberTrackingRepository;
 use Psmb\Newsletter\Parser\RequestParser;
 use Psmb\Newsletter\Service\Reporting;
-use TYPO3\Flow\Mvc\Controller\ActionController;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Mvc\View\JsonView;
-use TYPO3\Flow\Resource\ResourceManager;
-use TYPO3\Fluid\View\TemplateView;
+use Neos\Flow\Mvc\Controller\ActionController;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Mvc\View\JsonView;
+use Neos\Flow\ResourceManagement\ResourceManager;
+use Neos\FluidAdaptor\View\TemplateView;
 
 /**
  * Class AnalyticsController
@@ -77,7 +77,7 @@ class AnalyticsController extends ActionController
      * @param Newsletter $newsletter
      * @param string $type
      * @param string $filter
-     * @throws \TYPO3\TYPO3CR\Exception\NodeException
+     * @throws \Neos\ContentRepository\Exception\NodeException
      */
     public function dataSourceAction(Newsletter $newsletter = null, $type = '', $filter = '')
     {

@@ -1,8 +1,8 @@
 <?php
 namespace Psmb\Newsletter\Parser;
 
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Configuration\ConfigurationManager;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Configuration\ConfigurationManager;
 
 /**
  * Class RequestParser
@@ -17,7 +17,7 @@ class RequestParser {
     protected $userAgent;
 
     /**
-     * @var \TYPO3\Flow\Configuration\ConfigurationManager
+     * @var \Neos\Flow\Configuration\ConfigurationManager
      * @Flow\Inject
      */
     protected $configurationManager;

@@ -2,11 +2,11 @@
 namespace Psmb\Newsletter\Command;
 
 use Psmb\Newsletter\Domain\Model\Subscription;
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 use Psmb\Newsletter\Domain\Model\Subscriber;
 use Psmb\Newsletter\Domain\Repository\SubscriptionRepository;
 use Psmb\Newsletter\Domain\Repository\SubscriberRepository;
-use TYPO3\Flow\Cli\CommandController;
+use Neos\Flow\Cli\CommandController;
 
 /**
  * @Flow\Scope("singleton")
@@ -33,7 +33,7 @@ class MigrateCommandController extends CommandController
 
     /**
      * @Flow\Inject
-     * @var \TYPO3\Flow\Persistence\PersistenceManagerInterface
+     * @var \Neos\Flow\Persistence\PersistenceManagerInterface
      */
     protected $persistenceManager;
 

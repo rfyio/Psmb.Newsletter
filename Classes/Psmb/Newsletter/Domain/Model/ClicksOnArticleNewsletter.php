@@ -3,8 +3,8 @@
 namespace Psmb\Newsletter\Domain\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\TYPO3CR\Domain\Model\NodeData;
+use Neos\Flow\Annotations as Flow;
+use Neos\ContentRepository\Domain\Model\NodeData;
 
 /**
  * Thumbnail configuration value object
@@ -27,7 +27,7 @@ class ClicksOnArticleNewsletter
 
     /**
      * @return array
-     * @throws \TYPO3\TYPO3CR\Exception\NodeException
+     * @throws \Neos\ContentRepository\Exception\NodeException
      */
     public function getData()
     {

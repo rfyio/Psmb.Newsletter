@@ -1,5 +1,5 @@
 privilegeTargets:
-  TYPO3\Flow\Security\Authorization\Privilege\Method\MethodPrivilege:
+  Neos\Flow\Security\Authorization\Privilege\Method\MethodPrivilege:
     'Psmb.Newsletter:Tracking':
       matcher: 'method(Psmb\Newsletter\Controller\AnalyticsController->(.*)Action())'
     'Psmb.Newsletter:Subscription':
@@ -16,7 +16,7 @@ privilegeTargets:
       matcher: 'method(Psmb\Newsletter\Controller\Module\Newsletter\AnalyticsController->(.*)Action())'
 
 roles:
-  'TYPO3.Flow:Everybody':
+  'Neos.Flow:Everybody':
     privileges:
       -
         privilegeTarget: 'Psmb.Newsletter:Tracking'
@@ -24,7 +24,7 @@ roles:
       -
         privilegeTarget: 'Psmb.Newsletter:Subscription'
         permission: GRANT
-  'TYPO3.Neos:Editor':
+  'Neos.Neos:Editor':
     privileges:
       -
         privilegeTarget: 'Psmb.Newsletter:Backend'
@@ -41,7 +41,7 @@ roles:
       -
         privilegeTarget: 'Psmb.Newsletter:Module_Analytics'
         permission: GRANT
-  'TYPO3.Neos:Administrator':
+  'Neos.Neos:Administrator':
     privileges:
       -
         privilegeTarget: 'Psmb.Newsletter:Module'

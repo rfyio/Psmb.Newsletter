@@ -1,10 +1,10 @@
 <?php
 namespace Psmb\Newsletter\Domain\Repository;
 
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Persistence\QueryInterface;
-use TYPO3\Flow\Persistence\QueryResultInterface;
-use TYPO3\Flow\Persistence\Repository;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Persistence\QueryInterface;
+use Neos\Flow\Persistence\QueryResultInterface;
+use Neos\Flow\Persistence\Repository;
 
 /**
  * @Flow\Scope("singleton")
@@ -22,7 +22,7 @@ class SubscriptionRepository extends Repository
     /**
      * @param array $manualSubscriptions
      * @return QueryResultInterface
-     * @throws \TYPO3\Flow\Persistence\Exception\InvalidQueryException
+     * @throws \Neos\Flow\Persistence\Exception\InvalidQueryException
      */
     public function findByManualSubscriptions(array $manualSubscriptions): QueryResultInterface
     {

@@ -3,8 +3,8 @@
 namespace Psmb\Newsletter\Domain\Repository;
 
 use Psmb\Newsletter\Domain\Model\Subscription;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Persistence\Repository;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Persistence\Repository;
 
 /**
  * @Flow\Scope("singleton")
@@ -16,14 +16,14 @@ class SubscriberRepository extends Repository
      * @var array
      */
     protected $defaultOrderings = array(
-        'name' => \TYPO3\Flow\Persistence\QueryInterface::ORDER_ASCENDING
+        'name' => \Neos\Flow\Persistence\QueryInterface::ORDER_ASCENDING
     );
 
 
     /**
      * @param $filter
-     * @return \TYPO3\Flow\Persistence\QueryResultInterface
-     * @throws \TYPO3\Flow\Persistence\Exception\InvalidQueryException
+     * @return \Neos\Flow\Persistence\QueryResultInterface
+     * @throws \Neos\Flow\Persistence\Exception\InvalidQueryException
      */
     public function findAllByFilter($filter)
     {
@@ -37,8 +37,8 @@ class SubscriberRepository extends Repository
     /**
      * @param string|null $searchTerm
      * @param Subscription|null $subscription
-     * @return \TYPO3\Flow\Persistence\QueryResultInterface
-     * @throws \TYPO3\Flow\Persistence\Exception\InvalidQueryException
+     * @return \Neos\Flow\Persistence\QueryResultInterface
+     * @throws \Neos\Flow\Persistence\Exception\InvalidQueryException
      */
     public function findAllBySearchTermAndSubscription($searchTerm = null, Subscription $subscription = null)
     {
@@ -65,7 +65,7 @@ class SubscriberRepository extends Repository
     /**
      * @param Subscription $subscription
      * @return int
-     * @throws \TYPO3\Flow\Persistence\Exception\InvalidQueryException
+     * @throws \Neos\Flow\Persistence\Exception\InvalidQueryException
      */
     public function countBySubscription(Subscription $subscription): int
     {

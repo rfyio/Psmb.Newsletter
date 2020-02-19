@@ -1,7 +1,7 @@
 <?php
 namespace Psmb\Newsletter\Exception;
 
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 use Psmb\Newsletter\Exception;
 
 /**

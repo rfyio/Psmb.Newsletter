@@ -1,7 +1,7 @@
 <?php
 namespace Psmb\Newsletter\ViewHelpers\Form;
 
-use TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper;
+use Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper;
 
 /**
  * View Helper which creates a simple checkbox (<input type="checkbox">).

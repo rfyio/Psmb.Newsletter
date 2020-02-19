@@ -7,22 +7,22 @@ use Psmb\Newsletter\Domain\Model\ViewsOnDevice;
 use Psmb\Newsletter\Domain\Model\ViewsOnOperatingSystem;
 use Psmb\Newsletter\Domain\Repository\NewsletterRepository;
 use Psmb\Newsletter\Domain\Repository\SubscriberRepository;
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 use Flowpack\JobQueue\Common\Annotations as Job;
 use Psmb\Newsletter\Domain\Model\Subscriber;
 use Psmb\Newsletter\View\FusionView;
-use TYPO3\Flow\Mvc\ActionRequest;
-use TYPO3\Flow\Mvc\Controller\ControllerContext;
-use TYPO3\Flow\Mvc\Routing\UriBuilder;
-use TYPO3\Neos\Service\LinkingService;
+use Neos\Flow\Mvc\ActionRequest;
+use Neos\Flow\Mvc\Controller\ControllerContext;
+use Neos\Flow\Mvc\Routing\UriBuilder;
+use Neos\Neos\Service\LinkingService;
 use Neos\SwiftMailer\Message;
-use TYPO3\TYPO3CR\Domain\Model\Node;
-use TYPO3\TYPO3CR\Domain\Model\NodeInterface;
-use TYPO3\TYPO3CR\Domain\Service\ContextFactoryInterface;
-use TYPO3\Flow\Http\Request;
-use TYPO3\Flow\Http\Response;
-use TYPO3\Flow\Http\Uri;
-use TYPO3\Flow\Mvc\Controller\Arguments;
+use Neos\ContentRepository\Domain\Model\Node;
+use Neos\ContentRepository\Domain\Model\NodeInterface;
+use Neos\ContentRepository\Domain\Service\ContextFactoryInterface;
+use Neos\Flow\Http\Request;
+use Neos\Flow\Http\Response;
+use Neos\Flow\Http\Uri;
+use Neos\Flow\Mvc\Controller\Arguments;
 
 /**
  * @Flow\Scope("singleton")
@@ -70,7 +70,7 @@ class FusionMailService {
     protected $globalSettings;
 
     /**
-     * @Flow\InjectConfiguration(package="TYPO3.Flow", path="http.baseUri")
+     * @Flow\InjectConfiguration(package="Neos.Flow", path="http.baseUri")
      * @var string
      */
     protected $baseUri;

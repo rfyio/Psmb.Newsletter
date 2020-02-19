@@ -5,14 +5,14 @@ use Psmb\Newsletter\Domain\Model\Subscriber;
 use Psmb\Newsletter\Domain\Model\Subscription;
 use Psmb\Newsletter\Domain\Repository\SubscriberTrackingRepository;
 use Psmb\Newsletter\Domain\Repository\SubscriptionRepository;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Configuration\ConfigurationManager;
-use TYPO3\Flow\Configuration\Source\YamlSource;
-use TYPO3\Flow\Mvc\View\ViewInterface;
-use TYPO3\Flow\Package\PackageManagerInterface;
-use TYPO3\Flow\Reflection\ObjectAccess;
-use TYPO3\Media\Domain\Session\BrowserState;
-use TYPO3\Neos\Controller\Module\AbstractModuleController;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Configuration\ConfigurationManager;
+use Neos\Flow\Configuration\Source\YamlSource;
+use Neos\Flow\Mvc\View\ViewInterface;
+use Neos\Flow\Package\PackageManagerInterface;
+use Neos\Utility\ObjectAccess;
+use Neos\Media\Domain\Session\BrowserState;
+use Neos\Neos\Controller\Module\AbstractModuleController;
 use Psmb\Newsletter\Domain\Repository\SubscriberRepository;
 
 /**
@@ -86,8 +86,8 @@ class SubscriptionController extends AbstractModuleController
 
     /**
      * @param Subscription $subscription
-     * @throws \TYPO3\Flow\Mvc\Exception\StopActionException
-     * @throws \TYPO3\Flow\Persistence\Exception\IllegalObjectTypeException
+     * @throws \Neos\Flow\Mvc\Exception\StopActionException
+     * @throws \Neos\Flow\Persistence\Exception\IllegalObjectTypeException
      */
     public function createAction(Subscription $subscription)
     {
@@ -115,8 +115,8 @@ class SubscriptionController extends AbstractModuleController
     /**
      * Update Subscriber
      * @param Subscription $subscription
-     * @throws \TYPO3\Flow\Mvc\Exception\StopActionException
-     * @throws \TYPO3\Flow\Persistence\Exception\IllegalObjectTypeException
+     * @throws \Neos\Flow\Mvc\Exception\StopActionException
+     * @throws \Neos\Flow\Persistence\Exception\IllegalObjectTypeException
      */
     public function updateAction(Subscription $subscription)
     {
@@ -128,8 +128,8 @@ class SubscriptionController extends AbstractModuleController
     /**
      * Delete Subscription
      * @param Subscription $subscription
-     * @throws \TYPO3\Flow\Mvc\Exception\StopActionException
-     * @throws \TYPO3\Flow\Persistence\Exception\IllegalObjectTypeException
+     * @throws \Neos\Flow\Mvc\Exception\StopActionException
+     * @throws \Neos\Flow\Persistence\Exception\IllegalObjectTypeException
      */
     public function deleteAction(Subscription $subscription)
     {

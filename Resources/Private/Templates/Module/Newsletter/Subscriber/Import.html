@@ -1,4 +1,4 @@
-{namespace neos=TYPO3\Neos\ViewHelpers}
+{namespace neos=Neos\Neos\ViewHelpers}
 <f:layout name="Default"/>
 
 <f:section name="headScripts">
@@ -13,8 +13,8 @@
                 <div class="neos-span6 neos-image-inputs">
 
                 <span class="neos-file-input">
-                    <label class="neos-button neos-button-primary" for="resource" title="{neos:backend.translate(id: 'media.maxUploadSize', arguments: {0: humanReadableMaximumFileUploadSize}, source: 'Modules', package: 'TYPO3.Neos')}" data-neos-toggle="tooltip">
-                        {neos:backend.translate(id: 'media.chooseFile', source: 'Modules', package: 'TYPO3.Neos')} <i class="icon-file"></i>
+                    <label class="neos-button neos-button-primary" for="resource" title="{neos:backend.translate(id: 'media.maxUploadSize', arguments: {0: humanReadableMaximumFileUploadSize}, source: 'Modules', package: 'Neos.Neos')}" data-neos-toggle="tooltip">
+                        {neos:backend.translate(id: 'media.chooseFile', source: 'Modules', package: 'Neos.Neos')} <i class="icon-file"></i>
                     </label>
                     <f:form.upload id="resource" name="resource" additionalAttributes="{required: 'required'}"/>
                 </span>
@@ -33,8 +33,8 @@
                 </div>
             </fieldset>
             <div class="neos-footer">
-                <f:link.action action="index" class="neos-button">{neos:backend.translate(id: 'media.cancel', source: 'Modules', package: 'TYPO3.Neos')}</f:link.action>
-                <f:form.submit id="import" class="neos-button neos-button-primary" value="{neos:backend.translate(id: 'media.upload', source: 'Modules', package: 'TYPO3.Neos')}"/>
+                <f:link.action action="index" class="neos-button">{neos:backend.translate(id: 'media.cancel', source: 'Modules', package: 'Neos.Neos')}</f:link.action>
+                <f:form.submit id="import" class="neos-button neos-button-primary" value="{neos:backend.translate(id: 'media.upload', source: 'Modules', package: 'Neos.Neos')}"/>
             </div>
         </f:form>
     </div>
