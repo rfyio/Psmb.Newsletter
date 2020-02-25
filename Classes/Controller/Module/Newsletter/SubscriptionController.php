@@ -11,7 +11,7 @@ use Neos\Flow\Configuration\Source\YamlSource;
 use Neos\Flow\Mvc\View\ViewInterface;
 use Neos\Flow\Package\PackageManagerInterface;
 use Neos\Utility\ObjectAccess;
-use Neos\Media\Domain\Session\BrowserState;
+use Neos\Media\Browser\Domain\Session\BrowserState;
 use Neos\Neos\Controller\Module\AbstractModuleController;
 use Psmb\Newsletter\Domain\Repository\SubscriberRepository;
 

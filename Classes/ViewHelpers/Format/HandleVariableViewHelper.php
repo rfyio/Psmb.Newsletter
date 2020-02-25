@@ -28,13 +28,13 @@ class HandleVariableViewHelper extends AbstractViewHelper implements CompilableI
         return self::renderStatic(array('value' => $value), $this->buildRenderChildrenClosure(), $this->renderingContext);
     }
 
-    /**
-     * @param array $arguments
-     * @param callable $renderChildrenClosure
-     * @param \Neos\FluidAdaptor\Core\Rendering\RenderingContextInterface $renderingContext
-     * @return string
-     */
-    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
+	/**
+	 * @param array $arguments
+	 * @param \Closure $renderChildrenClosure
+	 * @param \TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface $renderingContext
+	 * @return mixed
+	 */
+    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, \TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface $renderingContext)
     {
         $value = $arguments['value'];
         if ($value === null) {

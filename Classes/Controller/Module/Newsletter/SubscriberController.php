@@ -2,6 +2,7 @@
 
 namespace Psmb\Newsletter\Controller\Module\Newsletter;
 
+use Neos\Media\Browser\Domain\Session\BrowserState;
 use Psmb\Newsletter\Domain\Model\Subscriber;
 use Psmb\Newsletter\Domain\Model\Subscription;
 use Psmb\Newsletter\Domain\Repository\SubscriberTrackingRepository;
@@ -14,7 +15,6 @@ use Neos\Flow\Package\PackageManagerInterface;
 use Neos\Utility\ObjectAccess;
 use Neos\Flow\ResourceManagement\PersistentResource;
 use Neos\Utility\Files;
-use Neos\Media\Domain\Session\BrowserState;
 use Neos\Neos\Controller\Module\AbstractModuleController;
 use Psmb\Newsletter\Domain\Repository\SubscriberRepository;
 
@@ -67,11 +67,11 @@ class SubscriberController extends AbstractModuleController
      */
     protected $subscriptions;
 
-    /**
-     * @Flow\Inject(lazy = false)
-     * @var BrowserState
-     */
-    protected $browserState;
+	/**
+	 * @Flow\Inject(lazy = false)
+	 * @var BrowserState
+	 */
+	protected $browserState;
 
     /**
      * @Flow\Inject

@@ -14,7 +14,7 @@ use Neos\Fusion\Exception\RuntimeException;
 use Neos\Flow\Security\Context;
 
 /**
- * A TypoScript view
+ * A Fusion view
  */
 class FusionView extends AbstractView
 {
@@ -30,7 +30,7 @@ class FusionView extends AbstractView
 	 * @var array
 	 */
 	protected $supportedOptions = array(
-		'enableContentCache' => array(null, 'Flag to enable content caching inside TypoScript (overriding the global setting).', 'boolean')
+		'enableContentCache' => array(null, 'Flag to enable content caching inside Fusion (overriding the global setting).', 'boolean')
 	);
 
 	/**
@@ -40,7 +40,7 @@ class FusionView extends AbstractView
 	protected $fusionService;
 
 	/**
-	 * The TypoScript path to use for rendering the node given in "value", defaults to "page".
+	 * The Fusion path to use for rendering the node given in "value", defaults to "page".
 	 *
 	 * @var string
 	 */
@@ -49,7 +49,7 @@ class FusionView extends AbstractView
 	/**
 	 * @var Runtime
 	 */
-	protected $typoScriptRuntime;
+	protected $fusionRuntime;
 
 	/**
 	 * @Flow\Inject
@@ -74,7 +74,7 @@ class FusionView extends AbstractView
 		if (!$siteNode instanceof Node) {
 			throw new Exception('FusionView needs a site node to be set in context variables passed to \'value\'.', 1329736457);
 		}
-		$typoScriptRuntime = $this->getTypoScriptRuntime($siteNode);
+		$fusionRuntime = $this->getFusionRuntime($siteNode);
 
 		$dimensions = $siteNode->getContext()->getDimensions();
 		if (array_key_exists('language', $dimensions) && $dimensions['language'] !== array()) {
@@ -83,13 +83,13 @@ class FusionView extends AbstractView
 			$this->i18nService->getConfiguration()->setFallbackRule(array('strict' => false, 'order' => array_reverse($dimensions['language'])));
 		}
 
-		$typoScriptRuntime->pushContextArray($contextVars);
+		$fusionRuntime->pushContextArray($contextVars);
 		try {
-			$output = $typoScriptRuntime->render($this->fusionPath);
+			$output = $fusionRuntime->render($this->fusionPath);
 		} catch (RuntimeException $exception) {
 			throw $exception->getPrevious();
 		}
-		$typoScriptRuntime->popContext();
+		$fusionRuntime->popContext();
 
 		return $output;
 	}
@@ -98,16 +98,16 @@ class FusionView extends AbstractView
 	 * @param NodeInterface $siteNode
      * @return \Neos\Fusion\Core\Runtime
      */
-	protected function getTypoScriptRuntime(NodeInterface $siteNode)
+	protected function getFusionRuntime(NodeInterface $siteNode)
 	{
-		if ($this->typoScriptRuntime === null) {
-			$this->typoScriptRuntime = $this->fusionService->createRuntime($siteNode, $this->controllerContext);
+		if ($this->fusionRuntime === null) {
+			$this->fusionRuntime = $this->fusionService->createRuntime($siteNode, $this->controllerContext);
 
 			if (isset($this->options['enableContentCache']) && $this->options['enableContentCache'] !== null) {
-				$this->typoScriptRuntime->setEnableContentCache($this->options['enableContentCache']);
+				$this->fusionRuntime->setEnableContentCache($this->options['enableContentCache']);
 			}
 		}
-		return $this->typoScriptRuntime;
+		return $this->fusionRuntime;
 	}
 
 	/**
@@ -119,7 +119,7 @@ class FusionView extends AbstractView
 	 */
 	public function assign($key, $value)
 	{
-		$this->typoScriptRuntime = null;
+		$this->fusionRuntime = null;
 		return parent::assign($key, $value);
 	}
 }

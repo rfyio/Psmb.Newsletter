@@ -11,8 +11,8 @@
         "flowpack/jobqueue-common": "*"
     },
     "autoload": {
-        "psr-0": {
-            "Psmb\\Newsletter": "Classes/"
+        "psr-4": {
+            "Psmb\\Newsletter\\": "Classes"
         }
     },
     "extra": {
